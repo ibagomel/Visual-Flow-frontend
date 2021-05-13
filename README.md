@@ -44,5 +44,8 @@ The following roles are available in the application:
 They can perform the below operations within the namespaces they are authorized to.
 Only Super-admin user can create a workspace (project) and grant access to this project.
 
-# License
-* (see LICENSE.md)
+## Contribution
+[Check the official guide](https://github.com/ibagomel/Visual-Flow/blob/main/CONTRIBUTING.md).
+
+## License
+Visual Flow is an open-source software licensed under the [Apache-2.0 license](./LICENSE).

@@ -1,0 +1,84 @@
+{
+    "name": "visual-flow-ui-backend",
+    "version": "1.0.0",
+    "private": true,
+    "license": "MIT",
+    "devDependencies": {
+        "babel-eslint": "^10.0.3",
+        "dotenv": "^8.2.0",
+        "eslint": "^7.8.1",
+        "eslint-config-airbnb": "^18.0.1",
+        "eslint-config-prettier": "^2.4.0",
+        "eslint-plugin-import": "^2.19.1",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-prettier": "^3.1.2",
+        "eslint-plugin-react": "^7.17.0",
+        "eslint-plugin-react-hooks": "^2.3.0",
+        "jest": "^26.6.3",
+        "jest-junit": "^10.0.0",
+        "jest-sonar-reporter": "^2.0.0",
+        "nodemon": "^2.0.4",
+        "prettier": "^1.19.1",
+        "supertest": "^4.0.2"
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "http-proxy-middleware": "^1.0.5",
+        "lodash": "^4.17.21",
+        "log4js": "^6.1.2",
+        "passport": "^0.4.1",
+        "passport-github2": "^0.1.12",
+        "passport-gitlab2": "^5.0.0"
+    },
+    "scripts": {
+        "start": "nodemon -w app --exec node -r dotenv/config --inspect app/server.js",
+        "start:prod": "node app/server.js",
+        "build": "echo \"No build is required\"",
+        "test": "jest",
+        "coverage": "jest --forceExit --coverage",
+        "format": "prettier --write \"./app/**/*.{js,md,scss}\"",
+        "format:diff": "prettier --list-different \"./app/**/*.{js,md,scss}\"",
+        "lint": "eslint ./app -f json -o reports/eslint-report.json"
+    },
+    "jest": {
+        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$",
+        "setupFiles": [
+            "<rootDir>/app/__tests__/env.js"
+        ],
+        "modulePathIgnorePatterns": [
+            "<rootDir>/app/__tests__/env.js"
+        ],
+        "reporters": [
+            "default",
+            "jest-junit"
+        ],
+        "coverageReporters": [
+            "text",
+            "lcov",
+            "cobertura"
+        ],
+        "collectCoverageFrom": [
+            "app/**/*.js",
+            "!app/**/*.test.js",
+            "!app/__tests__/**",
+            "!app/__mocks__/**",
+            "app/setupTests.js"
+        ],
+        "moduleNameMapper": {
+            "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/app/__mocks__/fileMock.js",
+            "\\.(scss|css|less)$": "<rootDir>/app/__mocks__/styleMock.js"
+        },
+        "testResultsProcessor": "jest-sonar-reporter"
+    },
+    "jest-junit": {
+        "outputDirectory": "coverage/junit",
+        "outputName": "junit.xml",
+        "usePathForSuiteName": "true"
+    },
+    "jestSonar": {
+        "reportPath": "reports",
+        "reportFile": "test-report.xml"
+    }
+}

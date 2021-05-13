@@ -1,0 +1,37 @@
+{
+    "Status": "Status",
+    "lastRun": "Last Run",
+    "lastFinished": "Last Finished",
+    "lastEdit": "Last Edit",
+    "Progress": "Progress",
+    "tooltip": {
+        "Play": "Play",
+        "Stop": "Stop",
+        "Copy": "Copy",
+        "pipelineDesigner": "Pipeline Designer",
+        "Remove": "Remove",
+        "Remove selected": "Remove selected"
+    },
+    "status": {
+        "Draft": "Draft",
+        "Pending": "Pending",
+        "Running": "Running",
+        "Error": "Error",
+        "Succeeded": "Succeeded"
+    },
+    "timeRange": {
+        "last hour": "last hour",
+        "last 3 hours": "last 3 hours",
+        "last 8 hours": "last 8 hours",
+        "1 day ago": "1 day ago",
+        "3 days ago": "3 days ago",
+        "7 days ago": "7 days ago"
+    },
+    "confirm": {
+        "delete": "Are you sure you want to delete {{name}} pipeline(s)?"
+    },
+    "params": {
+        "Name": "Name"
+    },
+    "relatedJobs": "Export related jobs"
+}

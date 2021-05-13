@@ -1,0 +1,14 @@
+{
+  "name": {
+    "name": "Name",
+    "value": "Provide Stage name."
+  },
+  "output": {
+    "name": "Output",
+    "value1": "Syntax: <column_name_1> as <alias_1>, function(<column_name_2>) as <alias_2>",
+    "value2": "Examples:",
+    "value3": "> col1, concat(col1, col2);",
+    "value4": "> count(*) as count",
+    "value5": "All available functions are listed here"
+  }
+}

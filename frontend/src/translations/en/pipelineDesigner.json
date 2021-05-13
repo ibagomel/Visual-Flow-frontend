@@ -1,0 +1,12 @@
+{
+    "jobConfiguration": {
+        "Name": "Stage Name",
+        "JobName": "Job Name",
+        "OutputPaths": "Output Paths:",
+        "seeLogs": "See job logs"
+    },
+    "jobModal": {
+        "Jobs": "Jobs",
+        "search": "Search..."
+    }
+}

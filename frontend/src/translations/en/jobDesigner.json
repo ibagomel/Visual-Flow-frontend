@@ -1,0 +1,100 @@
+{
+    "jobTitle": "Job Designer - {{name}}",
+    "pipelineTitle": "Pipeline Designer - {{name}}",
+    "PALETTE": "PALETTE",
+    "PARAMS": "PARAMS",
+    "Parameter": "Parameter",
+    "untitled": "Untitled*",
+    "palette": {
+        "READ": "Read",
+        "WRITE": "Write",
+        "JOIN": "Join",
+        "GROUP": "Group By",
+        "REMOVE_DUPLICATES": "Remove duplicates",
+        "FILTER": "Filter",
+        "TRANSFORM": "Transformer",
+        "UNION": "Union",
+        "CDC": "Change data capture",
+        "JOB": "Job",
+        "PIPELINE": "Pipeline",
+        "NOTIFICATION": "Notification"
+    },
+    "readConfiguration": {
+        "Name": "Name",
+        "Storage": "Storage",
+        "writeMode": "Write mode",
+        "Endpoint": "Endpoint",
+        "Accesskey": "Access key",
+        "Secretkey": "Secret key",
+        "Bucket": "Bucket",
+        "Path": "Path in bucket",
+        "JDBCURL": "JDBC URL",
+        "User": "User",
+        "Password": "Password",
+        "Schema": "Schema",
+        "Table": "Table",
+        "CertData": "CertData (optional)",
+        "Fileformat": "File format",
+        "Port": "Port",
+        "SSL": "SSL",
+        "Nodes": "Nodes",
+        "Index": "Index"
+    },
+    "writeConfiguration": {
+        "Header": "Header",
+        "Delimiter": "Delimiter"
+    },
+    "unionConfiguration": {
+        "Name": "Name",
+        "Mode": "Mode",
+        "all": "All values",
+        "distinct": "Distinct"
+    },
+    "groupByConfiguration": {
+        "GroupBy": "Group By",
+        "DropGroupingColumns": "Drop grouping columns",
+        "Column": "Column",
+        "AggregateFunctions": "Aggregate functions"
+    },
+    "edgeConfiguration": {
+        "Successpath": "Success path"
+    },
+    "joinConfiguration": {
+        "Name": "Name",
+        "JoinType": "Join type",
+        "LinkOrdering": "Link Ordering",
+        "Left": "Left",
+        "Right": "Right",
+        "Key": "Key"
+    },
+    "RemoveDuplConfiguration": {
+        "Key": "Key",
+        "OrderBy": "Order By"
+    },
+    "CDCConfiguration": {
+        "Name": "Name",
+        "LinkOrdering": "Link Ordering",
+        "After": "After",
+        "Before": "Before",
+        "Key": "Key",
+        "Mode": "Mode"
+    },
+    "transformConfiguration": {
+        "Name": "Name",
+        "Output": "Output",
+        "Placeholder": "column_name AS alias_name"
+    },
+    "filterConfiguration": {
+        "Name": "Name",
+        "Filter": "Filter"
+    },
+    "notificationConfiguration": {
+        "Name": "Name",
+        "Addressees": "To",
+        "Message": "Message"
+    },
+    "Zoom": "Zoom",
+    "Path": "Path",
+    "Configuration": "Configuration",
+    "STAGE": "STAGE"
+}

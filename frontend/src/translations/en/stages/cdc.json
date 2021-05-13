@@ -1,0 +1,19 @@
+{
+  "name": {
+    "name": "Name",
+    "value": "Provide Stage name."
+  },
+  "linkOrdering": {
+    "name": "Link Ordering",
+    "value": "This option allows you to specify which input link carries the before data set and which carries the after data set. To rearrange the links, click the up arrow button or the down arrow button."
+  },
+  "key": {
+    "name": "Key",
+    "value": "Specifies the name of a difference key input column. This property can be repeated to specify multiple difference key input columns."
+  },
+  "mode": {
+    "name": "Mode",
+    "value1": "Return All. Returns all rows (modified and unmodified).",
+    "value2": "Return Delta. Returns only modified rows."
+  }
+}

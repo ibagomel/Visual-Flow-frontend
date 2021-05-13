@@ -1,0 +1,123 @@
+{
+    "title": "Visual Flow",
+    "Overview": "Overview",
+    "Jobs": "Jobs",
+    "job": "Job",
+    "Pipelines": "Pipelines",
+    "pipeline": "Pipeline",
+    "Import": "Import",
+    "Settings": "Settings",
+    "Basic": "Basic",
+    "Parameters": "Parameters",
+    "Users/Roles": "Users/Roles",
+    "Exit": "Exit",
+    "jobDesigner": "Job Designer",
+    "search": "Search...",
+    "FileName": "File Name",
+    "sorted": {
+        "descending": "sorted descending",
+        "ascending": "sorted ascending"
+    },
+    "overview": {
+        "Jobs": "Jobs",
+        "Pipelines": "Pipelines",
+        "Utilization": "Resource Utilization",
+        "utilization": {
+            "Used": "Used",
+            "Requested": "Requested",
+            "Limits": "Limits"
+        }
+    },
+    "form": {
+        "header": {
+            "createProject": "Create Project",
+            "viewProject": "View Project",
+            "editProject": "Edit Project",
+            "viewProjectParameters": "View Project Parameters",
+            "editProjectParameters": "Edit Project Parameters",
+            "usersAndRoles": "Users and Roles",
+            "addUser": "Add User",
+            "Parameters": "Parameters",
+            "Export": "Export to"
+        },
+        "Name": "Name",
+        "Description": "Description",
+        "Requests": "Requests",
+        "Limits": "Limits"
+    },
+    "button": {
+        "Save": "Save",
+        "Export": "Export",
+        "Browse": "Browse",
+        "Cancel": "Cancel",
+        "Close": "Close",
+        "CLOSE": "CLOSE",
+        "Add": "ADD",
+        "addProperty": "ADD PROPERTY",
+        "setRole": "SET ROLE",
+        "addJob": "ADD JOB",
+        "addPipeline": "ADD PIPELINE",
+        "addUser": "ADD USER",
+        "ChooseFile": "CHOOSE FILE",
+        "Load": "LOAD",
+        "Import": "IMPORT",
+        "Confirm": "CONFIRM",
+        "Discard": "DISCARD"
+    },
+    "validation": {
+        "3to40chars": "Wrong symbol or should be 3 to 40 characters long.",
+        "moreThen500": "Should be less then 500 characters long.",
+        "positive": "Should be positive.",
+        "notBlank": "Should not be blank."
+    },
+    "confirm": {
+        "title": "Are you sure?",
+        "body": "Are you sure?",
+        "Yes": "Yes",
+        "No": "No",
+        "sure": "Are you sure you want to delete",
+        "unsaved" : "Are you sure? Unsaved changes will be lost"
+    },
+    "404": "Sorry, we can’t find the page you are looking for.",
+    "N/A": "N/A",
+    "dropDown": {
+        "None": "None"
+    },
+    "unsavedChanges": {
+        "sidePanelIsDirty": "Your configuration has not been saved",
+        "paramsIsDirty": "Your parameters has not been saved",
+        "jobsGraphIsDirty": "Your job has not been saved. If you leave Job Designer unsaved changes will be lost. Press “SAVE”  to save your job",
+        "pipelinesGraphIsDirty": "Your pipeline has not been saved. If you leave Pipeline Designer unsaved changes will be lost. Press “SAVE”  to save your pipeline",
+        "leaveWithUnsavedChanges": "Unsaved changes will be lost"
+    },
+    "enterJobName": "Please enter name and save params",
+    "status": {
+        "Draft": "Draft",
+        "Pending": "Pending",
+        "Running": "Running",
+        "Failed": "Failed",
+        "Succeeded": "Succeeded",
+        "Unknown": "Unknown",
+        "Error": "Error"
+    },
+    "tooltip": {
+        "MoveDown":"Move down",
+        "MoveUp": "Move up",
+        "Delete": "Delete",
+        "Add": "Add"
+    },
+    "importPage": {
+        "FilePath": "File Path",
+        "LastUpdated": "Last Updated",
+        "BadFile": "Bad structure of file",
+        "importSuccess": "Resources import successful",
+        "importFailed": "Resources import failed",
+        "configType": {
+            "ConfigMap": "Job",
+            "WorkflowTemplate": "Pipeline"
+        },
+        "confirm": "Jobs (pipilenes) with the same names will be overwritten.",
+        "Notice": "Notice:",
+        "NotAutorized": "You are not authorized for import within this project"
+    }
+}

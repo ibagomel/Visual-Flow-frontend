@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -120,8 +122,8 @@ const CosStorage = ({
                         margin="normal"
                         fullWidth
                         select
-                        name="header"
-                        value={inputValues.header || ''}
+                        name="option.header"
+                        value={inputValues['option.header'] || ''}
                         onChange={handleInputChange}
                     >
                         {renderDropdownItems(csvHeader)}
@@ -132,8 +134,8 @@ const CosStorage = ({
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="delimiter"
-                        value={inputValues.delimiter || ''}
+                        name="option.delimiter"
+                        value={inputValues['option.delimiter'] || ''}
                         onChange={handleInputChange}
                     />
                 </>

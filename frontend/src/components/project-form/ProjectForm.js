@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -48,9 +50,9 @@ const ProjectForm = ({ project, create, update }) => {
             requestsCpu: get(project, 'limits.requestsCpu', 1),
             requestsMemory: get(project, 'limits.requestsMemory', 1),
             editable: get(project, 'limits.editable')
-        }
-        // usage: get(project, 'usage'),
-        // editable: get(project, 'editable')
+        },
+        usage: get(project, 'usage'),
+        editable: get(project, 'editable')
     };
 
     const [card, setCardState] = React.useState(initialState);

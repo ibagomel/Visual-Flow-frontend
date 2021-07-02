@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -21,7 +23,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Grid, Table, TableBody, TableContainer, Paper } from '@material-ui/core';
-import { isEqual } from 'lodash';
+import { isEqual, uniqueId } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import FormWrapper from '../../components/form-wrapper/FormWrapper';
@@ -54,7 +56,9 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
         }
     ];
 
-    const [projectParameters, setProjectParameters] = React.useState(params);
+    const [projectParameters, setProjectParameters] = React.useState(
+        params.map(p => ({ ...p, id: uniqueId() }))
+    );
     const [editMode, setEditMode] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState('');
 
@@ -63,11 +67,14 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
     }, [projectId, editMode]);
 
     React.useEffect(() => {
-        setProjectParameters(params);
+        setProjectParameters(params.map(p => ({ ...p, id: uniqueId() })));
     }, [parameters]);
 
     const onSubmit = () => {
-        update(projectId, { ...parameters, params: projectParameters });
+        update(projectId, {
+            ...parameters,
+            params: projectParameters.map(({ id, ...p }) => p)
+        });
         setEditMode(false);
     };
 
@@ -76,36 +83,35 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
         setProjectParameters(params);
     };
 
-    const handleChangeParameter = (event, changedIndex, field) => {
+    const handleChangeParameter = (event, changedId, field) => {
         event.persist();
         setProjectParameters(prevState =>
-            prevState.map((parameter, index) =>
-                index === changedIndex
+            prevState.map(parameter =>
+                parameter.id === changedId
                     ? { ...parameter, [field]: event.target.value }
                     : parameter
             )
         );
     };
 
-    const removeParameter = removedIndex =>
+    const removeParameter = removedId =>
         setProjectParameters(prevState =>
-            prevState.filter((parameter, index) => index !== removedIndex)
+            prevState.filter(parameter => parameter.id !== removedId)
         );
 
     const handleClickNewFieldType = event =>
         setProjectParameters(prevState => [
             ...prevState,
-            { key: '', value: '', secret: Boolean(event.target.value) }
+            {
+                key: '',
+                value: '',
+                secret: Boolean(event.target.value),
+                id: uniqueId()
+            }
         ]);
 
     const handleChangeSearch = value => {
         setSearchValue(value);
-        setProjectParameters(
-            params.filter(
-                parameter =>
-                    parameter.key.toLowerCase().indexOf(value.toLowerCase()) !== -1
-            )
-        );
     };
 
     const renderNewFieldDropdown = () => (
@@ -121,18 +127,33 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
 
     const saveButtonIsDisabled = () => {
         useEffect(() => {
-            if (isEqual(projectParameters.sort(), params.sort())) {
+            if (
+                isEqual(
+                    projectParameters.map(({ id, ...p }) => p).sort(),
+                    params.sort()
+                )
+            ) {
                 setPristine();
             } else {
                 setDirty();
             }
         });
+
         return (
             !editable ||
-            isEqual(projectParameters.sort(), params.sort()) ||
+            isEqual(
+                projectParameters.map(({ id, ...p }) => p).sort(),
+                params.sort()
+            ) ||
             projectParameters.some(({ key, value }) => key === '' || value === '')
         );
     };
+
+    const filterParameters = () =>
+        projectParameters.filter(
+            parameter =>
+                parameter.key.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
+        );
 
     const shouldAddButtonRepeat = () => {
         // 73px - property row height; ~3.5 row sizes used by other interfaces
@@ -180,11 +201,9 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
                     <TableContainer component={Paper}>
                         <Table>
                             <TableBody>
-                                {projectParameters.map((parameter, index) => (
+                                {filterParameters().map(parameter => (
                                     <ParametersTableRow
-                                        // eslint-disable-next-line react/no-array-index-key
-                                        key={index}
-                                        index={index}
+                                        key={parameter.id}
                                         parameter={parameter}
                                         editMode={editMode}
                                         handleChangeParameter={handleChangeParameter}

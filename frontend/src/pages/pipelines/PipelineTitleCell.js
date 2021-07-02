@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -41,7 +43,8 @@ const PipelineTitleCell = ({
 }) => {
     const { t } = useTranslation();
 
-    const formatDate = date => date && moment(date).format('YYYY-MM-DD HH:mm:ss');
+    const formatDate = date =>
+        date && moment(date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
 
     const titleCell = () => (
         <Grid item xs={10}>

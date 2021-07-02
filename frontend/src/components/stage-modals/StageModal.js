@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -24,6 +26,8 @@ import RemoveDuplicatesModal from './modals/RemoveDuplicatesModal';
 import JoinModal from './modals/JoinModal';
 import CdcModal from './modals/cdcModal';
 import UnionModal from './modals/UnionModal';
+import JobModal from './modals/JobModal';
+import NotificationModal from './modals/NotificationModal';
 import {
     READ,
     WRITE,
@@ -33,19 +37,22 @@ import {
     JOIN,
     CDC,
     TRANSFORM,
-    FILTER
+    FILTER,
+    JOB,
+    NOTIFICATION
 } from '../mxgraph/constants';
 
 const StageModal = ({ stageName, ...restProps }) => {
+    // eslint-disable-next-line complexity
     const stageFilter = () => {
         switch (stageName) {
             case READ:
             case WRITE:
-                return <RWModal stageName={stageName} {...restProps} />;
+                return <RWModal {...restProps} />;
             case FILTER:
-                return <FilterModal stageName={stageName} {...restProps} />;
+                return <FilterModal {...restProps} />;
             case GROUP:
-                return <GroupModal stageName={stageName} {...restProps} />;
+                return <GroupModal {...restProps} />;
             case REMOVE_DUPLICATES:
                 return <RemoveDuplicatesModal {...restProps} />;
             case JOIN:
@@ -55,7 +62,11 @@ const StageModal = ({ stageName, ...restProps }) => {
             case UNION:
                 return <UnionModal {...restProps} />;
             case TRANSFORM:
-                return <TransformerModal stageName={stageName} {...restProps} />;
+                return <TransformerModal {...restProps} />;
+            case JOB:
+                return <JobModal {...restProps} />;
+            case NOTIFICATION:
+                return <NotificationModal {...restProps} />;
             default:
                 return null;
         }

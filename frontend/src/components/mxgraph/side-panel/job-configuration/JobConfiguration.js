@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -68,7 +70,8 @@ const JobConfiguration = ({
     saveCell,
     setPanelDirty,
     jobs: { loading, data },
-    graph
+    graph,
+    sidePanelIsOpen
 }) => {
     const classes = useStyles();
 
@@ -80,7 +83,7 @@ const JobConfiguration = ({
     useEffect(() => {
         setInputValues(configuration);
         setOutputPaths(getOutputPaths(graph));
-    }, [configuration]);
+    }, [configuration, sidePanelIsOpen]);
 
     useEffect(() => {
         setPanelDirty(!isEqual(configuration, inputValues));
@@ -271,11 +274,13 @@ JobConfiguration.propTypes = {
     saveCell: PropTypes.func,
     setPanelDirty: PropTypes.func,
     jobs: PropTypes.object,
+    sidePanelIsOpen: PropTypes.bool,
     graph: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-    jobs: state.pages.jobs
+    jobs: state.pages.jobs,
+    sidePanelIsOpen: state.mxGraph.sidePanelIsOpen
 });
 
 export default connect(mapStateToProps)(withTranslation()(JobConfiguration));

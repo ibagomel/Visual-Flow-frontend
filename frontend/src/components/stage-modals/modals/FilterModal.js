@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -19,7 +21,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import InfoModal from '../InfoModal';
 
-const FilterModel = props => {
+const FilterModal = props => {
     const { t } = useTranslation();
     const content = [
         {
@@ -37,4 +39,4 @@ const FilterModel = props => {
     return <InfoModal content={content} {...props} />;
 };
 
-export default FilterModel;
+export default FilterModal;

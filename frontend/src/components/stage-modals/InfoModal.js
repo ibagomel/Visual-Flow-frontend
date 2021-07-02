@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -21,6 +23,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import PopupForm from '../popup-form/PopupForm';
+import { DB2, COS, ELASTIC, STDOUT } from '../mxgraph/constants';
 
 import useStyles from './InfoModal.Style';
 
@@ -30,6 +33,7 @@ const InfoModal = ({
     db2,
     cos,
     elastic,
+    stdout,
     display,
     title,
     onClose
@@ -41,12 +45,14 @@ const InfoModal = ({
 
     const chosenStorage = () => {
         switch (storage) {
-            case 'DB2':
+            case DB2:
                 return db2;
-            case 'COS':
+            case COS:
                 return cos;
-            case 'ELASTIC':
+            case ELASTIC:
                 return elastic;
+            case STDOUT:
+                return stdout;
             default:
                 return null;
         }
@@ -85,7 +91,12 @@ const InfoModal = ({
                                     variant="body2"
                                     className={classes.paragraph}
                                 >
-                                    <a className={classes.link} href={linkFilter()}>
+                                    <a
+                                        className={classes.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        href={linkFilter()}
+                                    >
                                         {section[paragraph]}
                                     </a>
                                 </Typography>
@@ -103,28 +114,34 @@ const InfoModal = ({
                     </Box>
                 );
             })}
-            <FormControl variant="standard">
-                <InputLabel htmlFor="standard-age-native-simple">
-                    {t('ReadWrite:chooseStorage')}
-                </InputLabel>
-                <Select
-                    native
-                    onChange={event => setStorage(event.target.value)}
-                    label="Choose storage"
-                    className={classNames(classes.selectButton)}
-                    value={storage}
-                >
-                    <option aria-label="None" value="" />
-                    {storages?.map(value => (
-                        <option key={value} value={value}>
-                            {value}
-                        </option>
-                    ))}
-                </Select>
-            </FormControl>
+            {storages && (
+                <FormControl variant="standard">
+                    <InputLabel htmlFor="standard-age-native-simple">
+                        {t('ReadWrite:chooseStorage')}
+                    </InputLabel>
+                    <Select
+                        native
+                        onChange={event => setStorage(event.target.value)}
+                        label={t('ReadWrite:chooseStorage')}
+                        className={classNames(classes.selectButton)}
+                        value={storage}
+                    >
+                        <option aria-label="None" value="" />
+                        {storages?.map(
+                            value =>
+                                !(value === STDOUT && title === 'Read') && (
+                                    <option key={value} value={value}>
+                                        {value}
+                                    </option>
+                                )
+                        )}
+                    </Select>
+                </FormControl>
+            )}
             {(title === 'Read' || title === 'Write') && (
                 <Box className={classNames(classes.name, classes.wrapper)}>
                     {storage &&
+                        !(storage === STDOUT && title === 'Read') &&
                         chosenStorage()?.map(section => {
                             const other = Object.keys(section).slice(1);
                             return (
@@ -161,6 +178,7 @@ InfoModal.propTypes = {
     db2: PropTypes.array,
     cos: PropTypes.array,
     elastic: PropTypes.array,
+    stdout: PropTypes.array,
     display: PropTypes.bool,
     title: PropTypes.string,
     onClose: PropTypes.func

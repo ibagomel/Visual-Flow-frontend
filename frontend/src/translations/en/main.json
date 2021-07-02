@@ -50,6 +50,7 @@
         "Export": "Export",
         "Browse": "Browse",
         "Cancel": "Cancel",
+        "Exit": "Exit",
         "Close": "Close",
         "CLOSE": "CLOSE",
         "Add": "ADD",
@@ -85,7 +86,7 @@
     },
     "unsavedChanges": {
         "sidePanelIsDirty": "Your configuration has not been saved",
-        "paramsIsDirty": "Your parameters has not been saved",
+        "paramsIsDirty": "Your parameters have not been saved",
         "jobsGraphIsDirty": "Your job has not been saved. If you leave Job Designer unsaved changes will be lost. Press “SAVE”  to save your job",
         "pipelinesGraphIsDirty": "Your pipeline has not been saved. If you leave Pipeline Designer unsaved changes will be lost. Press “SAVE”  to save your pipeline",
         "leaveWithUnsavedChanges": "Unsaved changes will be lost"

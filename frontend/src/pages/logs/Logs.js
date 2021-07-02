@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -70,7 +72,16 @@ const Logs = ({
                     </Grid>
                 )}
                 <Grid item xs={12}>
-                    {loading ? <Skeleton /> : <LogsList data={data} modal={modal} />}
+                    {loading ? (
+                        <Skeleton />
+                    ) : (
+                        <LogsList
+                            data={data}
+                            modal={modal}
+                            projId={projId}
+                            jobId={jobId}
+                        />
+                    )}
                 </Grid>
             </Grid>
         </Box>

@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -25,7 +27,12 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
     response => {
         if (response.config.method !== 'get') {
-            showNotification(response.statusText, 'success');
+            showNotification(
+                response.statusText === 'No Content'
+                    ? 'Deleted successfully'
+                    : response.statusText,
+                'success'
+            );
         }
         return response;
     },

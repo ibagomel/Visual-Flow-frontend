@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -32,6 +34,8 @@ import union from './translations/en/stages/union.json';
 import groupBy from './translations/en/stages/groupBy.json';
 import join from './translations/en/stages/join.json';
 import cdc from './translations/en/stages/cdc.json';
+import job from './translations/en/stages/job.json';
+import notification from './translations/en/stages/notification.json';
 import pipelineDesigner from './translations/en/pipelineDesigner.json';
 
 export const resources = {
@@ -49,6 +53,8 @@ export const resources = {
         groupBy,
         join,
         cdc,
+        job,
+        notification,
         pipelineDesigner
     }
 };

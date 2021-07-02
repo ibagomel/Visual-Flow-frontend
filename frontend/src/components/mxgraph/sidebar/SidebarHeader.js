@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -129,37 +131,41 @@ const SidebarHeader = ({
                     {currentHeader()}
                 </Typography>
                 <div className={classes.buttons}>
-                    {ableToEdit && (
-                        <Button
-                            disabled={!name}
-                            variant="outlined"
-                            size="large"
-                            color="inherit"
-                            className={classes.button}
-                            onClick={fetchJob}
-                        >
-                            {t('main:button.Save')}
-                        </Button>
+                    {dirty && (
+                        <>
+                            {ableToEdit && (
+                                <Button
+                                    disabled={!name}
+                                    variant="outlined"
+                                    size="large"
+                                    color="inherit"
+                                    className={classes.button}
+                                    onClick={fetchJob}
+                                >
+                                    {t('main:button.Save')}
+                                </Button>
+                            )}
+                            <Button
+                                size="large"
+                                color="inherit"
+                                className={classes.button}
+                                onClick={() => {
+                                    if (someDirty) {
+                                        confirmationWindow({
+                                            body: `${t(
+                                                'main:unsavedChanges.leaveWithUnsavedChanges'
+                                            )}`,
+                                            callback: () => goToLastPage()
+                                        });
+                                    } else {
+                                        goToLastPage();
+                                    }
+                                }}
+                            >
+                                {t('main:button.Exit')}
+                            </Button>
+                        </>
                     )}
-                    <Button
-                        size="large"
-                        color="inherit"
-                        className={classes.button}
-                        onClick={() => {
-                            if (someDirty) {
-                                confirmationWindow({
-                                    body: `${t(
-                                        'main:unsavedChanges.leaveWithUnsavedChanges'
-                                    )}`,
-                                    callback: () => goToLastPage()
-                                });
-                            } else {
-                                goToLastPage();
-                            }
-                        }}
-                    >
-                        {t('main:button.Cancel')}
-                    </Button>
                 </div>
             </Toolbar>
         </AppBar>

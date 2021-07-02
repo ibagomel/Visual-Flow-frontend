@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -17,16 +19,18 @@
 
 import React from 'react';
 import { List, Grid, ListItem, ListItemText } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import useStyles from './LogsList.Styles';
 import LogsHeader from '../../components/logs-header/LogsHeader';
 
+import fetchLogs from '../../redux/actions/logsActions';
+
 const lvls = ['INFO', 'WARN', 'ERROR', 'DEBUG'];
 
-const LogsList = ({ data, modal }) => {
+const LogsList = ({ data, modal, projId, jobId, getLogs }) => {
     const classes = useStyles();
     const errorMes = useSelector(state => state.pages.logs.error);
 
@@ -63,6 +67,7 @@ const LogsList = ({ data, modal }) => {
                 <LogsHeader
                     onSearch={event => setSearch(event.target.value)}
                     searchValue={search}
+                    onRefreshClick={() => getLogs(projId, jobId)}
                     dropList={lvls}
                     onSelect={event => setLevel(event.target.value)}
                     lvl={lvl}
@@ -109,7 +114,14 @@ const LogsList = ({ data, modal }) => {
 
 LogsList.propTypes = {
     modal: PropTypes.bool,
-    data: PropTypes.array
+    data: PropTypes.array,
+    projId: PropTypes.string,
+    jobId: PropTypes.string,
+    getLogs: PropTypes.func
 };
 
-export default LogsList;
+const mapDispatchToProps = {
+    getLogs: fetchLogs
+};
+
+export default connect(null, mapDispatchToProps)(LogsList);

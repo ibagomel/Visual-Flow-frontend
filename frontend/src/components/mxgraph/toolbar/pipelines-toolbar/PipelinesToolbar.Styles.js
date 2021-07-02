@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -36,11 +38,14 @@ export default makeStyles(theme => ({
         alignItems: 'center'
     },
     caption: {
-        ...theme.typography.body2,
-        paddingBottom: '8px'
+        ...theme.typography.body2
     },
     margins: {
-        marginTop: '30px',
+        marginTop: '15px',
         marginBottom: '2px'
+    },
+    buttons: {
+        display: 'flex',
+        flexDirection: 'row'
     }
 }));

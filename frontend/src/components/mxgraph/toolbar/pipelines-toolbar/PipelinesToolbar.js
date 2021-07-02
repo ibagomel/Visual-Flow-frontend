@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -37,7 +39,9 @@ import RunStopButtons from '../run-stop-buttons';
 import EditDesignerButtons from '../edit-designer-buttons';
 import LinearProgressChart from '../../../chart/LinearProgressChart';
 import { fetchPipelineById } from '../../../../redux/actions/mxGraphActions';
+import { fetchJobs } from '../../../../redux/actions/jobsActions';
 import { resetFillColor } from '../../resetFillColor/resetFillColor';
+import { PENDING, RUNNING, ERROR, SUCCEEDED, DRAFT, FAILED } from '../../constants';
 
 const PipelinesToolbar = ({
     t,
@@ -46,6 +50,7 @@ const PipelinesToolbar = ({
     data,
     run,
     stop,
+    getActualJobs,
     getActualPipeline,
     pipelineStatus: { loading, status, progress, id },
     create,
@@ -74,14 +79,13 @@ const PipelinesToolbar = ({
 
     const runAndUpdate = () => {
         return run(currentProject, currentPipeline).then(() => {
+            getActualJobs(currentProject);
             getActualPipeline(currentProject, currentPipeline);
         });
     };
 
     const enableViewMode = () =>
-        data.status === 'Pending' || data.status === 'Running'
-            ? false
-            : data.editable;
+        data.status === PENDING || data.status === RUNNING ? false : data.editable;
 
     return (
         <>
@@ -113,15 +117,12 @@ const PipelinesToolbar = ({
                 />
             </div>
             <Divider orientation="vertical" flexItem />
-            <div>
+            <div className={classes.buttons}>
                 {data.runnable && (
                     <RunStopButtons
-                        isNotRunning={[
-                            'Draft',
-                            'Failed',
-                            'Error',
-                            'Succeeded'
-                        ].includes(statusValue)}
+                        isNotRunning={[DRAFT, FAILED, ERROR, SUCCEEDED].includes(
+                            statusValue
+                        )}
                         runnable={data.runnable}
                         run={() => {
                             runAndUpdate();
@@ -144,7 +145,10 @@ const PipelinesToolbar = ({
                 setSidePanel={setSidePanel}
                 sidePanelIsOpen={sidePanelIsOpen}
                 setDirty={setDirty}
-                refresh={() => getActualPipeline(currentProject, currentPipeline)}
+                refresh={() => {
+                    getActualJobs(currentProject);
+                    getActualPipeline(currentProject, currentPipeline);
+                }}
             />
         </>
     );
@@ -163,7 +167,8 @@ PipelinesToolbar.propTypes = {
     stop: PropTypes.func,
     pipelineStatus: PropTypes.object,
     reversible: PropTypes.object,
-    getActualPipeline: PropTypes.func
+    getActualPipeline: PropTypes.func,
+    getActualJobs: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -175,7 +180,8 @@ const mapDispatchToProps = {
     update: updatePipeline,
     run: runPipelineAndRefreshIt,
     stop: stopPipelineAndRefreshIt,
-    getActualPipeline: fetchPipelineById
+    getActualPipeline: fetchPipelineById,
+    getActualJobs: fetchJobs
 };
 
 export default connect(

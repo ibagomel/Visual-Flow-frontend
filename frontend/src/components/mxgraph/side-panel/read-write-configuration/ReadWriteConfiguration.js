@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -24,24 +26,24 @@ import { get } from 'lodash';
 import Db2Storage from './db2-storage/Db2Storage';
 import CosStorage from './cos-storage/CosStorage';
 import ElasticStorage from './elastic-storage/ElasticStorage';
-import { READ } from '../../constants';
+import { READ, DB2, COS, ELASTIC, STDOUT } from '../../constants';
 
 export const storages = [
     {
         value: 'DB2',
-        label: 'DB2'
+        label: DB2
     },
     {
         value: 'cos',
-        label: 'COS'
+        label: COS
     },
     {
         value: 'elastic',
-        label: 'Elastic Search'
+        label: ELASTIC
     },
     {
         value: 'STDOUT',
-        label: 'STDOUT',
+        label: STDOUT,
         hide: [READ]
     }
 ];

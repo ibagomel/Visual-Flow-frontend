@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -18,8 +20,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import InfoModal from '../InfoModal';
+import { DB2, COS, ELASTIC, STDOUT } from '../../mxgraph/constants';
 
-const RWModel = props => {
+const RWModal = props => {
     const { t } = useTranslation();
     const content = [
         {
@@ -111,11 +114,12 @@ const RWModel = props => {
             paragraph1: t('ReadWrite:ELASTIC.certData.value1')
         }
     ];
-    const storages = [
-        t('ReadWrite:db2'),
-        t('ReadWrite:cos'),
-        t('ReadWrite:elastic')
+    const stdout = [
+        {
+            title: t('ReadWrite:noAdditionalFields')
+        }
     ];
+    const storages = [DB2, COS, ELASTIC, STDOUT];
     return (
         <InfoModal
             content={content}
@@ -123,9 +127,10 @@ const RWModel = props => {
             db2={db2}
             cos={cos}
             elastic={elastic}
+            stdout={stdout}
             {...props}
         />
     );
 };
 
-export default RWModel;
+export default RWModal;

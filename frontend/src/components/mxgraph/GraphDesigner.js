@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -200,7 +202,7 @@ class GraphDesigner extends Component {
 
     // main setting
     setGraphSetting = () => {
-        const { jobs, type, setPanel } = this.props;
+        const { data, jobs, type, setPanel } = this.props;
         const { graph } = this.state;
         const that = this;
         graph.gridSize = 10;
@@ -267,8 +269,11 @@ class GraphDesigner extends Component {
                     const job = jobs.find(
                         item => item.id === cell.getAttribute('jobId')
                     );
-                    if (job) {
-                        results.status = job?.status;
+                    const jobInstance = job?.pipelineInstances?.find(
+                        item => item.pipelineId === data.id
+                    );
+                    if (jobInstance) {
+                        results.status = jobInstance.status;
                     }
                 }
                 // Returns a DOM for the label
@@ -303,7 +308,11 @@ class GraphDesigner extends Component {
                     cell.getAttribute('operation') === JOB &&
                     cell.getAttribute('jobId') === nodeId
                 ) {
-                    this.setState({ jobId: nodeId });
+                    const job = jobs.find(item => item.id === nodeId);
+                    const jobId = job.pipelineInstances?.find(
+                        item => item.pipelineId === data.id
+                    )?.id;
+                    this.setState({ jobId: jobId || nodeId });
                     this.props.setLogs(true);
                 }
             }
@@ -525,8 +534,7 @@ class GraphDesigner extends Component {
             edge => edge.source.id !== currentCell.id
         );
         if (inputEdges && inputEdges.length === 2) {
-            const first = inputEdges[0];
-            const second = inputEdges[1];
+            const [first, second] = inputEdges;
 
             graph.removeCells([first]);
             graph.removeCells([second]);
@@ -606,8 +614,9 @@ class GraphDesigner extends Component {
     };
 
     graphIsDisabled = value => {
-        const { data } = this.props;
-        return data.status === PENDING || data.status === RUNNING ? false : value;
+        const { jobStatus, pipelineStatus, type } = this.props;
+        const status = type === JOB ? jobStatus : pipelineStatus;
+        return status === PENDING || status === RUNNING ? false : value;
     };
 
     render() {
@@ -712,6 +721,8 @@ GraphDesigner.propTypes = {
     setZoomValue: PropTypes.func,
     classes: PropTypes.object,
     data: PropTypes.object,
+    jobStatus: PropTypes.string,
+    pipelineStatus: PropTypes.string,
     t: PropTypes.func,
     param: PropTypes.bool,
     sidePanelIsOpen: PropTypes.bool,
@@ -725,6 +736,8 @@ GraphDesigner.propTypes = {
 const mapStateToProps = state => ({
     sidePanelIsOpen: state.mxGraph.sidePanelIsOpen,
     data: state.mxGraph.data,
+    jobStatus: state.jobStatus.status,
+    pipelineStatus: state.pipelineStatus.status,
     param: state.pages.settingsParameters.data?.editable,
     zoomVal: state.mxGraph.zoomValue,
     jobs: state.pages.jobs.data.jobs,
@@ -735,8 +748,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     setLogs: setLogsModal,
     setDirtyGraph: setGraphDirty,
-    setSidePanelDirty,
     setPanel: setSidePanel,
+    setSidePanelDirty,
     setCurrentCell,
     setZoomValue
 };

@@ -8,9 +8,6 @@
     "name": "Storage",
     "value1": "Depending on the selected storage type, the corresponding parameters are displayed."
   },
-  "db2": "DB2",
-  "cos": "COS",
-  "elastic": "ELASTIC",
   "DB2": {
     "JDBCURL": {
       "name": "JDBC URL",
@@ -90,5 +87,6 @@
       "value": "Enabled when SSL is set to True.",
       "value1": "Enter certification data for SSL connection if needed."
     }
-  }
+  },
+  "noAdditionalFields": "There are no additional fields."
 }

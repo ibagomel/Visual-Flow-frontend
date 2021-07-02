@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -25,7 +27,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props => (
-            <Auth redirect={props.location.pathname}>
+            <Auth redirect={props.location.pathname + props.location.search}>
                 <Component {...props} />
             </Auth>
         )}
@@ -35,7 +37,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 PrivateRoute.propTypes = {
     component: PropTypes.oneOfType([PropTypes.objectOf(Object), PropTypes.func])
         .isRequired,
-    location: PropTypes.shape({ pathname: PropTypes.string })
+    location: PropTypes.shape({
+        pathname: PropTypes.string,
+        search: PropTypes.string
+    })
 };
 
 PrivateRoute.defaultProps = {

@@ -1,4 +1,6 @@
 #
+# Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+#
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -15,13 +17,13 @@
 # limitations under the License.
 #
 
-FROM node:14
+FROM public.ecr.aws/lambda/nodejs:14
 ARG PORT=8888
 WORKDIR /app/backend
 ENV NODE_ENV=production EXPRESS_PORT=$PORT
 COPY ./json-server /app/json-server
 COPY ./backend /app/backend
 COPY ./frontend /app/frontend
-RUN chmod -R 777 /app/
-CMD ["sh","-c","(cd /app/json-server && npm run start) & npm run start:prod"]
+RUN yum update -y && chmod -R 777 /app/
+ENTRYPOINT ["sh","-c","(cd /app/json-server && npm run start) & npm run start:prod"]
 EXPOSE $PORT

@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -79,7 +81,7 @@ const JobsToolbar = ({
     };
 
     const enableViewMode = () =>
-        data.status === PENDING || data.status === RUNNING ? false : data.editable;
+        status === PENDING || status === RUNNING ? false : data.editable;
 
     return (
         <>
@@ -95,7 +97,7 @@ const JobsToolbar = ({
                 )}
             </div>
             <Divider orientation="vertical" flexItem />
-            <div>
+            <div className={classes.buttons}>
                 {data.runnable && (
                     <RunStopButtons
                         isNotRunning={['Draft', 'Failed', 'Succeeded'].includes(

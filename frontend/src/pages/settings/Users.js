@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,7 +17,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { get, isEqual } from 'lodash';
@@ -106,7 +108,6 @@ const Users = ({
 
     const handleChangeSearch = value => {
         setSearchValue(value);
-        setUsersAndRoles(getMappedUsers().filter(user => searchFilter(user, value)));
     };
 
     const handleSearchNewUsers = value => {
@@ -151,13 +152,19 @@ const Users = ({
     };
 
     const saveButtonIsDisabled = () => {
-        if (!isEqual(getMappedUsers().sort(), usersAndRoles.sort())) {
-            setDirty();
-        } else if (isEqual(getMappedUsers().sort(), usersAndRoles.sort())) {
-            setPristine();
-        }
+        useEffect(() => {
+            if (isEqual(getMappedUsers().sort(), usersAndRoles.sort())) {
+                setPristine();
+            } else {
+                setDirty();
+            }
+        });
+
         return isEqual(getMappedUsers().sort(), usersAndRoles.sort());
     };
+
+    const filterUsers = () =>
+        usersAndRoles.filter(user => searchFilter(user, searchValue));
 
     return loadingUsers || loadingRoles || loadingProjectUsers ? (
         <PageSkeleton />
@@ -223,7 +230,7 @@ const Users = ({
                         )}
                     </Box>
                     <UsersTable
-                        users={usersAndRoles}
+                        users={filterUsers()}
                         roles={roles}
                         handleUpdateUsers={setUsersAndRoles}
                         editMode={editMode}

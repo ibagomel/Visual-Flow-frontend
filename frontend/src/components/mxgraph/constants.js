@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -34,3 +36,8 @@ export const DRAFT = 'Draft';
 export const SUCCEEDED = 'Succeeded';
 export const FAILED = 'Failed';
 export const ERROR = 'Error';
+
+export const DB2 = 'DB2';
+export const COS = 'COS (IBM, S3)';
+export const ELASTIC = 'Elasticsearch';
+export const STDOUT = 'STDOUT';

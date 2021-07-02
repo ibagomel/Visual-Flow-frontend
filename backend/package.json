@@ -2,7 +2,7 @@
     "name": "visual-flow-ui-backend",
     "version": "1.0.0",
     "private": true,
-    "license": "MIT",
+    "license": "Apache-2.0",
     "devDependencies": {
         "babel-eslint": "^10.0.3",
         "dotenv": "^8.2.0",

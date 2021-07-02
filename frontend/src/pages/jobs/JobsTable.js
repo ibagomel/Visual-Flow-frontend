@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -42,7 +44,7 @@ import {
     DRAFT,
     SUCCEEDED,
     FAILED,
-    RUNNING
+    PENDING
 } from '../../components/mxgraph/constants';
 import {
     deleteJob,
@@ -104,6 +106,7 @@ const JobsTable = ({
             : {
                   title: t('jobs:tooltip.Stop'),
                   Icon: StopOutlinedIcon,
+                  disable: !!icon.pipelineId,
                   onClick: () => {
                       stop(projectId, icon.id);
                   }
@@ -127,7 +130,7 @@ const JobsTable = ({
         {
             title: t('jobs:tooltip.Logs'),
             Icon: DescriptionOutlinedIcon,
-            disable: icon.status === RUNNING || !icon.startedAt,
+            disable: icon.status === PENDING || !icon.startedAt,
             onClick: () =>
                 history.push(
                     `/jobs/${icon.id}/logs/${projId}/${icon.name}/?backTo=jobsTable`
@@ -136,6 +139,7 @@ const JobsTable = ({
         {
             title: t('jobs:tooltip.Copy'),
             Icon: FileCopyOutlinedIcon,
+            disable: !!icon.pipelineId,
             onClick: () => copy(projectId, icon.id)
         },
         {

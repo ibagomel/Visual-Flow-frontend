@@ -4,17 +4,19 @@ In order to run the application you need to provide next environment variables.
 
 ##### Backend settings: 
 
-- `API_SERVER` - https://vsw-dev.apps.okd4.okd.gomel.iba.by/vsw/be
+- `API_SERVER` - https://${backend-url}/${backend-sub-path}
 - `MOCK_SERVER` - http://localhost:3010
+- `SESSION_SECRET` - use your
+- `BASE_URL` - /${frontend-sub-path}/
+- `STRATEGY` - GITHUB
+- `STRATEGY_BASE_URL` - https://github.com
+- `STRATEGY_CALLBACK_URL` - https://localhost:8888/${frontend-sub-path}/callback
 - `GITLAB_APP_ID` - use your
 - `GITLAB_APP_SECRET` - use your
-- `STRATEGY_CALLBACK_URL` - https://localhost:8888/vsw/ui/callback
-- `STRATEGY_BASE_URL` - https://gitlab.okd.gomel.iba.by
-- `SESSION_SECRET` - use your
-- `BASE_URL` - /vsw/ui/
 
-
-Note: You can create `.env` file in backend root with all necessary values.
+Notes:
+- You can create `.env` file in backend root with all necessary values.
+- See documentation about configuring authentication at this link: https://github.com/ibagomel/Visual-Flow-deploy/blob/main/OAUTH.md
 
 ##### Frontend settings:
 

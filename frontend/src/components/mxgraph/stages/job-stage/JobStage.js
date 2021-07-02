@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -22,10 +24,11 @@ import { Typography } from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import stageIcon from '../../sidebar/palette/stageIcon';
 import useStyles from './JobStage.Styles';
+import { DRAFT } from '../../constants';
 
 const JobStage = ({ stage }) => {
     const classes = useStyles();
-    const visibleLogsIcon = stage.status && stage.status !== 'Draft';
+    const visibleLogsIcon = stage.status && stage.status !== DRAFT;
 
     return (
         <div className={classes.root}>

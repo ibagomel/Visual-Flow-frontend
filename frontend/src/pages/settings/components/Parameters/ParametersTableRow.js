@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) 2021 IBA Group, a.s. All rights reserved.
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -30,21 +32,20 @@ import toggleConfirmationWindow from '../../../../redux/actions/modalsActions';
 
 const ParametersTableRow = ({
     editMode,
-    index,
     handleRemoveParameter,
     handleChangeParameter,
-    parameter: { key, value, secret },
+    parameter: { key, value, secret, id },
     confirmationWindow
 }) => {
     const { t } = useTranslation();
     const classes = useStyles();
 
-    const inputValueProps = (parameterValue, parameterIndex) => ({
+    const inputValueProps = () => ({
         disabled: !editMode,
-        onChange: event => handleChangeParameter(event, parameterIndex, 'value'),
+        onChange: event => handleChangeParameter(event, id, 'value'),
         fullWidth: true,
         placeholder: t('setting:parameter.Value'),
-        value: parameterValue
+        value
     });
 
     return (
@@ -54,18 +55,15 @@ const ParametersTableRow = ({
                     disabled={!editMode}
                     variant="outlined"
                     value={key}
-                    onChange={event => handleChangeParameter(event, index, 'key')}
+                    onChange={event => handleChangeParameter(event, id, 'key')}
                     placeholder={t('setting:parameter.Name')}
                 />
             </TableCell>
             <TableCell className={classNames(classes.cell, classes.valueCell)}>
                 {secret ? (
-                    <PasswordInput {...inputValueProps(value, index)} />
+                    <PasswordInput {...inputValueProps()} />
                 ) : (
-                    <TextField
-                        {...inputValueProps(value, index)}
-                        variant="outlined"
-                    />
+                    <TextField {...inputValueProps()} variant="outlined" />
                 )}
             </TableCell>
             <TableCell className={classes.cell}>
@@ -76,7 +74,7 @@ const ParametersTableRow = ({
                     onClick={() =>
                         confirmationWindow({
                             body: `${t('main:confirm.sure')} '${key}'?`,
-                            callback: () => handleRemoveParameter(index)
+                            callback: () => handleRemoveParameter(id)
                         })
                     }
                 >

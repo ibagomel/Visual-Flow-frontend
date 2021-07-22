@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { fetchJobs, setJobSearchField } from '../../redux/actions/jobsActions';
+import { setCurrentTablePage } from '../../redux/actions/enhancedTableActions';
 import JobsTable from './JobsTable';
 import PageHeader from '../../components/page-header/PageHeader';
 import history from '../../utils/history';
@@ -38,6 +39,7 @@ const Jobs = ({
     getPipelines,
     setSearchField,
     searchField,
+    setCurrentPage,
     loadingExport
 }) => {
     const { t } = useTranslation();
@@ -53,6 +55,7 @@ const Jobs = ({
 
     React.useEffect(() => {
         setList(jobs.data.jobs?.filter(item => item?.name?.includes(searchField)));
+        setCurrentPage(0);
     }, [jobs.data.jobs, searchField]);
 
     return jobs.loading || loadingExport ? (
@@ -92,6 +95,7 @@ Jobs.propTypes = {
     getJobs: PropTypes.func,
     getPipelines: PropTypes.func,
     setSearchField: PropTypes.func,
+    setCurrentPage: PropTypes.func,
     loadingExport: PropTypes.bool
 };
 
@@ -105,7 +109,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     getJobs: fetchJobs,
     getPipelines: fetchPipelines,
-    setSearchField: setJobSearchField
+    setSearchField: setJobSearchField,
+    setCurrentPage: setCurrentTablePage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Jobs);

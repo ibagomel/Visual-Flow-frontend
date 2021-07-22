@@ -54,7 +54,7 @@ const PipelineStatusCell = ({
             </Typography>
             {status !== 'Error' ? (
                 <Chip
-                    label={t(`pipelines:status.${capitalize(status)}`)}
+                    label={t(`pipelines:${capitalize(status)}`)}
                     variant="outlined"
                     className={classNames(
                         classes.chip,

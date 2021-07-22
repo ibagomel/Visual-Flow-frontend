@@ -66,7 +66,7 @@ describe('pipelines', () => {
     });
 
     it('should stop pipeline by projectId and pipelineId', () => {
-        const requestURL = `/project/${projectId}/pipeline/${pipelineId}/stop`;
+        const requestURL = `/project/${projectId}/pipeline/${pipelineId}/terminate`;
         const spy = jest.spyOn(axiosInstance, 'post').mockResolvedValue(expected);
         return pipelines.stopPipeline(projectId, pipelineId).then(result => {
             expect(result).toEqual(expected);
@@ -75,7 +75,7 @@ describe('pipelines', () => {
     });
 
     it('should resume pipeline by projectId and pipelineId', () => {
-        const requestURL = `/project/${projectId}/pipeline/${pipelineId}/resume`;
+        const requestURL = `/project/${projectId}/pipeline/${pipelineId}/retry`;
         const spy = jest.spyOn(axiosInstance, 'post').mockResolvedValue(expected);
         return pipelines.resumePipeline(projectId, pipelineId).then(result => {
             expect(result).toEqual(expected);

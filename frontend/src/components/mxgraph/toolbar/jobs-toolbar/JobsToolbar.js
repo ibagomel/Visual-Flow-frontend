@@ -116,9 +116,7 @@ const JobsToolbar = ({
                     </IconButton>
                 )}
                 <IconButton
-                    disabled={
-                        status === PENDING || status === RUNNING || !data.startedAt
-                    }
+                    disabled={status === PENDING || !data.startedAt}
                     aria-label="descriptionIcon"
                     onClick={() => setShowModal(true)}
                 >

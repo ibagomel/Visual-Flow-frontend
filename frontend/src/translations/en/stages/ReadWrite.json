@@ -8,12 +8,21 @@
     "name": "Storage",
     "value1": "Depending on the selected storage type, the corresponding parameters are displayed."
   },
+  "writeMode": {
+    "name": "Write mode",
+    "value": "1. Append. Append mode means that when saving a DataFrame to a data source, if data/table",
+    "value1": "already exists, contents of the DataFrame are expected to be appended to existing data.",
+    "value2": "2. Overwrite. It means that when saving a DataFrame to a data source, if data/table already",
+    "value3": "exists, existing data is expected to be overwritten by the contents of the DataFrame.",
+    "value4": "3. Error If Exists. This mode means that when saving a DataFrame to a data source, if data",
+    "value5": "already exists, an exception is expected to be thrown."
+  },
   "DB2": {
     "JDBCURL": {
       "name": "JDBC URL",
       "value": "A database connection URL is a string that your DBMS JDBC driver uses to connect to a database",
       "value1": "The connection URL format for the DB2 driver is:",
-      "value2": "jdbc:bea:db2://hostname:port[;property=value[;...]]"
+      "value2": "jdbc:db2://hostname:port[;property=value[;...]]"
     },
     "user": {
       "name": "User",
@@ -26,6 +35,14 @@
     "schema": {
       "name": "Schema",
       "value": "Schema that the table used for reading belongs to."
+    },
+    "table": {
+      "name": "Table",
+      "value": "Database table name."
+    },
+    "certData": {
+      "name": "CertData (optional)",
+      "value": "Enter certification data if needed."
     }
   },
   "COS": {
@@ -44,6 +61,15 @@
     "bucket": {
       "name": "Bucket",
       "value": "Name of the basic containers for holding your data."
+    },
+    "pathInBucket": {
+      "name": "Path in bucket",
+      "value": "Path in the bucket."
+    },
+    "fileFormat": {
+      "name": "File format",
+      "value": "Spark DataFrame format.",
+      "value1": "For CSV, please, specify Header and Delimiter."
     }
   },
   "ELASTIC": {
@@ -66,15 +92,6 @@
     "index": {
       "name": "Index",
       "value": "The index where the document resides."
-    },
-    "writeMode": {
-      "name": "Write Mode",
-      "value": "1. Append. Append mode means that when saving a DataFrame to a data source, if data/table",
-      "value1": "already exists, contents of the DataFrame are expected to be appended to existing data.",
-      "value2": "2. Overwrite. It means that when saving a DataFrame to a data source, if data/table already",
-      "value3": "exists, existing data is expected to be overwritten by the contents of the DataFrame.",
-      "value4": "3. Error If Exists. This mode means that when saving a DataFrame to a data source, if data",
-      "value5": "already exists, an exception is expected to be thrown."
     },
     "ssl": {
       "name": "SSL",

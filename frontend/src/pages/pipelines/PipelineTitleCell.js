@@ -28,12 +28,10 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
-import { CalendarTodayRounded, EventRounded } from '@material-ui/icons';
 import styles from './PipelineTitleCell.Styles';
 
 const PipelineTitleCell = ({
     title,
-    cron,
     lastRun,
     lastFinished,
     lastEdit,
@@ -80,9 +78,6 @@ const PipelineTitleCell = ({
                 <Grid item xs={1} classes={{ root: classes.checkbox }}>
                     <Checkbox checked={checked} onChange={onClick} />
                 </Grid>
-                <Grid item xs={1} classes={{ root: classes.calendarIcon }}>
-                    {cron ? <EventRounded /> : <CalendarTodayRounded />}
-                </Grid>
                 {titleCell()}
             </Grid>
         </TableCell>
@@ -96,8 +91,7 @@ PipelineTitleCell.propTypes = {
     lastEdit: PropTypes.string,
     checked: PropTypes.bool,
     onClick: PropTypes.func,
-    classes: PropTypes.object,
-    cron: PropTypes.bool
+    classes: PropTypes.object
 };
 
 export default withStyles(styles, { name: 'PipelineTitleCell' })(PipelineTitleCell);

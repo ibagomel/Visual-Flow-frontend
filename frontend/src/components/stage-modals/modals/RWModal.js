@@ -24,6 +24,17 @@ import { DB2, COS, ELASTIC, STDOUT } from '../../mxgraph/constants';
 
 const RWModal = props => {
     const { t } = useTranslation();
+
+    const writeMode = {
+        title: t('ReadWrite:writeMode.name'),
+        paragraph: t('ReadWrite:writeMode.value'),
+        paragraph1: t('ReadWrite:writeMode.value1'),
+        paragraph2: t('ReadWrite:writeMode.value2'),
+        paragraph3: t('ReadWrite:writeMode.value3'),
+        paragraph4: t('ReadWrite:writeMode.value4'),
+        paragraph5: t('ReadWrite:writeMode.value5')
+    };
+
     const content = [
         {
             title: t('ReadWrite:name.name'),
@@ -52,6 +63,15 @@ const RWModal = props => {
         {
             title: t('ReadWrite:DB2.schema.name'),
             paragraph: t('ReadWrite:DB2.schema.value')
+        },
+        {
+            title: t('ReadWrite:DB2.table.name'),
+            paragraph: t('ReadWrite:DB2.table.value')
+        },
+        writeMode,
+        {
+            title: t('ReadWrite:DB2.certData.name'),
+            paragraph: t('ReadWrite:DB2.certData.value')
         }
     ];
     const cos = [
@@ -70,6 +90,16 @@ const RWModal = props => {
         {
             title: t('ReadWrite:COS.bucket.name'),
             paragraph: t('ReadWrite:COS.bucket.value')
+        },
+        {
+            title: t('ReadWrite:COS.pathInBucket.name'),
+            paragraph: t('ReadWrite:COS.pathInBucket.value')
+        },
+        writeMode,
+        {
+            title: t('ReadWrite:COS.fileFormat.name'),
+            paragraph: t('ReadWrite:COS.fileFormat.value'),
+            paragraph1: t('ReadWrite:COS.fileFormat.value1')
         }
     ];
     const elastic = [
@@ -93,15 +123,7 @@ const RWModal = props => {
             title: t('ReadWrite:ELASTIC.index.name'),
             paragraph: t('ReadWrite:ELASTIC.index.value')
         },
-        {
-            title: t('ReadWrite:ELASTIC.writeMode.name'),
-            paragraph: t('ReadWrite:ELASTIC.writeMode.value'),
-            paragraph1: t('ReadWrite:ELASTIC.writeMode.value1'),
-            paragraph2: t('ReadWrite:ELASTIC.writeMode.value2'),
-            paragraph3: t('ReadWrite:ELASTIC.writeMode.value3'),
-            paragraph4: t('ReadWrite:ELASTIC.writeMode.value4'),
-            paragraph5: t('ReadWrite:ELASTIC.writeMode.value5')
-        },
+        writeMode,
         {
             title: t('ReadWrite:ELASTIC.ssl.name'),
             paragraph: t('ReadWrite:ELASTIC.ssl.value'),

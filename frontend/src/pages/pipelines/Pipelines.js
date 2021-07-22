@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { fetchPipelines } from '../../redux/actions/pipelinesActions';
+import { setCurrentTablePage } from '../../redux/actions/enhancedTableActions';
 import PipelinesTable from './PipelinesTable';
 import PageHeader from '../../components/page-header/PageHeader';
 import history from '../../utils/history';
@@ -33,6 +34,7 @@ const Pipelines = ({
     projectId,
     pipelines: { data, loading },
     getPipelines,
+    setCurrentPage,
     loadingExport
 }) => {
     const { t } = useTranslation();
@@ -46,6 +48,7 @@ const Pipelines = ({
 
     React.useEffect(() => {
         setList(data?.pipelines?.filter(item => item.name.includes(search)));
+        setCurrentPage(0);
     }, [data?.pipelines, search]);
 
     return loading || loadingExport ? (
@@ -77,6 +80,7 @@ Pipelines.propTypes = {
     projectId: PropTypes.string,
     pipelines: PropTypes.object,
     getPipelines: PropTypes.func,
+    setCurrentPage: PropTypes.func,
     loadingExport: PropTypes.bool
 };
 
@@ -86,7 +90,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    getPipelines: fetchPipelines
+    getPipelines: fetchPipelines,
+    setCurrentPage: setCurrentTablePage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pipelines);

@@ -38,10 +38,10 @@ export default {
         axiosInstance.post(`/project/${projectId}/pipeline/${pipelineId}/run`),
 
     stopPipeline: (projectId, pipelineId) =>
-        axiosInstance.post(`/project/${projectId}/pipeline/${pipelineId}/stop`),
+        axiosInstance.post(`/project/${projectId}/pipeline/${pipelineId}/terminate`),
 
     resumePipeline: (projectId, pipelineId) =>
-        axiosInstance.post(`/project/${projectId}/pipeline/${pipelineId}/resume`),
+        axiosInstance.post(`/project/${projectId}/pipeline/${pipelineId}/retry`),
 
     copyPipeline: (projectId, pipelineId) =>
         axiosInstance.post(`/project/${projectId}/${pipelineId}/copyPipeline`)

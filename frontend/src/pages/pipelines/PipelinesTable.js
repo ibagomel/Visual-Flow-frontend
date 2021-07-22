@@ -38,6 +38,7 @@ import PipelineUtilizationCell from './PipelineUtilizationCell';
 import ActionsCell from '../../components/table/ActionsCell';
 import EnhancedTable from '../../components/table/EnhancedTable';
 import toggleConfirmationWindow from '../../redux/actions/modalsActions';
+import { setCurrentTablePage } from '../../redux/actions/enhancedTableActions';
 import {
     deletePipeline,
     runPipeline,
@@ -79,7 +80,8 @@ const PipelinesTable = ({
     lastRun,
     setLastRun,
     status,
-    setStatus
+    setStatus,
+    setCurrentPage
 }) => {
     const { t } = useTranslation();
     const classes = withStyles();
@@ -187,7 +189,10 @@ const PipelinesTable = ({
                             }))}
                             label={t('pipelines:Status')}
                             value={status}
-                            onChange={event => setStatus(event.target.value)}
+                            onChange={event => {
+                                setStatus(event.target.value);
+                                setCurrentPage(0);
+                            }}
                         />
                     </Grid>
                     {utilizationField(
@@ -250,7 +255,8 @@ PipelinesTable.propTypes = {
     setLastRun: PropTypes.func,
     status: PropTypes.string,
     setStatus: PropTypes.func,
-    confirmationWindow: PropTypes.func
+    confirmationWindow: PropTypes.func,
+    setCurrentPage: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -265,6 +271,7 @@ const mapDispatchToProps = {
     copy: copyPipeline,
     setLastRun: setPipelinesLastRun,
     setStatus: setPipelinesStatus,
+    setCurrentPage: setCurrentTablePage,
     confirmationWindow: toggleConfirmationWindow
 };
 

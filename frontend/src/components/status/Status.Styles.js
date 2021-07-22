@@ -50,5 +50,9 @@ export default theme => ({
     chipFailed: {
         color: theme.palette.error.main,
         borderColor: theme.palette.error.main
+    },
+    chipTerminated: {
+        color: theme.palette.warning.main,
+        borderColor: theme.palette.warning.main
     }
 });

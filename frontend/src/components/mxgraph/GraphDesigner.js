@@ -352,6 +352,7 @@ class GraphDesigner extends Component {
             const inputEdges = targetNode?.edges?.filter(
                 edge => edge.target.id === targetId
             );
+            this.props.setDirtyGraph(true);
             // NEED REFACTOR
             if (targetNodeType === CDC || targetNodeType === JOIN) {
                 graph.model.setValue(

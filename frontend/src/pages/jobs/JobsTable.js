@@ -54,6 +54,7 @@ import {
     setJobsLastRun,
     setJobsStatus
 } from '../../redux/actions/jobsActions';
+import { setCurrentTablePage } from '../../redux/actions/enhancedTableActions';
 import withStyles from './JobsTable.Styles';
 import timeRange from '../../utils/timeRangeOptions';
 import DropdownFilter from '../../components/table/DropdownFilter';
@@ -76,7 +77,8 @@ const JobsTable = ({
     lastRun,
     setLastRun,
     status,
-    setStatus
+    setStatus,
+    setCurrentPage
 }) => {
     const { t } = useTranslation();
     const classes = withStyles();
@@ -210,7 +212,10 @@ const JobsTable = ({
                             items={statuses}
                             label={t('jobs:Status')}
                             value={status}
-                            onChange={event => setStatus(event.target.value)}
+                            onChange={event => {
+                                setStatus(event.target.value);
+                                setCurrentPage(0);
+                            }}
                         />
                     </Grid>
                     <Grid item className={classes.utilization}>
@@ -282,7 +287,8 @@ JobsTable.propTypes = {
     status: PropTypes.string,
     setStatus: PropTypes.func,
     confirmationWindow: PropTypes.func,
-    ableToEdit: PropTypes.bool
+    ableToEdit: PropTypes.bool,
+    setCurrentPage: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -297,6 +303,7 @@ const mapDispatchToProps = {
     copy: copyJob,
     setLastRun: setJobsLastRun,
     setStatus: setJobsStatus,
+    setCurrentPage: setCurrentTablePage,
     confirmationWindow: toggleConfirmationWindow
 };
 

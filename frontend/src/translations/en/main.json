@@ -117,7 +117,7 @@
             "ConfigMap": "Job",
             "WorkflowTemplate": "Pipeline"
         },
-        "confirm": "Jobs (pipilenes) with the same names will be overwritten.",
+        "confirm": "Jobs (pipelines) with the same names will be overwritten.",
         "Notice": "Notice:",
         "NotAutorized": "You are not authorized for import within this project"
     }

@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import PopupForm from '../popup-form/PopupForm';
-import { DB2, COS, ELASTIC, STDOUT } from '../mxgraph/constants';
+import { DB2, COS, ELASTIC, STDOUT, AWS } from '../mxgraph/constants';
 
 import useStyles from './InfoModal.Style';
 
@@ -32,6 +32,7 @@ const InfoModal = ({
     storages,
     db2,
     cos,
+    aws,
     elastic,
     stdout,
     display,
@@ -49,6 +50,8 @@ const InfoModal = ({
                 return db2;
             case COS:
                 return cos;
+            case AWS:
+                return aws;
             case ELASTIC:
                 return elastic;
             case STDOUT:
@@ -177,6 +180,7 @@ InfoModal.propTypes = {
     storages: PropTypes.array,
     db2: PropTypes.array,
     cos: PropTypes.array,
+    aws: PropTypes.array,
     elastic: PropTypes.array,
     stdout: PropTypes.array,
     display: PropTypes.bool,

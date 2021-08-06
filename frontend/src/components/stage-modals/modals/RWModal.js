@@ -20,10 +20,39 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import InfoModal from '../InfoModal';
-import { DB2, COS, ELASTIC, STDOUT } from '../../mxgraph/constants';
+import { DB2, COS, AWS, ELASTIC, STDOUT } from '../../mxgraph/constants';
 
 const RWModal = props => {
     const { t } = useTranslation();
+
+    const getCosInfo = (label, writeModeDescr) => [
+        {
+            title: t(`ReadWrite:${label}.endpoint.name`),
+            paragraph: t(`ReadWrite:${label}.endpoint.value`)
+        },
+        {
+            title: t(`ReadWrite:${label}.accessKey.name`),
+            paragraph: t(`ReadWrite:${label}.accessKey.value`)
+        },
+        {
+            title: t(`ReadWrite:${label}.secretKey.name`),
+            paragraph: t(`ReadWrite:${label}.secretKey.value`)
+        },
+        {
+            title: t(`ReadWrite:${label}.bucket.name`),
+            paragraph: t(`ReadWrite:${label}.bucket.value`)
+        },
+        {
+            title: t(`ReadWrite:${label}.pathInBucket.name`),
+            paragraph: t(`ReadWrite:${label}.pathInBucket.value`)
+        },
+        writeModeDescr,
+        {
+            title: t(`ReadWrite:${label}.format.name`),
+            paragraph: t(`ReadWrite:${label}.format.value`),
+            paragraph1: t(`ReadWrite:${label}.format.value1`)
+        }
+    ];
 
     const writeMode = {
         title: t('ReadWrite:writeMode.name'),
@@ -74,34 +103,17 @@ const RWModal = props => {
             paragraph: t('ReadWrite:DB2.certData.value')
         }
     ];
-    const cos = [
+
+    const cos = getCosInfo('COS', writeMode);
+
+    const aws = [
         {
-            title: t('ReadWrite:COS.endpoint.name'),
-            paragraph: t('ReadWrite:COS.endpoint.value')
+            title: t('ReadWrite:AWS.anonymousAccess.name'),
+            paragraph: t('ReadWrite:AWS.anonymousAccess.value')
         },
-        {
-            title: t('ReadWrite:COS.accessKey.name'),
-            paragraph: t('ReadWrite:COS.accessKey.value')
-        },
-        {
-            title: t('ReadWrite:COS.secretKey.name'),
-            paragraph: t('ReadWrite:COS.secretKey.value')
-        },
-        {
-            title: t('ReadWrite:COS.bucket.name'),
-            paragraph: t('ReadWrite:COS.bucket.value')
-        },
-        {
-            title: t('ReadWrite:COS.pathInBucket.name'),
-            paragraph: t('ReadWrite:COS.pathInBucket.value')
-        },
-        writeMode,
-        {
-            title: t('ReadWrite:COS.fileFormat.name'),
-            paragraph: t('ReadWrite:COS.fileFormat.value'),
-            paragraph1: t('ReadWrite:COS.fileFormat.value1')
-        }
+        ...getCosInfo('AWS', writeMode)
     ];
+
     const elastic = [
         {
             title: t('ReadWrite:ELASTIC.nodes.name'),
@@ -141,13 +153,14 @@ const RWModal = props => {
             title: t('ReadWrite:noAdditionalFields')
         }
     ];
-    const storages = [DB2, COS, ELASTIC, STDOUT];
+    const storages = [DB2, COS, AWS, ELASTIC, STDOUT];
     return (
         <InfoModal
             content={content}
             storages={storages}
             db2={db2}
             cos={cos}
+            aws={aws}
             elastic={elastic}
             stdout={stdout}
             {...props}

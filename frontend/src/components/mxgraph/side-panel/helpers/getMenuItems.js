@@ -17,32 +17,14 @@
  * limitations under the License.
  */
 
-import { Chip, withStyles } from '@material-ui/core';
-import { capitalize } from 'lodash';
-import classNames from 'classnames';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
-import styles from './Status.Styles';
+import { MenuItem } from '@material-ui/core';
 
-const Status = ({ value, classes }) => {
-    const { t } = useTranslation();
+const getMenuItems = items =>
+    items.map(option => (
+        <MenuItem key={option.value} value={option.value}>
+            {option.label}
+        </MenuItem>
+    ));
 
-    return (
-        <Chip
-            label={t(`main:${value}`)}
-            variant="outlined"
-            className={classNames(
-                classes.chip,
-                value && classes[`chip${capitalize(value)}`]
-            )}
-        />
-    );
-};
-
-Status.propTypes = {
-    value: PropTypes.string,
-    classes: PropTypes.object
-};
-
-export default withStyles(styles)(Status);
+export default getMenuItems;

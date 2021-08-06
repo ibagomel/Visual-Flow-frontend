@@ -38,6 +38,7 @@ export const FAILED = 'Failed';
 export const ERROR = 'Error';
 
 export const DB2 = 'DB2';
-export const COS = 'COS (IBM, S3)';
+export const COS = 'IBM COS';
+export const AWS = 'AWS S3';
 export const ELASTIC = 'Elasticsearch';
 export const STDOUT = 'STDOUT';

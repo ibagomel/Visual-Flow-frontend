@@ -55,8 +55,11 @@ const Jobs = ({
 
     React.useEffect(() => {
         setList(jobs.data.jobs?.filter(item => item?.name?.includes(searchField)));
-        setCurrentPage(0);
     }, [jobs.data.jobs, searchField]);
+
+    React.useEffect(() => {
+        setCurrentPage(0);
+    }, [searchField]);
 
     return jobs.loading || loadingExport ? (
         <PageSkeleton />

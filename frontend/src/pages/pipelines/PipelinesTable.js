@@ -52,7 +52,7 @@ import timeRange from '../../utils/timeRangeOptions';
 import DropdownFilter from '../../components/table/DropdownFilter';
 import history from '../../utils/history';
 import ExportModalWindow from '../../components/export-modal-window/ExportModalWindow';
-import { RUNNING } from '../../components/mxgraph/constants';
+import { PENDING, RUNNING } from '../../components/mxgraph/constants';
 
 const utilizationField = (t, lastRun, onChange, classname) => (
     <Grid item className={classname}>
@@ -93,7 +93,7 @@ const PipelinesTable = ({
     const statuses = uniq(data?.map(v => v.status));
 
     const getActions = item => [
-        item.status !== RUNNING
+        ![RUNNING, PENDING].includes(item.status)
             ? {
                   title: t('pipelines:tooltip.Play'),
                   Icon: PlayArrowOutlinedIcon,
@@ -105,7 +105,7 @@ const PipelinesTable = ({
             : {
                   title: t('pipelines:tooltip.Stop'),
                   Icon: StopOutlinedIcon,
-                  disable: !item.runnable,
+                  disable: !item.runnable || item.status === PENDING,
                   onClick: () => {
                       stop(projectId, item.id);
                   }
@@ -185,7 +185,7 @@ const PipelinesTable = ({
                         <DropdownFilter
                             items={statuses?.map(value => ({
                                 value,
-                                label: t(`pipelines:status.${value}`) || value
+                                label: t(`pipelines:${value}`) || value
                             }))}
                             label={t('pipelines:Status')}
                             value={status}
@@ -198,7 +198,10 @@ const PipelinesTable = ({
                     {utilizationField(
                         t,
                         lastRun,
-                        event => setLastRun(event.target.value),
+                        event => {
+                            setLastRun(event.target.value);
+                            setCurrentPage(0);
+                        },
                         classes.utilization
                     )}
                 </>

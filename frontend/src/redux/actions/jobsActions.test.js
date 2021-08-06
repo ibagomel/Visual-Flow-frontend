@@ -301,7 +301,10 @@ describe('Jobs action', () => {
 
         it('should dispatch RUN_JOB_FAIL on failure', () => {
             jest.spyOn(api, 'runJob').mockRejectedValue({});
-            return runJob(projectId, jobId)(dispatch).then(() => {
+            return runJob(
+                projectId,
+                jobId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: RUN_JOB_START }],
                     [{ type: RUN_JOB_FAIL, payload: { error: {} } }]
@@ -331,7 +334,10 @@ describe('Jobs action', () => {
         });
 
         it('should dispatch jobId with STOP_JOB_SUCCESS on success', () => {
-            return stopJob(projectId, jobId)(dispatch).then(() => {
+            return stopJob(
+                projectId,
+                jobId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: STOP_JOB_START }],
                     [
@@ -358,7 +364,7 @@ describe('Jobs action', () => {
     describe('copyJob', () => {
         let data, projectId, jobId;
         beforeEach(() => {
-            data = { status: ''};
+            data = { status: '' };
             projectId = 'some_id';
             jobId = 'id';
             dispatch = jest.fn();
@@ -371,7 +377,10 @@ describe('Jobs action', () => {
         });
 
         it('should dispatch COPY_JOB_SUCCESS on success', () => {
-            return copyJob(projectId, jobId)(dispatch).then(() => {
+            return copyJob(
+                projectId,
+                jobId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: COPY_JOB_START }],
                     [{ type: COPY_JOB_SUCCESS }],
@@ -382,7 +391,10 @@ describe('Jobs action', () => {
 
         it('should dispatch COPY_JOB_FAIL on failure', () => {
             jest.spyOn(api, 'copyJob').mockRejectedValue('error');
-            return copyJob(projectId, jobId)(dispatch).then(() => {
+            return copyJob(
+                projectId,
+                jobId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: COPY_JOB_START }],
                     [{ type: COPY_JOB_FAIL, payload: { error: 'error' } }]

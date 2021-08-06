@@ -41,7 +41,7 @@ import LinearProgressChart from '../../../chart/LinearProgressChart';
 import { fetchPipelineById } from '../../../../redux/actions/mxGraphActions';
 import { fetchJobs } from '../../../../redux/actions/jobsActions';
 import { resetFillColor } from '../../resetFillColor/resetFillColor';
-import { PENDING, RUNNING, ERROR, SUCCEEDED, DRAFT, FAILED } from '../../constants';
+import { PENDING, RUNNING } from '../../constants';
 
 const PipelinesToolbar = ({
     t,
@@ -120,10 +120,9 @@ const PipelinesToolbar = ({
             <div className={classes.buttons}>
                 {data.runnable && (
                     <RunStopButtons
-                        isNotRunning={[DRAFT, FAILED, ERROR, SUCCEEDED].includes(
-                            statusValue
-                        )}
+                        isNotRunning={![RUNNING, PENDING].includes(statusValue)}
                         runnable={data.runnable}
+                        stopable={![PENDING].includes(statusValue)}
                         run={() => {
                             runAndUpdate();
                         }}

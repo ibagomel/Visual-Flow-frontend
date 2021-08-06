@@ -31,6 +31,9 @@ import Configuration from './Configuration';
 import TransformConfiguration from './transform-configuration/TransformConfiguration';
 import FilterConfiguration from './filter-configuration/FilterConfiguration';
 
+const checkReadWriteFields = ({ name, storage, anonymousAccess }) =>
+    !name || !storage || (storage === 's3' && !anonymousAccess);
+
 const RenderJobConfiguration = ({
     configuration,
     setPanelDirty,
@@ -54,7 +57,7 @@ const RenderJobConfiguration = ({
             component: Configuration,
             props: {
                 Component: ReadWriteConfiguration,
-                isDisabled: state => !state.name || !state.storage,
+                isDisabled: state => checkReadWriteFields(state),
                 ableToEdit,
                 setPanelDirty,
                 configuration,
@@ -67,7 +70,7 @@ const RenderJobConfiguration = ({
             component: Configuration,
             props: {
                 Component: ReadWriteConfiguration,
-                isDisabled: state => !state.name || !state.storage,
+                isDisabled: state => checkReadWriteFields(state),
                 ableToEdit,
                 setPanelDirty,
                 configuration,

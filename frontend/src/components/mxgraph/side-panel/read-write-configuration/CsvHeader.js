@@ -17,32 +17,43 @@
  * limitations under the License.
  */
 
-import { Chip, withStyles } from '@material-ui/core';
-import { capitalize } from 'lodash';
-import classNames from 'classnames';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import styles from './Status.Styles';
+import { TextField } from '@material-ui/core';
+import { withTranslation } from 'react-i18next';
+import getMenuItems from '../helpers/getMenuItems';
 
-const Status = ({ value, classes }) => {
-    const { t } = useTranslation();
+const csvModes = [
+    {
+        value: 'true',
+        label: 'True'
+    },
+    {
+        value: 'false',
+        label: 'False'
+    }
+];
 
-    return (
-        <Chip
-            label={t(`main:${value}`)}
-            variant="outlined"
-            className={classNames(
-                classes.chip,
-                value && classes[`chip${capitalize(value)}`]
-            )}
-        />
-    );
-};
+const CsvHeader = ({ t, value, onChange }) => (
+    <TextField
+        label={t('jobDesigner:writeConfiguration.Header')}
+        placeholder={t('jobDesigner:writeConfiguration.Header')}
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        select
+        name="option.header"
+        value={value || ''}
+        onChange={onChange}
+    >
+        {getMenuItems(csvModes)}
+    </TextField>
+);
 
-Status.propTypes = {
+CsvHeader.propTypes = {
+    t: PropTypes.func,
     value: PropTypes.string,
-    classes: PropTypes.object
+    onChange: PropTypes.func
 };
 
-export default withStyles(styles)(Status);
+export default withTranslation()(CsvHeader);

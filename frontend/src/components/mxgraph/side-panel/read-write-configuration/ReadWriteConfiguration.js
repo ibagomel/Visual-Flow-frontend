@@ -25,8 +25,9 @@ import { get } from 'lodash';
 
 import Db2Storage from './db2-storage/Db2Storage';
 import CosStorage from './cos-storage/CosStorage';
+import AwsStorage from './aws-storage/AwsStorage';
 import ElasticStorage from './elastic-storage/ElasticStorage';
-import { READ, DB2, COS, ELASTIC, STDOUT } from '../../constants';
+import { READ, DB2, COS, ELASTIC, STDOUT, AWS } from '../../constants';
 
 export const storages = [
     {
@@ -36,6 +37,10 @@ export const storages = [
     {
         value: 'cos',
         label: COS
+    },
+    {
+        value: 's3',
+        label: AWS
     },
     {
         value: 'elastic',
@@ -55,6 +60,8 @@ const ReadWriteConfiguration = ({ state, ableToEdit, onChange, t, openModal }) =
                 return Db2Storage;
             case 'cos':
                 return CosStorage;
+            case 's3':
+                return AwsStorage;
             case 'elastic':
                 return ElasticStorage;
             case 'STDOUT':

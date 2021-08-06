@@ -100,10 +100,9 @@ const JobsToolbar = ({
             <div className={classes.buttons}>
                 {data.runnable && (
                     <RunStopButtons
-                        isNotRunning={['Draft', 'Failed', 'Succeeded'].includes(
-                            stats
-                        )}
+                        isNotRunning={![RUNNING, PENDING].includes(stats)}
                         runnable={data.runnable}
+                        stopable={![PENDING].includes(stats)}
                         run={() => {
                             runAndUpdate();
                         }}

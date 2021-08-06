@@ -59,7 +59,9 @@ const EditDesignerButtons = ({
                             sidePanelIsOpen && setSidePanel(false);
                             const currentNodes = graph.getSelectionCells();
                             graph.removeCells(currentNodes);
-                            setDirty(true);
+                            if (currentNodes.length !== 0) {
+                                setDirty(true);
+                            }
                         }
                     }}
                 >

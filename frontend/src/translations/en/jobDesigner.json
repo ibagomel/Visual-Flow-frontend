@@ -23,6 +23,7 @@
         "Name": "Name",
         "Storage": "Storage",
         "writeMode": "Write mode",
+        "AnonymousAccess": "Anonymous access",
         "Endpoint": "Endpoint",
         "Accesskey": "Access key",
         "Secretkey": "Secret key",

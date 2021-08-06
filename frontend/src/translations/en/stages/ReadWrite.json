@@ -1,109 +1,141 @@
 {
-  "name": {
-    "name": "Name",
-    "value": "Provide Stage name."
-  },
-  "chooseStorage": "Choose storage",
-  "storage": {
-    "name": "Storage",
-    "value1": "Depending on the selected storage type, the corresponding parameters are displayed."
-  },
-  "writeMode": {
-    "name": "Write mode",
-    "value": "1. Append. Append mode means that when saving a DataFrame to a data source, if data/table",
-    "value1": "already exists, contents of the DataFrame are expected to be appended to existing data.",
-    "value2": "2. Overwrite. It means that when saving a DataFrame to a data source, if data/table already",
-    "value3": "exists, existing data is expected to be overwritten by the contents of the DataFrame.",
-    "value4": "3. Error If Exists. This mode means that when saving a DataFrame to a data source, if data",
-    "value5": "already exists, an exception is expected to be thrown."
-  },
-  "DB2": {
-    "JDBCURL": {
-      "name": "JDBC URL",
-      "value": "A database connection URL is a string that your DBMS JDBC driver uses to connect to a database",
-      "value1": "The connection URL format for the DB2 driver is:",
-      "value2": "jdbc:db2://hostname:port[;property=value[;...]]"
+    "name": {
+        "name": "Name",
+        "value": "Provide Stage name."
     },
-    "user": {
-      "name": "User",
-      "value": "User name for a JDBC connection."
+    "chooseStorage": "Choose storage",
+    "storage": {
+        "name": "Storage",
+        "value1": "Depending on the selected storage type, the corresponding parameters are displayed."
     },
-    "password": {
-      "name": "Password",
-      "value": "Password for a JDBC connection."
+    "writeMode": {
+        "name": "Write mode",
+        "value": "1. Append. Append mode means that when saving a DataFrame to a data source, if data/table",
+        "value1": "already exists, contents of the DataFrame are expected to be appended to existing data.",
+        "value2": "2. Overwrite. It means that when saving a DataFrame to a data source, if data/table already",
+        "value3": "exists, existing data is expected to be overwritten by the contents of the DataFrame.",
+        "value4": "3. Error If Exists. This mode means that when saving a DataFrame to a data source, if data",
+        "value5": "already exists, an exception is expected to be thrown."
     },
-    "schema": {
-      "name": "Schema",
-      "value": "Schema that the table used for reading belongs to."
+
+    "DB2": {
+        "JDBCURL": {
+            "name": "JDBC URL",
+            "value": "A database connection URL is a string that your DBMS JDBC driver uses to connect to a database",
+            "value1": "The connection URL format for the DB2 driver is:",
+            "value2": "jdbc:db2://hostname:port[;property=value[;...]]"
+        },
+        "user": {
+            "name": "User",
+            "value": "User name for a JDBC connection."
+        },
+        "password": {
+            "name": "Password",
+            "value": "Password for a JDBC connection."
+        },
+        "schema": {
+            "name": "Schema",
+            "value": "Schema that the table used for reading belongs to."
+        },
+        "table": {
+            "name": "Table",
+            "value": "Database table name."
+        },
+        "certData": {
+            "name": "CertData (optional)",
+            "value": "Enter certification data if needed."
+        }
     },
-    "table": {
-      "name": "Table",
-      "value": "Database table name."
+    "COS": {
+        "endpoint": {
+            "name": "Endpoint",
+            "value": "The endpoint that a service will talk to, for example, 's3.us-south.objectstorage.softlayer.net'."
+        },
+        "accessKey": {
+            "name": "Access key",
+            "value": "The COS access key ID."
+        },
+        "secretKey": {
+            "name": "Secret key",
+            "value": "The COS secret access key."
+        },
+        "bucket": {
+            "name": "Bucket",
+            "value": "Name of the basic containers for holding your data."
+        },
+        "pathInBucket": {
+            "name": "Path in bucket",
+            "value": "Path in the bucket."
+        },
+        "format": {
+            "name": "File format",
+            "value": "Spark DataFrame format.",
+            "value1": "For CSV, please, specify Header and Delimiter."
+        }
     },
-    "certData": {
-      "name": "CertData (optional)",
-      "value": "Enter certification data if needed."
-    }
-  },
-  "COS": {
-    "endpoint": {
-      "name": "Endpoint",
-      "value": "The endpoint that a service will talk to, for example, 's3.us-south.objectstorage.softlayer.net'."
+    "AWS": {
+        "anonymousAccess": {
+            "name": "Anonymous access",
+            "value": "Anonymous access which does not display accessKey and secretKey"
+        },
+        "endpoint": {
+            "name": "Endpoint",
+            "value": "The endpoint that a service will talk to, for example, 's3.us-south.objectstorage.softlayer.net'."
+        },
+        "accessKey": {
+            "name": "Access key",
+            "value": "The AWS access key ID."
+        },
+        "secretKey": {
+            "name": "Secret key",
+            "value": "The AWS secret access key."
+        },
+        "bucket": {
+            "name": "Bucket",
+            "value": "Name of the basic containers for holding your data."
+        },
+        "pathInBucket": {
+            "name": "Path in bucket",
+            "value": "Path in the bucket."
+        },
+        "format": {
+            "name": "File format",
+            "value": "Spark DataFrame format.",
+            "value1": "For CSV, please, specify Header and Delimiter."
+        }
     },
-    "accessKey": {
-      "name": "Access key",
-      "value": "The AWS access key ID."
+    "ELASTIC": {
+        "nodes": {
+            "name": "Nodes",
+            "value": "Node is an instance of an Elasticsearch where you can store, index, and search data."
+        },
+        "port": {
+            "name": "Port",
+            "value": "Port to bind to for incoming HTTP requests."
+        },
+        "user": {
+            "name": "User",
+            "value": "User name for connection."
+        },
+        "password": {
+            "name": "Password",
+            "value": "Password for connection."
+        },
+        "index": {
+            "name": "Index",
+            "value": "The index where the document resides."
+        },
+        "ssl": {
+            "name": "SSL",
+            "value": "Whether to enable SSL connections on all supported protocols.",
+            "value1": "False by default.",
+            "value2": "If it set to True then CertData is available, but it is optional."
+        },
+        "certData": {
+            "name": "CertData (optional)",
+            "value": "Enabled when SSL is set to True.",
+            "value1": "Enter certification data for SSL connection if needed."
+        }
     },
-    "secretKey": {
-      "name": "Secret key",
-      "value": "The AWS secret access key."
-    },
-    "bucket": {
-      "name": "Bucket",
-      "value": "Name of the basic containers for holding your data."
-    },
-    "pathInBucket": {
-      "name": "Path in bucket",
-      "value": "Path in the bucket."
-    },
-    "fileFormat": {
-      "name": "File format",
-      "value": "Spark DataFrame format.",
-      "value1": "For CSV, please, specify Header and Delimiter."
-    }
-  },
-  "ELASTIC": {
-    "nodes": {
-      "name": "Nodes",
-      "value": "Node is an instance of an Elasticsearch where you can store, index, and search data."
-    },
-    "port": {
-      "name": "Port",
-      "value": "Port to bind to for incoming HTTP requests."
-    },
-    "user": {
-      "name": "User",
-      "value": "User name for connection."
-    },
-    "password": {
-      "name": "Password",
-      "value": "Password for connection."
-    },
-    "index": {
-      "name": "Index",
-      "value": "The index where the document resides."
-    },
-    "ssl": {
-      "name": "SSL",
-      "value": "Whether to enable SSL connections on all supported protocols.",
-      "value1": "False by default.",
-      "value2": "If it set to True then CertData is available, but it is optional."
-    },
-    "certData": {
-      "name": "CertData (optional)",
-      "value": "Enabled when SSL is set to True.",
-      "value1": "Enter certification data for SSL connection if needed."
-    }
-  },
-  "noAdditionalFields": "There are no additional fields."
+    "noAdditionalFields": "There are no additional fields."
 }

@@ -19,12 +19,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Divider, MenuItem } from '@material-ui/core';
 import { withTranslation } from 'react-i18next';
-
-import ReadTextFields from '../ReadWriteTextFields';
-import WriteMode from '../WriteMode';
-import { WRITE } from '../../../constants';
+import CosProperties from '../common/CosProperties';
 
 const fields = [
     { field: 'Endpoint' },
@@ -34,118 +30,17 @@ const fields = [
     { field: 'Path' }
 ];
 
-const fileFormats = [
-    {
-        value: 'csv',
-        label: 'CSV'
-    },
-    {
-        value: 'json',
-        label: 'JSON'
-    },
-    {
-        value: 'parquet',
-        label: 'Parquet'
-    },
-    {
-        value: 'orc',
-        label: 'ORC'
-    },
-    {
-        value: 'text',
-        label: 'Text'
-    }
-];
-
-const csvHeader = [
-    {
-        value: 'true',
-        label: 'True'
-    },
-    {
-        value: 'false',
-        label: 'False'
-    }
-];
-
-const CosStorage = ({
-    inputValues,
-    handleInputChange,
-    t,
-    openModal,
-    ableToEdit
-}) => {
-    const renderDropdownItems = options =>
-        options.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-                {option.label}
-            </MenuItem>
-        ));
-
-    return (
-        <>
-            <ReadTextFields
-                ableToEdit={ableToEdit}
-                fields={fields}
-                inputValues={inputValues}
-                handleInputChange={handleInputChange}
-                openModal={openModal}
-            />
-            {inputValues.operation === WRITE && (
-                <WriteMode
-                    disabled={!ableToEdit}
-                    value={inputValues.writeMode}
-                    onChange={handleInputChange}
-                />
-            )}
-            <TextField
-                disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.Fileformat')}
-                placeholder={t('jobDesigner:readConfiguration.Fileformat')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
-                name="format"
-                value={inputValues.format || ''}
-                onChange={handleInputChange}
-            >
-                {renderDropdownItems(fileFormats)}
-            </TextField>
-            {inputValues.format === 'csv' && (
-                <>
-                    <Divider />
-                    <TextField
-                        label={t('jobDesigner:writeConfiguration.Header')}
-                        placeholder={t('jobDesigner:writeConfiguration.Header')}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        select
-                        name="option.header"
-                        value={inputValues['option.header'] || ''}
-                        onChange={handleInputChange}
-                    >
-                        {renderDropdownItems(csvHeader)}
-                    </TextField>
-                    <TextField
-                        label={t('jobDesigner:writeConfiguration.Delimiter')}
-                        placeholder={t('jobDesigner:writeConfiguration.Delimiter')}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        name="option.delimiter"
-                        value={inputValues['option.delimiter'] || ''}
-                        onChange={handleInputChange}
-                    />
-                </>
-            )}
-        </>
-    );
-};
+const CosStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => (
+    <CosProperties
+        fields={fields}
+        openModal={openModal}
+        inputValues={inputValues}
+        ableToEdit={ableToEdit}
+        handleInputChange={handleInputChange}
+    />
+);
 
 CosStorage.propTypes = {
-    t: PropTypes.func,
     inputValues: PropTypes.object,
     handleInputChange: PropTypes.func,
     openModal: PropTypes.func,

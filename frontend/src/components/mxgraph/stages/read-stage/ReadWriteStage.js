@@ -29,6 +29,27 @@ import useStyles from './ReadWriteStage.Styles';
 const ReadWriteStage = ({ stage, t }) => {
     const classes = useStyles();
 
+    const cosStageFields = () => (
+        <>
+            <Typography
+                variant="caption"
+                component="div"
+                className={classes.bucket}
+                color="textSecondary"
+            >
+                {t('jobDesigner:readConfiguration.Bucket')}: {stage.bucket}
+            </Typography>
+            <Typography
+                variant="caption"
+                component="div"
+                className={classes.pathInBucket}
+                color="textSecondary"
+            >
+                {t('jobDesigner:Path')}: {stage.path}
+            </Typography>
+        </>
+    );
+
     const renderStorageData = () => {
         switch (stage.storage) {
             case 'DB2':
@@ -53,28 +74,6 @@ const ReadWriteStage = ({ stage, t }) => {
                         </Typography>
                     </>
                 );
-            case 'cos':
-                return (
-                    <>
-                        <Typography
-                            variant="caption"
-                            component="div"
-                            className={classes.bucket}
-                            color="textSecondary"
-                        >
-                            {t('jobDesigner:readConfiguration.Bucket')}:{' '}
-                            {stage.bucket}
-                        </Typography>
-                        <Typography
-                            variant="caption"
-                            component="div"
-                            className={classes.pathInBucket}
-                            color="textSecondary"
-                        >
-                            {t('jobDesigner:Path')}: {stage.path}
-                        </Typography>
-                    </>
-                );
             case 'elastic':
                 return (
                     <>
@@ -88,6 +87,9 @@ const ReadWriteStage = ({ stage, t }) => {
                         </Typography>
                     </>
                 );
+            case 'cos':
+            case 's3':
+                return cosStageFields();
             case 'STDOUT':
                 return null;
             default:

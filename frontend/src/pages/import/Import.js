@@ -70,12 +70,8 @@ const Import = ({
         reader.onload = e => {
             try {
                 const fileData = JSON.parse(e.target.result);
-                const jobsList = fileData?.jobs
-                    ? fileData?.jobs.map(job => JSON.parse(job))
-                    : [];
-                const pipelinesList = fileData?.pipelines
-                    ? fileData?.pipelines.map(pipeline => JSON.parse(pipeline))
-                    : [];
+                const jobsList = fileData?.jobs || [];
+                const pipelinesList = fileData?.pipelines || [];
 
                 setJobs(
                     _.sortBy(jobsList, [o => o.metadata.labels.name.toLowerCase()])
@@ -103,8 +99,8 @@ const Import = ({
         );
 
         const data = {
-            jobs: [...importJobs.map(job => JSON.stringify(job))],
-            pipelines: [...importPipelines.map(job => JSON.stringify(job))]
+            jobs: [...importJobs],
+            pipelines: [...importPipelines]
         };
 
         importToProject(projectId, data);

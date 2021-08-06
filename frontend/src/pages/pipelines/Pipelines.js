@@ -48,8 +48,11 @@ const Pipelines = ({
 
     React.useEffect(() => {
         setList(data?.pipelines?.filter(item => item.name.includes(search)));
-        setCurrentPage(0);
     }, [data?.pipelines, search]);
+
+    React.useEffect(() => {
+        setCurrentPage(0);
+    }, [search]);
 
     return loading || loadingExport ? (
         <PageSkeleton />
@@ -60,6 +63,7 @@ const Pipelines = ({
                     header="Pipelines"
                     ableToEdit={data.editable}
                     buttonCaption={t('main:button.addPipeline')}
+                    searchValue={search}
                     onSearch={event => setSearch(event.target.value)}
                     onRefreshClick={() => getPipelines(projectId)}
                     onAddClick={() => history.push(`/pipelines/${projectId}`)}

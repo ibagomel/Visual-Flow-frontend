@@ -40,12 +40,7 @@ import UtilizationCell from '../../components/table/UtilizationCell';
 import ActionsCell from '../../components/table/ActionsCell';
 import EnhancedTable from '../../components/table/EnhancedTable';
 import toggleConfirmationWindow from '../../redux/actions/modalsActions';
-import {
-    DRAFT,
-    SUCCEEDED,
-    FAILED,
-    PENDING
-} from '../../components/mxgraph/constants';
+import { PENDING, RUNNING } from '../../components/mxgraph/constants';
 import {
     deleteJob,
     runJob,
@@ -63,6 +58,18 @@ import ExportModalWindow from '../../components/export-modal-window/ExportModalW
 
 const withRunAction = (act, getActions) =>
     act.runnable ? getActions(act).slice(0, 3) : getActions(act).slice(1, 3);
+
+const filterData = (data, status, lastRun) =>
+    data?.filter(
+        item =>
+            (!status || item.status === status) &&
+            (!timeRange[lastRun] ||
+                timeRange[lastRun](
+                    moment(item.startedAt, 'YYYY-MM-DD HH:mm:ss').format(
+                        'YYYY-MM-DD HH:mm:ss'
+                    )
+                ))
+    );
 
 const JobsTable = ({
     projectId,
@@ -87,7 +94,6 @@ const JobsTable = ({
 
     const byId = id => data.find(item => item.id === id);
     const projId = projectId;
-
     const resolveStatus = value => ({
         value,
         label: t(`main:status.${value}`) || value
@@ -96,7 +102,7 @@ const JobsTable = ({
     const statuses = uniq(data?.map(v => v.status)).map(resolveStatus);
 
     const getActions = icon => [
-        [DRAFT, FAILED, SUCCEEDED].includes(icon.status)
+        ![RUNNING, PENDING].includes(icon.status)
             ? {
                   title: t('jobs:tooltip.Play'),
                   Icon: PlayArrowOutlinedIcon,
@@ -108,7 +114,7 @@ const JobsTable = ({
             : {
                   title: t('jobs:tooltip.Stop'),
                   Icon: StopOutlinedIcon,
-                  disable: !!icon.pipelineId,
+                  disable: !!icon.pipelineId || icon.status === PENDING,
                   onClick: () => {
                       stop(projectId, icon.id);
                   }
@@ -178,21 +184,9 @@ const JobsTable = ({
         }
     ];
 
-    const filterData = () =>
-        data?.filter(
-            item =>
-                (!status || item.status === status) &&
-                (!timeRange[lastRun] ||
-                    timeRange[lastRun](
-                        moment(item.startedAt, 'YYYY-MM-DD HH:mm:ss').format(
-                            'YYYY-MM-DD HH:mm:ss'
-                        )
-                    ))
-        );
-
     return (
         <EnhancedTable
-            data={filterData()}
+            data={filterData(data, status, lastRun)}
             actions={ableToEdit ? getGlobalActions() : getGlobalActions().slice(-1)}
             orderColumns={[
                 { id: 'name', name: t('main:form.Name') },
@@ -226,7 +220,10 @@ const JobsTable = ({
                             }))}
                             label={t('jobs:lastRun')}
                             value={lastRun}
-                            onChange={event => setLastRun(event.target.value)}
+                            onChange={event => {
+                                setLastRun(event.target.value);
+                                setCurrentPage(0);
+                            }}
                         />
                     </Grid>
                 </>

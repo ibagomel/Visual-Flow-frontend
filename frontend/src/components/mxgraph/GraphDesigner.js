@@ -343,6 +343,7 @@ class GraphDesigner extends Component {
 
         if (get(current, 'edge', false)) {
             const targetId = current.target.id;
+            const sourceId = current.source.id;
             const targetNode = graph.model.cells[targetId];
             const targetNodeType = get(
                 targetNode,
@@ -352,7 +353,14 @@ class GraphDesigner extends Component {
             const inputEdges = targetNode?.edges?.filter(
                 edge => edge.target.id === targetId
             );
-            this.props.setDirtyGraph(true);
+            graph.addListener(mxEvent.CELL_CONNECTED, () => {
+                if (
+                    current.target.id !== targetId ||
+                    current.source.id !== sourceId
+                ) {
+                    this.props.setDirtyGraph(true);
+                }
+            });
             // NEED REFACTOR
             if (targetNodeType === CDC || targetNodeType === JOIN) {
                 graph.model.setValue(

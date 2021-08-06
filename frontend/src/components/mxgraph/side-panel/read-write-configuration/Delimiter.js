@@ -17,32 +17,28 @@
  * limitations under the License.
  */
 
-import { Chip, withStyles } from '@material-ui/core';
-import { capitalize } from 'lodash';
-import classNames from 'classnames';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import styles from './Status.Styles';
+import { TextField } from '@material-ui/core';
+import { withTranslation } from 'react-i18next';
 
-const Status = ({ value, classes }) => {
-    const { t } = useTranslation();
+const Delimiter = ({ t, value, onChange }) => (
+    <TextField
+        label={t('jobDesigner:writeConfiguration.Delimiter')}
+        placeholder={t('jobDesigner:writeConfiguration.Delimiter')}
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        name="option.delimiter"
+        value={value || ''}
+        onChange={onChange}
+    />
+);
 
-    return (
-        <Chip
-            label={t(`main:${value}`)}
-            variant="outlined"
-            className={classNames(
-                classes.chip,
-                value && classes[`chip${capitalize(value)}`]
-            )}
-        />
-    );
-};
-
-Status.propTypes = {
+Delimiter.propTypes = {
+    t: PropTypes.func,
     value: PropTypes.string,
-    classes: PropTypes.object
+    onChange: PropTypes.func
 };
 
-export default withStyles(styles)(Status);
+export default withTranslation()(Delimiter);

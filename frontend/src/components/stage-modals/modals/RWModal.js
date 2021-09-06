@@ -27,10 +27,6 @@ const RWModal = props => {
 
     const getCosInfo = (label, writeModeDescr) => [
         {
-            title: t(`ReadWrite:${label}.endpoint.name`),
-            paragraph: t(`ReadWrite:${label}.endpoint.value`)
-        },
-        {
             title: t(`ReadWrite:${label}.accessKey.name`),
             paragraph: t(`ReadWrite:${label}.accessKey.value`)
         },
@@ -90,12 +86,23 @@ const RWModal = props => {
             paragraph: t('ReadWrite:DB2.password.value')
         },
         {
+            title: t('ReadWrite:DB2.customSql.name'),
+            paragraph: t('ReadWrite:DB2.customSql.value')
+        },
+        {
             title: t('ReadWrite:DB2.schema.name'),
             paragraph: t('ReadWrite:DB2.schema.value')
         },
         {
             title: t('ReadWrite:DB2.table.name'),
             paragraph: t('ReadWrite:DB2.table.value')
+        },
+        {
+            title: t('ReadWrite:DB2.optionDbtable.name'),
+            paragraph: t('ReadWrite:DB2.optionDbtable.value'),
+            paragraph1: t('ReadWrite:DB2.optionDbtable.value1'),
+            paragraph2: t('ReadWrite:DB2.optionDbtable.value2'),
+            paragraph3: t('ReadWrite:DB2.optionDbtable.value3')
         },
         writeMode,
         {
@@ -104,9 +111,31 @@ const RWModal = props => {
         }
     ];
 
-    const cos = getCosInfo('COS', writeMode);
+    const cos = [
+        {
+            title: t('ReadWrite:COS.endpoint.name'),
+            paragraph: t('ReadWrite:COS.endpoint.value')
+        },
+        {
+            title: t('ReadWrite:COS.authType.name'),
+            paragraph: t('ReadWrite:COS.authType.value')
+        },
+        {
+            title: t('ReadWrite:COS.iamApiKey.name'),
+            paragraph: t('ReadWrite:COS.iamApiKey.value')
+        },
+        {
+            title: t('ReadWrite:COS.iamServiceId.name'),
+            paragraph: t('ReadWrite:COS.iamServiceId.value')
+        },
+        ...getCosInfo('COS', writeMode)
+    ];
 
     const aws = [
+        {
+            title: t('ReadWrite:AWS.endpoint.name'),
+            paragraph: t('ReadWrite:AWS.endpoint.value')
+        },
         {
             title: t('ReadWrite:AWS.anonymousAccess.name'),
             paragraph: t('ReadWrite:AWS.anonymousAccess.value')

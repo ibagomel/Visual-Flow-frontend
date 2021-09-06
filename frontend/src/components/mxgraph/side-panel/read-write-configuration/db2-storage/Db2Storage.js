@@ -19,50 +19,112 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { TextField } from '@material-ui/core';
+import { withTranslation } from 'react-i18next';
 import ReadTextFields from '../ReadWriteTextFields';
 import WriteMode from '../WriteMode';
-import { WRITE } from '../../../constants';
+import { READ, WRITE } from '../../../constants';
+import getMenuItems from '../../helpers/getMenuItems';
 
-const fields = [
-    { field: 'JDBC URL' },
-    { field: 'User' },
-    { field: 'Password' },
-    { field: 'Schema' },
-    { field: 'Table' }
+const customSql = [
+    {
+        value: 'true',
+        label: 'True'
+    },
+    {
+        value: 'false',
+        label: 'False'
+    }
 ];
 
-const Db2Storage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => (
-    <>
-        <ReadTextFields
-            ableToEdit={ableToEdit}
-            fields={fields}
-            inputValues={inputValues}
-            handleInputChange={handleInputChange}
-            openModal={openModal}
-        />
-        {inputValues.operation === WRITE && (
-            <WriteMode
-                disabled={!ableToEdit}
-                value={inputValues.writeMode}
-                onChange={handleInputChange}
+const customFields = [{ field: 'Schema' }, { field: 'Table' }];
+
+const fields = [{ field: 'JDBC URL' }, { field: 'User' }, { field: 'Password' }];
+
+const Db2Storage = ({
+    inputValues,
+    handleInputChange,
+    t,
+    openModal,
+    ableToEdit
+}) => {
+    return (
+        <>
+            <ReadTextFields
+                ableToEdit={ableToEdit}
+                fields={fields}
+                inputValues={inputValues}
+                handleInputChange={handleInputChange}
+                openModal={openModal}
             />
-        )}
-        <ReadTextFields
-            ableToEdit={ableToEdit}
-            fields={[{ field: 'Cert Data', rows: 6 }]}
-            inputValues={inputValues}
-            handleInputChange={handleInputChange}
-            openModal={openModal}
-        />
-    </>
-);
+            {inputValues.operation === READ && (
+                <TextField
+                    disabled={!ableToEdit}
+                    label={t('jobDesigner:readConfiguration.CustomSql')}
+                    placeholder={t('jobDesigner:readConfiguration.CustomSql')}
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    select
+                    name="customSql"
+                    value={inputValues.customSql || ''}
+                    onChange={handleInputChange}
+                >
+                    {getMenuItems(customSql)}
+                </TextField>
+            )}
+            {inputValues.customSql === 'false' && (
+                <ReadTextFields
+                    ableToEdit={ableToEdit}
+                    fields={customFields}
+                    inputValues={inputValues}
+                    handleInputChange={handleInputChange}
+                    openModal={openModal}
+                />
+            )}
+            {inputValues.customSql === 'true' && (
+                <ReadTextFields
+                    ableToEdit={ableToEdit}
+                    fields={[{ field: 'option.dbtable', rows: 6 }]}
+                    inputValues={inputValues}
+                    handleInputChange={handleInputChange}
+                    openModal={openModal}
+                    nameWIthPoint
+                />
+            )}
+            {inputValues.operation === WRITE && (
+                <>
+                    <ReadTextFields
+                        ableToEdit={ableToEdit}
+                        fields={customFields}
+                        inputValues={inputValues}
+                        handleInputChange={handleInputChange}
+                        openModal={openModal}
+                    />
+                    <WriteMode
+                        disabled={!ableToEdit}
+                        value={inputValues.writeMode}
+                        onChange={handleInputChange}
+                    />
+                </>
+            )}
+            <ReadTextFields
+                ableToEdit={ableToEdit}
+                fields={[{ field: 'Cert Data', rows: 6 }]}
+                inputValues={inputValues}
+                handleInputChange={handleInputChange}
+                openModal={openModal}
+            />
+        </>
+    );
+};
 
 Db2Storage.propTypes = {
+    t: PropTypes.func,
     inputValues: PropTypes.object,
     handleInputChange: PropTypes.func,
     openModal: PropTypes.func,
     ableToEdit: PropTypes.bool
 };
 
-export default Db2Storage;
+export default withTranslation()(Db2Storage);

@@ -33,6 +33,10 @@
             "name": "Password",
             "value": "Password for a JDBC connection."
         },
+        "customSql": {
+            "name": "Custom SQL",
+            "value": "Displays the schema and the table fields, if you choose false. If you choose true, you will be able to write your own SQL code in the provided field."
+        },
         "schema": {
             "name": "Schema",
             "value": "Schema that the table used for reading belongs to."
@@ -41,12 +45,23 @@
             "name": "Table",
             "value": "Database table name."
         },
+        "optionDbtable": {
+            "name": "SQL statement",
+            "value": "The code of your own SQL query.",
+            "value1": "- You have to specify both schema name and table name in your custom SQL query.",
+            "value2": "- Column names must be surrounded by double quotes.",
+            "value3": "- Any syntactic error in SQL query wouldn't be highlighted."
+        },
         "certData": {
             "name": "CertData (optional)",
             "value": "Enter certification data if needed."
         }
     },
     "COS": {
+        "authType": {
+            "name": "Authentication type",
+            "value": "Authentication type which displays accessKey and secretKey, if you choose HMAC, or iamApiKey and iamServiceId, if you choose IAM."
+        },
         "endpoint": {
             "name": "Endpoint",
             "value": "The endpoint that a service will talk to, for example, 's3.us-south.objectstorage.softlayer.net'."
@@ -58,6 +73,14 @@
         "secretKey": {
             "name": "Secret key",
             "value": "The COS secret access key."
+        },
+        "iamApiKey": {
+            "name": "Api key",
+            "value": "The COS IAM api key."
+        },
+        "iamServiceId": {
+            "name": "ServiceId key",
+            "value": "The COS IAM service id."
         },
         "bucket": {
             "name": "Bucket",

@@ -20,27 +20,94 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
+import { TextField } from '@material-ui/core';
+import ReadTextFields from '../ReadWriteTextFields';
+import getMenuItems from '../../helpers/getMenuItems';
 import CosProperties from '../common/CosProperties';
 
-const fields = [
-    { field: 'Endpoint' },
-    { field: 'Access key' },
-    { field: 'Secret key' },
-    { field: 'Bucket' },
-    { field: 'Path' }
+const authType = [
+    {
+        value: 'HMAC',
+        label: 'HMAC'
+    },
+    {
+        value: 'IAM',
+        label: 'IAM'
+    }
 ];
 
-const CosStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => (
-    <CosProperties
-        fields={fields}
-        openModal={openModal}
-        inputValues={inputValues}
-        ableToEdit={ableToEdit}
-        handleInputChange={handleInputChange}
-    />
-);
+const endpointField = [{ field: 'Endpoint' }];
+
+const fields = [{ field: 'Bucket' }, { field: 'Path' }];
+
+const hmacFields = [{ field: 'Access key' }, { field: 'Secret key' }];
+
+const iamFields = [{ field: 'iamApiKey' }, { field: 'iamServiceId' }];
+
+const CosStorage = ({
+    inputValues,
+    handleInputChange,
+    t,
+    openModal,
+    ableToEdit
+}) => {
+    return (
+        <>
+            <ReadTextFields
+                fields={endpointField}
+                openModal={openModal}
+                inputValues={inputValues}
+                ableToEdit={ableToEdit}
+                handleInputChange={handleInputChange}
+            />
+            <TextField
+                disabled={!ableToEdit}
+                label={t('jobDesigner:readConfiguration.authType')}
+                placeholder={t('jobDesigner:readConfiguration.authType')}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                select
+                name="authType"
+                value={inputValues.authType || ''}
+                onChange={handleInputChange}
+            >
+                {getMenuItems(authType)}
+            </TextField>
+
+            {inputValues.authType === 'HMAC' && (
+                <ReadTextFields
+                    ableToEdit={ableToEdit}
+                    label={t('jobDesigner:readConfiguration.iamApiKey')}
+                    placeholder={t('jobDesigner:readConfiguration.iamApiKey')}
+                    fields={hmacFields}
+                    inputValues={inputValues}
+                    handleInputChange={handleInputChange}
+                    openModal={openModal}
+                />
+            )}
+            {inputValues.authType === 'IAM' && (
+                <ReadTextFields
+                    ableToEdit={ableToEdit}
+                    fields={iamFields}
+                    inputValues={inputValues}
+                    handleInputChange={handleInputChange}
+                    openModal={openModal}
+                />
+            )}
+            <CosProperties
+                fields={fields}
+                openModal={openModal}
+                inputValues={inputValues}
+                ableToEdit={ableToEdit}
+                handleInputChange={handleInputChange}
+            />
+        </>
+    );
+};
 
 CosStorage.propTypes = {
+    t: PropTypes.func,
     inputValues: PropTypes.object,
     handleInputChange: PropTypes.func,
     openModal: PropTypes.func,

@@ -56,7 +56,9 @@ const JobsToolbar = ({
     setSidePanel,
     sidePanelIsOpen,
     setDirty,
-    setShowModal
+    setShowModal,
+    sidePanelIsDirty,
+    dirty
 }) => {
     const classes = useStyles();
 
@@ -103,6 +105,7 @@ const JobsToolbar = ({
                         isNotRunning={![RUNNING, PENDING].includes(stats)}
                         runnable={data.runnable}
                         stopable={![PENDING].includes(stats)}
+                        changesNotSaved={sidePanelIsDirty || dirty}
                         run={() => {
                             runAndUpdate();
                         }}
@@ -152,11 +155,15 @@ JobsToolbar.propTypes = {
     getStatus: PropTypes.func,
     storeStatus: PropTypes.object,
     reversible: PropTypes.object,
-    getActualJob: PropTypes.func
+    getActualJob: PropTypes.func,
+    sidePanelIsDirty: PropTypes.bool,
+    dirty: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
-    storeStatus: state.jobStatus
+    storeStatus: state.jobStatus,
+    sidePanelIsDirty: state.mxGraph.sidePanelIsDirty,
+    dirty: state.mxGraph.dirty
 });
 
 const mapDispatchToProps = {

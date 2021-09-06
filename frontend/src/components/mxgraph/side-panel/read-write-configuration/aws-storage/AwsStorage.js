@@ -37,7 +37,9 @@ const anonymousAccess = [
     }
 ];
 
-const fields = [{ field: 'Endpoint' }, { field: 'Bucket' }, { field: 'Path' }];
+const endpointField = [{ field: 'Endpoint' }];
+
+const fields = [{ field: 'Bucket' }, { field: 'Path' }];
 
 const keyField = [{ field: 'Access key' }, { field: 'Secret key' }];
 
@@ -50,6 +52,13 @@ const AwsStorage = ({
 }) => {
     return (
         <>
+            <ReadTextFields
+                fields={endpointField}
+                openModal={openModal}
+                inputValues={inputValues}
+                ableToEdit={ableToEdit}
+                handleInputChange={handleInputChange}
+            />
             <TextField
                 disabled={!ableToEdit}
                 label={t('jobDesigner:readConfiguration.AnonymousAccess')}

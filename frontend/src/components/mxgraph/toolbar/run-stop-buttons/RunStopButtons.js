@@ -22,14 +22,27 @@ import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
 import { PlayArrow, Stop } from '@material-ui/icons';
 
-const RunStopButtons = ({ isNotRunning, runnable, run, stopable, stop }) => {
-    const PlayArrowColor = runnable ? 'green' : 'lightgrey';
+const RunStopButtons = ({
+    isNotRunning,
+    runnable,
+    run,
+    stopable,
+    stop,
+    changesNotSaved
+}) => {
+    const PlayArrowColor = !runnable || changesNotSaved ? 'lightgrey' : 'green';
     const StopColor = stopable ? 'red' : 'lightgrey';
-
+    const Tip = changesNotSaved ? 'Please save your changes to run the job' : null;
     return isNotRunning ? (
-        <IconButton disabled={!runnable} aria-label="playArrowIcon" onClick={run}>
-            <PlayArrow htmlColor={PlayArrowColor} />
-        </IconButton>
+        <div title={Tip}>
+            <IconButton
+                disabled={!runnable || changesNotSaved}
+                aria-label="playArrowIcon"
+                onClick={run}
+            >
+                <PlayArrow htmlColor={PlayArrowColor} />
+            </IconButton>
+        </div>
     ) : (
         <IconButton disabled={!stopable} aria-label="stopIcon" onClick={stop}>
             <Stop htmlColor={StopColor} />
@@ -42,7 +55,8 @@ RunStopButtons.propTypes = {
     runnable: PropTypes.bool,
     run: PropTypes.func,
     stop: PropTypes.func,
-    stopable: PropTypes.bool
+    stopable: PropTypes.bool,
+    changesNotSaved: PropTypes.bool
 };
 
 export default RunStopButtons;

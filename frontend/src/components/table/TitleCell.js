@@ -63,7 +63,7 @@ const TitleCell = ({
                     {!!pipelineId && (
                         <Tooltip
                             title={
-                                pipelines?.find(item => item.id === pipelineId).name
+                                pipelines?.find(item => item.id === pipelineId)?.name
                             }
                             arrow
                         >

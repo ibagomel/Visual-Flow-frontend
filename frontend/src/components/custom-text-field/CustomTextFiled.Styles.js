@@ -17,33 +17,18 @@
  * limitations under the License.
  */
 
-export default theme => ({
+import { makeStyles } from '@material-ui/core/styles';
+
+export default makeStyles(() => ({
     root: {
-        paddingLeft: theme.spacing(2),
-        width: '100%',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden'
+        display: 'flex'
     },
-    cell: {
-        maxWidth: 0,
-        minWidth: theme.spacing(36)
+    text: {
+        flexGrow: 2,
+        flexBasis: 0
     },
-    checkbox: {
-        'align-self': 'center',
-        minWidth: theme.spacing(6)
-    },
-    calendarIcon: {
-        color: theme.palette.text.secondary,
-        'align-self': 'center'
-    },
-    item: {
-        whiteSpace: 'nowrap',
-        display: 'inline-block',
-        '&:not(:last-child)::after': {
-            content: '";\\A0"'
-        }
-    },
-    hint: {
-        color: theme.palette.text.hint
+    select: {
+        flexGrow: 1,
+        flexBasis: 0
     }
-});
+}));

@@ -18,6 +18,7 @@
         "jest-junit": "^10.0.0",
         "jest-sonar-reporter": "^2.0.0",
         "nodemon": "^2.0.4",
+        "owasp-dependency-check": "^0.0.18",
         "prettier": "^1.19.1",
         "supertest": "^4.0.2"
     },
@@ -36,7 +37,8 @@
         "start": "nodemon -w app --exec node -r dotenv/config --inspect app/server.js",
         "start:prod": "node app/server.js",
         "build": "echo \"No build is required\"",
-        "test": "jest",
+        "owasp": "owasp-dependency-check --project backend --scan package-lock.json --scan package.json -f HTML --disableAssembly --failOnCVSS 8 --suppression dependency-check-suppression.xml",
+        "test": "jest && npm run owasp",
         "coverage": "jest --forceExit --coverage",
         "format": "prettier --write \"./app/**/*.{js,md,scss}\"",
         "format:diff": "prettier --list-different \"./app/**/*.{js,md,scss}\"",

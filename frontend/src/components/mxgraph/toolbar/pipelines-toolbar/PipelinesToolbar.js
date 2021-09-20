@@ -57,7 +57,9 @@ const PipelinesToolbar = ({
     update,
     setSidePanel,
     sidePanelIsOpen,
-    setDirty
+    setDirty,
+    sidePanelIsDirty,
+    dirty
 }) => {
     const classes = useStyles({ name: 'PipelineUtilizationCell' });
 
@@ -123,6 +125,7 @@ const PipelinesToolbar = ({
                         isNotRunning={![RUNNING, PENDING].includes(statusValue)}
                         runnable={data.runnable}
                         stopable={![PENDING].includes(statusValue)}
+                        changesNotSaved={sidePanelIsDirty || dirty}
                         run={() => {
                             runAndUpdate();
                         }}
@@ -167,11 +170,15 @@ PipelinesToolbar.propTypes = {
     pipelineStatus: PropTypes.object,
     reversible: PropTypes.object,
     getActualPipeline: PropTypes.func,
-    getActualJobs: PropTypes.func
+    getActualJobs: PropTypes.func,
+    sidePanelIsDirty: PropTypes.bool,
+    dirty: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
-    pipelineStatus: state.pipelineStatus
+    pipelineStatus: state.pipelineStatus,
+    sidePanelIsDirty: state.mxGraph.sidePanelIsDirty,
+    dirty: state.mxGraph.dirty
 });
 
 const mapDispatchToProps = {

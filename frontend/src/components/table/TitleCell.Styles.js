@@ -22,14 +22,16 @@ export default theme => ({
         paddingLeft: theme.spacing(2),
         width: '100%',
         textOverflow: 'ellipsis',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        minWidth: theme.spacing(50)
     },
     cell: {
         maxWidth: 0,
         minWidth: theme.spacing(36)
     },
     checkbox: {
-        'align-self': 'center'
+        'align-self': 'center',
+        minWidth: theme.spacing(4)
     },
     pipelineIcon: {
         color: theme.palette.text.secondary,

@@ -47,7 +47,11 @@ const Pipelines = ({
     }, [projectId]);
 
     React.useEffect(() => {
-        setList(data?.pipelines?.filter(item => item.name.includes(search)));
+        setList(
+            data?.pipelines?.filter(item =>
+                item.name.toUpperCase().includes(search.toUpperCase())
+            )
+        );
     }, [data?.pipelines, search]);
 
     React.useEffect(() => {

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { axiosMockInstance, axiosInstance } from './axiosInstance';
+import { axiosMockInstance, axiosInstance, getLocation, login } from './axiosInstance';
 
 describe('axiosInstance', () => {
     require('./axiosInstance');
@@ -43,7 +43,29 @@ describe('axiosInstance', () => {
                 );
                 expect(actual).rejects.toEqual(error);
             })
-
         });
+    });
+
+    it('getLocation should return a correct url', () => {
+        expect(getLocation('/home/pathname', '/homePage/')).toBe(
+            `/homePage/login?redirect=${encodeURIComponent('/home/pathname')}`
+        );
+
+        expect(getLocation('baseUrl/home/pathname', 'baseUrl/')).toBe(
+            `baseUrl/login?redirect=${encodeURIComponent('home/pathname')}`
+        );
+
+        expect(getLocation('/home/pathname', '/')).toBe(
+            `/login?redirect=${encodeURIComponent('home/pathname')}`
+        );
+    });
+
+
+    it('login should set window.location', () => {
+        window.BASE_URL = 'baseUrl/';
+        window.location.pathname = '/pathname';
+        window.location.search = '';
+        login();
+        expect(window.location).toBe('baseUrl/login?redirect=%2Fpathname');
     });
 });

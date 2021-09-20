@@ -1,0 +1,16 @@
+{
+  "NOTIFICATION": [
+    {
+      "field": "name"
+    },
+    {
+      "field": "operation"
+    },
+    {
+      "field": "addressees"
+    },
+    {
+      "field": "message"
+    }
+  ]
+}

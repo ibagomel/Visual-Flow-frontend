@@ -1,0 +1,21 @@
+{
+  "WRITE": [
+    {
+      "field": "writeMode",
+      "condition": [
+        {
+          "storage": "cos"
+        },
+        {
+          "storage": "s3"
+        },
+        {
+          "storage": "DB2"
+        },
+        {
+          "storage": "elastic"
+        }
+      ]
+    }
+  ]
+}

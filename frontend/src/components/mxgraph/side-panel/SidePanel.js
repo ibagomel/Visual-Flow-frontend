@@ -28,7 +28,7 @@ import { withStyles } from '@material-ui/styles';
 import { Box, Drawer, Toolbar, Typography, IconButton } from '@material-ui/core';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import CloseIcon from '@material-ui/icons/Close';
-
+import { get } from 'lodash';
 import {
     setCurrentCell,
     setGraphDirty,
@@ -42,6 +42,7 @@ import StageModal from '../../stage-modals/StageModal';
 import addPropsToChildren from '../../../utils/addPropsToChildren';
 import { EDGE, PIPELINE } from '../constants';
 import { selectFillColor } from '../resetFillColor/selectFillColor';
+import schemas from './schemas';
 
 const { mxRectangle, mxConstants } = mxgraph();
 
@@ -88,18 +89,47 @@ class SidePanel extends React.Component {
         setCell('');
     }
 
+    cleanUpConfiguration = (fields, schema) => {
+        let result = {};
+        Object.entries(fields).forEach(([key, value]) => {
+            const schemaLine = schema.find(v => v.field === key);
+            const conditions = get(schemaLine, 'conditions', undefined);
+            if (!conditions) {
+                result = { ...result, [key]: value };
+            } else {
+                conditions.forEach(condition => {
+                    if (
+                        Object.entries(condition).every(
+                            ([field, val]) => get(fields, field) === val
+                        )
+                    ) {
+                        result = { ...result, [key]: value };
+                    }
+                });
+            }
+        });
+        return result;
+    };
+
     saveCell = configuration => {
+        const commonSchema = get(schemas, 'COMMON_SCHEMA', []);
+        const schema = get(schemas, configuration.operation, []);
+        const cleanConfiguration = this.cleanUpConfiguration(configuration, [
+            ...commonSchema,
+            ...schema
+        ]);
+
         const { graph, currentCell, setDirty, setPanelDirty } = this.props;
 
         const cell = graph.model.getCell(currentCell);
         // update the cell
-        const obj = stageLabels(configuration);
+        const obj = stageLabels(cleanConfiguration);
         graph.model.setValue(cell, obj);
 
-        if (configuration.operation === EDGE) {
+        if (cleanConfiguration.operation === EDGE) {
             graph.setCellStyles(
                 mxConstants.STYLE_STROKECOLOR,
-                configuration.successPath === 'False' ? '#F44336' : '#4CAF50',
+                cleanConfiguration.successPath === 'False' ? '#F44336' : '#4CAF50',
                 [cell]
             );
         } else {
@@ -111,7 +141,7 @@ class SidePanel extends React.Component {
             );
             graph.resizeCell(cell, newCellSize);
         }
-        this.setState({ configuration });
+        this.setState({ configuration: cleanConfiguration });
         setPanelDirty(false);
         setDirty(true);
         this.props.setSidePanel(false);

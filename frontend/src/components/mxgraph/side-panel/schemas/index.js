@@ -17,33 +17,31 @@
  * limitations under the License.
  */
 
-export default theme => ({
-    root: {
-        paddingLeft: theme.spacing(2),
-        width: '100%',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden'
-    },
-    cell: {
-        maxWidth: 0,
-        minWidth: theme.spacing(36)
-    },
-    checkbox: {
-        'align-self': 'center',
-        minWidth: theme.spacing(6)
-    },
-    calendarIcon: {
-        color: theme.palette.text.secondary,
-        'align-self': 'center'
-    },
-    item: {
-        whiteSpace: 'nowrap',
-        display: 'inline-block',
-        '&:not(:last-child)::after': {
-            content: '";\\A0"'
-        }
-    },
-    hint: {
-        color: theme.palette.text.hint
-    }
-});
+import { get } from 'lodash';
+import commonSchema from './commonSchema.json';
+import read from './read.json';
+import write from './write.json';
+import cdc from './cdc.json';
+import join from './join.json';
+import group from './group.json';
+import removeDuplicates from './removeDuplicates.json';
+import union from './union.json';
+import transform from './transform.json';
+import filter from './filter.json';
+import job from './job.json';
+
+const schemas = {
+    ...commonSchema,
+    ...read,
+    ...cdc,
+    ...join,
+    ...group,
+    ...removeDuplicates,
+    ...union,
+    ...transform,
+    ...filter,
+    ...job,
+    WRITE: [...get(read, 'READ'), ...get(write, 'WRITE')]
+};
+
+export default schemas;

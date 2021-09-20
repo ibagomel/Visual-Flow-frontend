@@ -49,3 +49,7 @@ frontend/public/index.html
 **/reports
 /frontend/test-report.xml
 /frontend/eslint-report.json
+
+# owasp-dependency-check
+**/dependency-check-bin
+**/dependency-check-reports

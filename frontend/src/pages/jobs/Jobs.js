@@ -54,7 +54,11 @@ const Jobs = ({
     }, [projectId]);
 
     React.useEffect(() => {
-        setList(jobs.data.jobs?.filter(item => item?.name?.includes(searchField)));
+        setList(
+            jobs.data.jobs?.filter(item =>
+                item?.name?.toUpperCase().includes(searchField.toUpperCase())
+            )
+        );
     }, [jobs.data.jobs, searchField]);
 
     React.useEffect(() => {

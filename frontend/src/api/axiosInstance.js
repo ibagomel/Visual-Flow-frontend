@@ -24,6 +24,16 @@ export const axiosInstance = axios.create({
     baseURL: `${window.BASE_URL}backend/api`
 });
 
+export const getLocation = (pathname, baseUrl) =>
+    `${baseUrl}login?redirect=${encodeURIComponent(
+        pathname.startsWith(baseUrl) ? pathname.slice(baseUrl.length) : pathname
+    )}`;
+
+export const login = () => {
+    const pathname = window.location.pathname + window.location.search;
+    window.location = getLocation(pathname, window.BASE_URL);
+};
+
 axiosInstance.interceptors.response.use(
     response => {
         if (response.config.method !== 'get') {
@@ -37,11 +47,13 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     error => {
-        showNotification(
-            error.response.data.error || error.response.data,
-            'error',
-            true
-        );
+        error.response?.status === 401
+            ? login()
+            : showNotification(
+                  error.response.data.error || error.response.data,
+                  'error',
+                  true
+              );
         return Promise.reject(error);
     }
 );

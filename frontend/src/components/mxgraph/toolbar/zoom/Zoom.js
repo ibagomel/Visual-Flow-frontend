@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
@@ -51,6 +51,14 @@ const marks = [
 const Zoom = ({ graph, zoomVal, zoom, setZoomVal, panning, setPan }) => {
     const { t } = useTranslation();
     const classes = useStyles();
+
+    useEffect(
+        () => () => {
+            setZoomVal(1);
+            setPan(false);
+        },
+        []
+    );
 
     const restoreZoom = () => {
         setZoomVal(1);

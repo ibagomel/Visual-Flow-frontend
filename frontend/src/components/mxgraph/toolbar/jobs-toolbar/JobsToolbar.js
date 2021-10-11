@@ -104,7 +104,7 @@ const JobsToolbar = ({
                     <RunStopButtons
                         isNotRunning={![RUNNING, PENDING].includes(stats)}
                         runnable={data.runnable}
-                        stopable={![PENDING].includes(stats)}
+                        stopable
                         changesNotSaved={sidePanelIsDirty || dirty}
                         run={() => {
                             runAndUpdate();

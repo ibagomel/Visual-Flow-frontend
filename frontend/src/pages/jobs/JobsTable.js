@@ -114,7 +114,7 @@ const JobsTable = ({
             : {
                   title: t('jobs:tooltip.Stop'),
                   Icon: StopOutlinedIcon,
-                  disable: !!icon.pipelineId || icon.status === PENDING,
+                  disable: !!icon.pipelineId,
                   onClick: () => {
                       stop(projectId, icon.id);
                   }

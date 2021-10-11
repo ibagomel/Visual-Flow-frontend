@@ -17,7 +17,8 @@
         "CDC": "Change data capture",
         "JOB": "Job",
         "PIPELINE": "Pipeline",
-        "NOTIFICATION": "Notification"
+        "NOTIFICATION": "Notification",
+        "CONTAINER": "Container"
     },
     "readConfiguration": {
         "Name": "Name",

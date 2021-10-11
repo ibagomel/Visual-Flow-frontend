@@ -17,8 +17,9 @@
  * limitations under the License.
  */
 
-import fetchLogs from './logsActions';
-import api from '../../api/jobs';
+import { fetchJobLogs, fetchContainerLogs } from './logsActions';
+import apiJobs from '../../api/jobs';
+import apiPipelines from '../../api/pipelines';
 import { FETCH_LOGS_START, FETCH_LOGS_FAIL, FETCH_LOGS_SUCCESS } from './types';
 
 describe('Logs action', () => {
@@ -29,16 +30,16 @@ describe('Logs action', () => {
         beforeEach(() => {
             data = {};
             dispatch = jest.fn();
-            jest.spyOn(api, 'getJobLogs').mockResolvedValue({ data });
+            jest.spyOn(apiJobs, 'getJobLogs').mockResolvedValue({ data });
         });
 
         it('should dispatch FETCH_LOGS_START', () => {
-            fetchLogs()(dispatch);
+            fetchJobLogs()(dispatch);
             expect(dispatch).toHaveBeenCalledWith({ type: FETCH_LOGS_START });
         });
 
         it('should dispatch FETCH_LOGS_SUCCESS on success', () => {
-            return fetchLogs()(dispatch).then(() => {
+            return fetchJobLogs()(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: FETCH_LOGS_START }],
                     [{ type: FETCH_LOGS_SUCCESS, payload: data }]
@@ -47,8 +48,8 @@ describe('Logs action', () => {
         });
 
         it('should dispatch FETCH_LOGS_FAIL on failure', () => {
-            jest.spyOn(api, 'getJobLogs').mockRejectedValue({});
-            return fetchLogs()(dispatch).then(() => {
+            jest.spyOn(apiJobs, 'getJobLogs').mockRejectedValue({});
+            return fetchJobLogs()(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: FETCH_LOGS_START }],
                     [{ type: FETCH_LOGS_FAIL, payload: { error: {} } }]
@@ -57,4 +58,36 @@ describe('Logs action', () => {
         });
     });
 
+    describe('getPipelineLogs', () => {
+        let data;
+        beforeEach(() => {
+            data = {};
+            dispatch = jest.fn();
+            jest.spyOn(apiPipelines, 'getPipelineLogs').mockResolvedValue({ data });
+        });
+
+        it('should dispatch FETCH_LOGS_START', () => {
+            fetchContainerLogs()(dispatch);
+            expect(dispatch).toHaveBeenCalledWith({ type: FETCH_LOGS_START });
+        });
+
+        it('should dispatch FETCH_LOGS_SUCCESS on success', () => {
+            return fetchContainerLogs()(dispatch).then(() => {
+                expect(dispatch.mock.calls).toEqual([
+                    [{ type: FETCH_LOGS_START }],
+                    [{ type: FETCH_LOGS_SUCCESS, payload: data }]
+                ]);
+            });
+        });
+
+        it('should dispatch FETCH_LOGS_FAIL on failure', () => {
+            jest.spyOn(apiPipelines, 'getPipelineLogs').mockRejectedValue({});
+            return fetchContainerLogs()(dispatch).then(() => {
+                expect(dispatch.mock.calls).toEqual([
+                    [{ type: FETCH_LOGS_START }],
+                    [{ type: FETCH_LOGS_FAIL, payload: { error: {} } }]
+                ]);
+            });
+        });
+    });
 });

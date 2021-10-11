@@ -21,10 +21,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { withTranslation } from 'react-i18next';
-import { storages } from '../../side-panel/read-write-configuration/ReadWriteConfiguration';
 
 import stageIcon from '../../sidebar/palette/stageIcon';
 import useStyles from './ReadWriteStage.Styles';
+import { STORAGES } from '../../constants';
 
 const ReadWriteStage = ({ stage, t }) => {
     const classes = useStyles();
@@ -50,9 +50,15 @@ const ReadWriteStage = ({ stage, t }) => {
         </>
     );
 
+    // eslint-disable-next-line complexity
     const renderStorageData = () => {
         switch (stage.storage) {
-            case 'DB2':
+            case STORAGES.DB2.value:
+            case STORAGES.POSTGRE.value:
+            case STORAGES.SQLITE.value:
+            case STORAGES.ORACLE.value:
+            case STORAGES.MYSQL.value:
+            case STORAGES.MSSQL.value:
                 return (
                     <>
                         <Typography
@@ -74,7 +80,7 @@ const ReadWriteStage = ({ stage, t }) => {
                         </Typography>
                     </>
                 );
-            case 'elastic':
+            case STORAGES.ELASTIC.value:
                 return (
                     <>
                         <Typography
@@ -87,10 +93,10 @@ const ReadWriteStage = ({ stage, t }) => {
                         </Typography>
                     </>
                 );
-            case 'cos':
-            case 's3':
+            case STORAGES.COS.value:
+            case STORAGES.AWS.value:
                 return cosStageFields();
-            case 'STDOUT':
+            case STORAGES.STDOUT.value:
                 return null;
             default:
                 throw new Error(`Unsupported storage: ${stage.storage}`);
@@ -108,7 +114,11 @@ const ReadWriteStage = ({ stage, t }) => {
                 component="div"
                 className={classes.storage}
             >
-                {storages.find(({ value }) => value === stage.storage)?.label}
+                {
+                    Object.values(STORAGES).find(
+                        ({ value }) => value === stage.storage
+                    )?.label
+                }
             </Typography>
         </div>
     );

@@ -43,83 +43,69 @@ const ReadWriteTextFields = ({
 }) => {
     const classes = useStyles();
 
-    return (
-        <>
-            {fields.map(({ field, rows = 1 }) => {
-                const fieldName = nameWIthPoint ? field : camelCase(field);
-                return (
-                    <>
-                        <Box
-                            key={field}
-                            className={classNames(classes.fieldWrapper, {
-                                [classes.multilineCross]: rows > 1
-                            })}
-                        >
-                            <TextField
-                                label={t(
-                                    `jobDesigner:readConfiguration.${field.replace(
-                                        /[\s.]/g,
-                                        ''
-                                    )}`
-                                )}
-                                placeholder={t(
-                                    `jobDesigner:readConfiguration.${field.replace(
-                                        /[\s.]/g,
-                                        ''
-                                    )}`
-                                )}
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                multiline={rows > 1}
-                                rows={rows}
-                                disabled={
-                                    !ableToEdit ||
-                                    valueIsLink(inputValues[fieldName])
-                                }
-                                name={fieldName}
-                                value={inputValues[fieldName] || ''}
-                                onChange={handleInputChange}
-                                InputProps={{
-                                    endAdornment: (
-                                        <IconButton
-                                            className={classNames(classes.button, {
-                                                [classes.multilineButton]: rows > 1
-                                            })}
-                                            onClick={() => openModal(fieldName)}
-                                        >
-                                            <TuneOutlined />
-                                        </IconButton>
-                                    )
-                                }}
-                            />
+    return fields.map(({ field, rows = 1 }) => {
+        const fieldName = nameWIthPoint ? field : camelCase(field);
+        return (
+            <Box
+                key={field}
+                className={classNames(classes.fieldWrapper, {
+                    [classes.multilineCross]: rows > 1
+                })}
+            >
+                <TextField
+                    label={t(
+                        `jobDesigner:readConfiguration.${field.replace(
+                            /[\s.]/g,
+                            ''
+                        )}`
+                    )}
+                    placeholder={t(
+                        `jobDesigner:readConfiguration.${field.replace(
+                            /[\s.]/g,
+                            ''
+                        )}`
+                    )}
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    multiline={rows > 1}
+                    rows={rows}
+                    disabled={!ableToEdit || valueIsLink(inputValues[fieldName])}
+                    name={fieldName}
+                    value={inputValues[fieldName] || ''}
+                    onChange={handleInputChange}
+                    InputProps={{
+                        endAdornment: (
                             <IconButton
-                                color={
-                                    valueIsLink(inputValues[fieldName])
-                                        ? 'primary'
-                                        : 'inherit'
-                                }
-                                onClick={() =>
-                                    handleInputChange({
-                                        target: {
-                                            name: fieldName,
-                                            value: ''
-                                        }
-                                    })
-                                }
-                                disabled={
-                                    !ableToEdit ||
-                                    !valueIsLink(inputValues[fieldName])
-                                }
+                                className={classNames(classes.button, {
+                                    [classes.multilineButton]: rows > 1
+                                })}
+                                onClick={() => openModal(fieldName)}
                             >
-                                <Cancel />
+                                <TuneOutlined />
                             </IconButton>
-                        </Box>
-                    </>
-                );
-            })}
-        </>
-    );
+                        )
+                    }}
+                />
+                <IconButton
+                    color={
+                        valueIsLink(inputValues[fieldName]) ? 'primary' : 'inherit'
+                    }
+                    onClick={() =>
+                        handleInputChange({
+                            target: {
+                                name: fieldName,
+                                value: ''
+                            }
+                        })
+                    }
+                    disabled={!ableToEdit || !valueIsLink(inputValues[fieldName])}
+                >
+                    <Cancel />
+                </IconButton>
+            </Box>
+        );
+    });
 };
 
 ReadWriteTextFields.propTypes = {

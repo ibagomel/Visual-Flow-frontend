@@ -28,6 +28,7 @@ import CdcModal from './modals/cdcModal';
 import UnionModal from './modals/UnionModal';
 import JobModal from './modals/JobModal';
 import NotificationModal from './modals/NotificationModal';
+import ContainerModal from './modals/ContainerModal';
 import {
     READ,
     WRITE,
@@ -39,7 +40,8 @@ import {
     TRANSFORM,
     FILTER,
     JOB,
-    NOTIFICATION
+    NOTIFICATION,
+    CONTAINER
 } from '../mxgraph/constants';
 
 const StageModal = ({ stageName, ...restProps }) => {
@@ -67,6 +69,8 @@ const StageModal = ({ stageName, ...restProps }) => {
                 return <JobModal {...restProps} />;
             case NOTIFICATION:
                 return <NotificationModal {...restProps} />;
+            case CONTAINER:
+                return <ContainerModal {...restProps} />;
             default:
                 return null;
         }

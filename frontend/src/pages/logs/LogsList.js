@@ -19,18 +19,16 @@
 
 import React from 'react';
 import { List, Grid, ListItem, ListItemText } from '@material-ui/core';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import useStyles from './LogsList.Styles';
 import LogsHeader from '../../components/logs-header/LogsHeader';
 
-import fetchLogs from '../../redux/actions/logsActions';
-
 const lvls = ['INFO', 'WARN', 'ERROR', 'DEBUG'];
 
-const LogsList = ({ data, modal, projId, jobId, getLogs }) => {
+const LogsList = ({ data, modal, onRefresh }) => {
     const classes = useStyles();
     const errorMes = useSelector(state => state.pages.logs.error);
 
@@ -54,7 +52,10 @@ const LogsList = ({ data, modal, projId, jobId, getLogs }) => {
 
     const logs = list =>
         list.map(
-            ({ message, timestamp, level }) => `${timestamp} - ${level} - ${message}`
+            ({ message, timestamp, level }) =>
+                (timestamp ? `${timestamp} - ` : '') +
+                (level ? `${level} - ` : '') +
+                (message ? `${message}` : '')
         );
 
     return (
@@ -67,7 +68,7 @@ const LogsList = ({ data, modal, projId, jobId, getLogs }) => {
                 <LogsHeader
                     onSearch={event => setSearch(event.target.value)}
                     searchValue={search}
-                    onRefreshClick={() => getLogs(projId, jobId)}
+                    onRefreshClick={onRefresh}
                     dropList={lvls}
                     onSelect={event => setLevel(event.target.value)}
                     lvl={lvl}
@@ -115,13 +116,7 @@ const LogsList = ({ data, modal, projId, jobId, getLogs }) => {
 LogsList.propTypes = {
     modal: PropTypes.bool,
     data: PropTypes.array,
-    projId: PropTypes.string,
-    jobId: PropTypes.string,
-    getLogs: PropTypes.func
+    onRefresh: PropTypes.func
 };
 
-const mapDispatchToProps = {
-    getLogs: fetchLogs
-};
-
-export default connect(null, mapDispatchToProps)(LogsList);
+export default LogsList;

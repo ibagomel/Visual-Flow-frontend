@@ -23,7 +23,7 @@ export default makeStyles(theme => ({
     root: {
         position: 'relative'
     },
-    name: {
+    title: {
         position: 'absolute',
         left: -100,
         top: -64,
@@ -31,6 +31,10 @@ export default makeStyles(theme => ({
         'white-space': 'normal',
         width: 215,
         'text-align': 'left'
+    },
+    name: {
+        paddingLeft: theme.spacing(1),
+        overflow: 'hidden'
     },
     addressees: {
         backgroundColor: '#81c784',

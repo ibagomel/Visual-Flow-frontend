@@ -20,7 +20,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import InfoModal from '../InfoModal';
-import { DB2, COS, AWS, ELASTIC, STDOUT } from '../../mxgraph/constants';
+import { STORAGES } from '../../mxgraph/constants';
 
 const RWModal = props => {
     const { t } = useTranslation();
@@ -182,7 +182,7 @@ const RWModal = props => {
             title: t('ReadWrite:noAdditionalFields')
         }
     ];
-    const storages = [DB2, COS, AWS, ELASTIC, STDOUT];
+    const storages = Object.values(STORAGES).map(v => v.label);
     return (
         <InfoModal
             content={content}

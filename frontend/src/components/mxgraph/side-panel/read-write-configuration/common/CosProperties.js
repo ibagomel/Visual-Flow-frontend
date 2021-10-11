@@ -76,7 +76,7 @@ CosProperties.propTypes = {
     handleInputChange: PropTypes.func,
     ableToEdit: PropTypes.bool,
     openModal: PropTypes.func,
-    fields: PropTypes.arrayOf(PropTypes.string),
+    fields: PropTypes.arrayOf(PropTypes.object),
     inputValues: PropTypes.shape({
         format: PropTypes.string,
         operation: PropTypes.string,

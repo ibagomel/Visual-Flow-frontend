@@ -17,39 +17,42 @@
  * limitations under the License.
  */
 
-import { palette } from '../../translations/en/jobDesigner.json';
-import { JOB, NOTIFICATION, PIPELINE, CONTAINER } from './constants';
+import { makeStyles } from '@material-ui/core/styles';
 
-const pipelinesStages = [
-    {
-        operation: JOB,
-        name: palette.JOB,
-        color: '#E9F5FE',
-        show: true
+export default makeStyles(theme => ({
+    root: {
+        position: 'relative'
     },
-    {
-        operation: PIPELINE,
-        name: palette.PIPELINE,
-        color: '#FFF5E5',
-        show: false
+    title: {
+        position: 'absolute',
+        left: -100,
+        top: -64,
+        display: 'flex',
+        'white-space': 'normal',
+        width: 204,
+        'text-align': 'left',
+        'align-items': 'center'
     },
-    {
-        operation: NOTIFICATION,
-        name: palette.NOTIFICATION,
-        color: '#EDF7ED',
-        show: true
+    name: {
+        paddingLeft: theme.spacing(1),
+        overflow: 'hidden'
     },
-    {
-        operation: CONTAINER,
-        name: palette.CONTAINER,
-        color: '#FFF5E5',
-        show: true
+    image: {
+        position: 'absolute',
+        left: -97,
+        top: -22,
+        backgroundColor: '#FFB74D',
+        color: 'white',
+        'border-radius': 4,
+        maxWidth: 190,
+        overflow: 'hidden',
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+        whiteSpace: 'pre-wrap'
+    },
+    logIcon: {
+        cursor: 'pointer',
+        fill: theme.palette.text.secondary,
+        marginLeft: 'auto'
     }
-].filter(stage => stage.show);
-
-const pipelinesStagesByType = Object.assign(
-    {},
-    ...pipelinesStages.map(stage => ({ [stage.operation]: stage }))
-);
-
-export { pipelinesStages, pipelinesStagesByType };
+}));

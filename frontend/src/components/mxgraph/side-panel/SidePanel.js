@@ -26,7 +26,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/styles';
 import { Box, Drawer, Toolbar, Typography, IconButton } from '@material-ui/core';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CloseIcon from '@material-ui/icons/Close';
 import { get } from 'lodash';
 import {
@@ -242,7 +242,7 @@ class SidePanel extends React.Component {
                                 <Typography variant="h6">
                                     {t('jobDesigner:Configuration')}
                                 </Typography>
-                                <ErrorOutlineIcon
+                                <InfoOutlinedIcon
                                     className={classes.infoIcon}
                                     onClick={() =>
                                         this.setState({ showModal: true })

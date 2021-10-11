@@ -36,6 +36,7 @@ import join from './translations/en/stages/join.json';
 import cdc from './translations/en/stages/cdc.json';
 import job from './translations/en/stages/job.json';
 import notification from './translations/en/stages/notification.json';
+import container from './translations/en/stages/container.json';
 import pipelineDesigner from './translations/en/pipelineDesigner.json';
 
 export const resources = {
@@ -55,6 +56,7 @@ export const resources = {
         cdc,
         job,
         notification,
+        container,
         pipelineDesigner
     }
 };

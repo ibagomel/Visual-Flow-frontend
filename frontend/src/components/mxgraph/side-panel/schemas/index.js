@@ -29,6 +29,8 @@ import union from './union.json';
 import transform from './transform.json';
 import filter from './filter.json';
 import job from './job.json';
+import container from './container.json';
+import readWriteCommon from './read-write-common.json';
 
 const schemas = {
     ...commonSchema,
@@ -41,7 +43,9 @@ const schemas = {
     ...transform,
     ...filter,
     ...job,
-    WRITE: [...get(read, 'READ'), ...get(write, 'WRITE')]
+    ...container,
+    READ: [...get(readWriteCommon, 'READ_WRITE'), ...get(read, 'READ')],
+    WRITE: [...get(readWriteCommon, 'READ_WRITE'), ...get(write, 'WRITE')]
 };
 
 export default schemas;

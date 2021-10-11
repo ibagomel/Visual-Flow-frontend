@@ -23,22 +23,36 @@ import { withTranslation } from 'react-i18next';
 import PopupForm from '../../../components/popup-form/PopupForm';
 import Logs from '../Logs';
 
-const LogsModal = ({ display, onClose, t, projectId, jobId }) => {
-    return (
-        <PopupForm
-            logs
-            display={display}
-            onClose={onClose}
-            title={t('jobs:tooltip.Logs')}
-        >
-            <Logs projId={projectId} jobId={jobId} modal={display} />
-        </PopupForm>
-    );
-};
+const LogsModal = ({
+    display,
+    onClose,
+    t,
+    projectId,
+    jobId,
+    pipelineId,
+    nodeId
+}) => (
+    <PopupForm
+        logs
+        display={display}
+        onClose={onClose}
+        title={t('jobs:tooltip.Logs')}
+    >
+        <Logs
+            projId={projectId}
+            jobId={jobId}
+            modal={display}
+            pipelineId={pipelineId}
+            nodeId={nodeId}
+        />
+    </PopupForm>
+);
 
 LogsModal.propTypes = {
     projectId: PropTypes.string,
     jobId: PropTypes.string,
+    pipelineId: PropTypes.string,
+    nodeId: PropTypes.string,
     display: PropTypes.bool,
     onClose: PropTypes.func,
     t: PropTypes.func

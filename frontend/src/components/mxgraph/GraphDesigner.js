@@ -98,9 +98,11 @@ import {
     PENDING,
     RUNNING,
     SUCCEEDED,
-    FAILED
+    FAILED,
+    CONTAINER,
+    SKIPPED
 } from './constants';
-import LogsModal from '../../pages/logs/logsModal/LogsModal';
+import LogsModal from '../../pages/logs/logsModal';
 
 const {
     mxGraph,
@@ -128,7 +130,8 @@ class GraphDesigner extends Component {
 
         this.state = {
             graph: {},
-            jobId: ''
+            jobId: '',
+            nodeId: ''
         };
 
         this.createPopupMenu = this.popupMenu.bind(this);
@@ -265,7 +268,8 @@ class GraphDesigner extends Component {
                     const attribute = cell.value.attributes[attrKey];
                     results[attribute.nodeName] = attribute.nodeValue;
                 });
-                if (cell.getAttribute('operation') === JOB) {
+                const operation = cell.getAttribute('operation');
+                if (operation === JOB) {
                     const job = jobs.find(
                         item => item.id === cell.getAttribute('jobId')
                     );
@@ -274,6 +278,11 @@ class GraphDesigner extends Component {
                     );
                     if (jobInstance) {
                         results.status = jobInstance.status;
+                    }
+                }
+                if (operation === CONTAINER) {
+                    if (data?.jobsStatuses) {
+                        results.status = data?.jobsStatuses[cell.id];
                     }
                 }
                 // Returns a DOM for the label
@@ -304,15 +313,20 @@ class GraphDesigner extends Component {
                     nodeName === 'svg'
                         ? get(mouseEvent, 'target.id', '')
                         : get(mouseEvent, 'target.parentElement.id', '');
-                if (
-                    cell.getAttribute('operation') === JOB &&
-                    cell.getAttribute('jobId') === nodeId
-                ) {
+                const operation = cell.getAttribute('operation');
+                if (operation === JOB && cell.getAttribute('jobId') === nodeId) {
                     const job = jobs.find(item => item.id === nodeId);
                     const jobId = job.pipelineInstances?.find(
                         item => item.pipelineId === data.id
                     )?.id;
-                    this.setState({ jobId: jobId || nodeId });
+                    this.setState({ jobId: jobId || nodeId, nodeId: '' });
+                    this.props.setLogs(true);
+                }
+                if (
+                    operation === CONTAINER &&
+                    cell.getAttribute('name') === nodeId
+                ) {
+                    this.setState({ nodeId: cell.id });
                     this.props.setLogs(true);
                 }
             }
@@ -586,6 +600,8 @@ class GraphDesigner extends Component {
             color = '#E57373';
         } else if (val === RUNNING || val === PENDING) {
             color = '#64b5f6';
+        } else if (val === SKIPPED) {
+            color = '#bdbdbd';
         }
         return color;
     };
@@ -642,16 +658,17 @@ class GraphDesigner extends Component {
             setDirtyGraph,
             setLogs
         } = this.props;
-        const { graph, jobId } = this.state;
+        const { graph, jobId, nodeId } = this.state;
         const currentPath = history.location.pathname.split('/');
         const currentProject = currentPath.slice(-2, -1)[0];
         const currentJob = type === PIPELINE ? jobId : currentPath.slice(-1)[0];
-
         return (
             <div className={classes.root}>
                 <LogsModal
                     display={showLogsModal}
                     projectId={currentProject}
+                    pipelineId={data.id}
+                    nodeId={nodeId}
                     jobId={currentJob}
                     onClose={() => setLogs(false)}
                 />

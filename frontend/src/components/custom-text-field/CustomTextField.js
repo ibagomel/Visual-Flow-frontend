@@ -23,45 +23,73 @@ import classNames from 'classnames';
 import { TextField, MenuItem } from '@material-ui/core';
 import useStyles from './CustomTextFiled.Styles';
 
+const PATTERN = '([\\d]*)([a-zA-Z]*)';
+
+const NAMES = {
+    TEXT: 'text',
+    SELECT: 'select'
+};
+
 const CustomTextField = ({
     className,
-    classNameText,
-    classNameSelect,
-    onChangeText,
-    onChangeSelect,
-    textValue,
-    selectedValue,
+    variant,
+    margin,
     selectValues,
     textLabel,
     textPlaceholder,
     selectLabel,
     selectPlaceholder,
     textType,
-    disabled
+    disabled,
+    value,
+    parseFunction,
+    onChange,
+    name,
+    defaultValue
 }) => {
     const classes = useStyles();
+
+    const parsedValue = parseFunction(value) || [];
+    const textValue = parsedValue[1] || '';
+    const selectValue = parsedValue[2] || defaultValue;
+
+    const handleOnChange = event => {
+        if (event.target.name === NAMES.TEXT) {
+            onChange({
+                target: { value: event.target.value + selectValue, name }
+            });
+        } else {
+            onChange({
+                target: { value: textValue + event.target.value, name }
+            });
+        }
+    };
 
     return (
         <div className={classNames(classes.root, className)}>
             <TextField
-                className={classNames(classes.text, classNameText)}
-                variant="outlined"
+                className={classNames(classes.text)}
+                margin={margin}
+                name={NAMES.TEXT}
+                variant={variant}
                 disabled={disabled}
                 value={textValue}
-                onChange={onChangeText}
+                onChange={handleOnChange}
                 label={textLabel}
-                placeholder={textPlaceholder}
+                placeholder={textPlaceholder || textLabel}
                 type={textType}
             />
             <TextField
-                className={classNames(classes.select, classNameSelect)}
+                className={classNames(classes.select)}
+                margin={margin}
                 select
                 disabled={disabled}
-                value={selectedValue || ''}
-                onChange={onChangeSelect}
-                variant="outlined"
+                value={selectValue}
+                onChange={handleOnChange}
+                name={NAMES.SELECT}
+                variant={variant}
                 label={selectLabel}
-                placeholder={selectPlaceholder}
+                placeholder={selectPlaceholder || selectLabel}
             >
                 {selectValues.map(option => (
                     <MenuItem key={option.key || option.value} value={option.value}>
@@ -73,18 +101,26 @@ const CustomTextField = ({
     );
 };
 
+CustomTextField.defaultProps = {
+    parseFunction: value => new RegExp(PATTERN, 'gi').exec(value),
+    textType: 'number',
+    variant: 'outlined',
+    margin: 'normal'
+};
+
 CustomTextField.propTypes = {
     className: PropTypes.string,
-    classNameText: PropTypes.string,
-    classNameSelect: PropTypes.string,
-    onChangeText: PropTypes.func,
-    onChangeSelect: PropTypes.func,
+    variant: PropTypes.string,
+    margin: PropTypes.string,
+    defaultValue: PropTypes.string,
+    onChange: PropTypes.func,
+    name: PropTypes.string,
     textLabel: PropTypes.string,
     textPlaceholder: PropTypes.string,
     selectLabel: PropTypes.string,
     selectPlaceholder: PropTypes.string,
-    textValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    selectedValue: PropTypes.string,
+    value: PropTypes.string,
+    parseFunction: PropTypes.func,
     selectValues: PropTypes.arrayOf(PropTypes.object),
     textType: PropTypes.string,
     disabled: PropTypes.bool

@@ -23,6 +23,7 @@ import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import TransformOutlinedIcon from '@material-ui/icons/TransformOutlined';
 import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined';
 import MailOutlinedIcon from '@material-ui/icons/MailOutlined';
+import DeveloperModeOutlinedIcon from '@material-ui/icons/DeveloperModeOutlined';
 import React from 'react';
 import join16 from '../../../../assets/join16.svg';
 import union16 from '../../../../assets/union16.svg';
@@ -42,7 +43,8 @@ import {
     FILTER,
     JOB,
     NOTIFICATION,
-    PIPELINE
+    PIPELINE,
+    CONTAINER
 } from '../../constants';
 
 const style = {
@@ -76,6 +78,8 @@ const stageIcon = stageName => {
             return <TimelineOutlinedIcon style={style} />;
         case NOTIFICATION:
             return <MailOutlinedIcon style={style} />;
+        case CONTAINER:
+            return <DeveloperModeOutlinedIcon style={style} />;
         default:
             return '';
     }

@@ -21,31 +21,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 
+import { withTranslation } from 'react-i18next';
+import DescriptionIcon from '@material-ui/icons/Description';
 import stageIcon from '../../sidebar/palette/stageIcon';
-import useStyles from './NotificationStage.Styles';
+import useStyles from './ContainerStage.Styles';
+import { DRAFT, PENDING, SKIPPED } from '../../constants';
 
-const NotificationStage = ({ stage }) => {
+const ContainerStage = ({ stage }) => {
     const classes = useStyles();
+    const visibleLogsIcon =
+        stage.status && ![DRAFT, PENDING, SKIPPED].includes(stage.status);
 
     return (
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.title}>
                 {stageIcon(stage.operation)}
                 <span className={classes.name}>{stage.name}</span>
+                {visibleLogsIcon && (
+                    <DescriptionIcon id={stage.name} className={classes.logIcon} />
+                )}
             </Typography>
-            <Typography
-                variant="caption"
-                component="div"
-                className={classes.addressees}
-            >
-                {stage.addressees}
+            <Typography variant="caption" component="div" className={classes.image}>
+                {stage.image || ''}
             </Typography>
         </div>
     );
 };
 
-NotificationStage.propTypes = {
+ContainerStage.propTypes = {
     stage: PropTypes.object
 };
 
-export default NotificationStage;
+export default withTranslation()(ContainerStage);

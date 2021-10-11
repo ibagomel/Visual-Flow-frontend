@@ -61,7 +61,7 @@ const PipelineDesigner = ({
     return loading || jobs.loading ? (
         <PageSkeleton />
     ) : (
-        <GraphDesigner type={PIPELINE} />
+        <GraphDesigner type={PIPELINE} projectId={projectId} />
     );
 };
 

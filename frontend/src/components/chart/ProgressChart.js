@@ -26,14 +26,14 @@ import styles from './ProgressChart.Styles';
 const ProgressChart = ({ value, thickness = 2, classes }) => (
     <div className={classes.root}>
         <CircularProgress
-            variant="static"
+            variant="determinate"
             className={classes.bottom}
             size="100%"
             thickness={thickness}
             value={100}
         />
         <CircularProgress
-            variant="static"
+            variant="determinate"
             className={classes.top}
             classes={{
                 circle: classes.circle

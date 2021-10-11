@@ -31,6 +31,7 @@ import CDCStage from './cdc-stage/CDCStage';
 import EdgeStage from './edge-stage/EdgeStage';
 import JobStage from './job-stage';
 import NotificationStage from './notification-stage/NotificationStage';
+import ContainerStage from './container-stage';
 import {
     READ,
     WRITE,
@@ -43,7 +44,8 @@ import {
     TRANSFORM,
     FILTER,
     JOB,
-    NOTIFICATION
+    NOTIFICATION,
+    CONTAINER
 } from '../constants';
 
 // eslint-disable-next-line complexity
@@ -83,6 +85,8 @@ const renderStage = (stage, t) => {
             return <JobStage stage={stage} />;
         case NOTIFICATION:
             return <NotificationStage stage={stage} />;
+        case CONTAINER:
+            return <ContainerStage stage={stage} />;
         default:
             return null;
     }

@@ -23,7 +23,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Skeleton from '@material-ui/lab/Skeleton';
 
-import fetchLogs from '../../redux/actions/logsActions';
+import { fetchJobLogs, fetchContainerLogs } from '../../redux/actions/logsActions';
 import LogsList from './LogsList';
 import LogsPageHeader from '../../components/logs-page-header/LogsPageHeader';
 import history from '../../utils/history';
@@ -33,12 +33,23 @@ const Logs = ({
     jobName,
     jobId,
     logs: { data, loading },
-    getLogs,
-    modal
+    getJobLogs,
+    getContainerLogs,
+    modal,
+    pipelineId,
+    nodeId
 }) => {
+    const callGetLogs = () => {
+        if (nodeId) {
+            getContainerLogs(projId, pipelineId, nodeId);
+        } else {
+            getJobLogs(projId, jobId);
+        }
+    };
+
     React.useEffect(() => {
-        getLogs(projId, jobId);
-    }, [projId, jobId]);
+        callGetLogs();
+    }, [nodeId, jobId]);
 
     const backTo = new URLSearchParams(history.location.search).get('backTo');
 
@@ -80,6 +91,7 @@ const Logs = ({
                             modal={modal}
                             projId={projId}
                             jobId={jobId}
+                            onRefresh={callGetLogs}
                         />
                     )}
                 </Grid>
@@ -93,8 +105,11 @@ Logs.propTypes = {
     projId: PropTypes.string,
     jobName: PropTypes.string,
     jobId: PropTypes.string,
+    pipelineId: PropTypes.string,
+    nodeId: PropTypes.string,
     logs: PropTypes.object,
-    getLogs: PropTypes.func
+    getJobLogs: PropTypes.func,
+    getContainerLogs: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -102,7 +117,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    getLogs: fetchLogs
+    getJobLogs: fetchJobLogs,
+    getContainerLogs: fetchContainerLogs
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logs);

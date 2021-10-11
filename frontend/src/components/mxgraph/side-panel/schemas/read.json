@@ -1,173 +1,42 @@
 {
   "READ": [
     {
-      "field": "storage"
-    },
-    {
-      "field": "authType",
-      "conditions": [
-        {
-          "storage": "cos"
-        }
-      ]
-    },
-    {
-      "field": "bucket",
-      "conditions": [
-        {
-          "storage": "cos"
-        },
-        {
-          "storage": "s3"
-        }
-      ]
-    },
-    {
-      "field": "endpoint",
-      "conditions": [
-        {
-          "storage": "cos"
-        },
-        {
-          "storage": "s3"
-        }
-      ]
-    },
-    {
-      "field": "format",
-      "conditions": [
-        {
-          "storage": "cos"
-        },
-        {
-          "storage": "s3"
-        }
-      ]
-    },
-    {
-      "field": "path",
-      "conditions": [
-        {
-          "storage": "cos"
-        },
-        {
-          "storage": "s3"
-        }
-      ]
-    },
-    {
-      "field": "iamApiKey",
-      "conditions": [
-        {
-          "storage": "cos",
-          "authType": "IAM"
-        }
-      ]
-    },
-    {
-      "field": "iamServiceId",
-      "conditions": [
-        {
-          "storage": "cos",
-          "authType": "IAM"
-        }
-      ]
-    },
-    {
-      "field": "accessKey",
-      "conditions": [
-        {
-          "storage": "cos",
-          "authType": "HMAC"
-        },
-        {
-          "storage": "s3",
-          "anonymousAccess": "false"
-        }
-      ]
-    },
-    {
-      "field": "secretKey",
-      "conditions": [
-        {
-          "storage": "cos",
-          "authType": "HMAC"
-        },
-        {
-          "storage": "s3",
-          "anonymousAccess": "false"
-        }
-      ]
-    },
-    {
-      "field": "option.delimiter",
-      "conditions": [
-        {
-          "storage": "cos",
-          "format": "csv"
-        },
-        {
-          "storage": "s3",
-          "format": "csv"
-        }
-      ]
-    },
-    {
-      "field": "option.header",
-      "conditions": [
-        {
-          "storage": "cos",
-          "format": "csv"
-        },
-        {
-          "storage": "s3",
-          "format": "csv"
-        }
-      ]
-    },
-    {
-      "field": "anonymousAccess",
-      "condition": [
-        {
-          "storage": "s3"
-        }
-      ]
-    },
-    {
-      "field": "jdbcUrl",
-      "conditions": [
-        {
-          "storage": "DB2"
-        }
-      ]
-    },
-    {
-      "field": "user",
-      "conditions": [
-        {
-          "storage": "DB2"
-        },
-        {
-          "storage": "elastic"
-        }
-      ]
-    },
-    {
-      "field": "password",
-      "conditions": [
-        {
-          "storage": "DB2"
-        },
-        {
-          "storage": "elastic"
-        }
-      ]
-    },
-    {
       "field": "schema",
       "conditions": [
         {
-          "storage": "DB2",
+          "storage": "db2",
+          "customSql": "false"
+        },
+        {
+          "storage": "postgresql",
+          "customSql": "false"
+        },
+        {
+          "storage": "sqlite",
+          "customSql": "false"
+        },
+        {
+          "storage": "oracle",
+          "customSql": "false"
+        },
+        {
+          "storage": "mysql",
+          "customSql": "false"
+        },
+        {
+          "storage": "redis",
+          "customSql": "false"
+        },
+        {
+          "storage": "cassandra",
+          "customSql": "false"
+        },
+        {
+          "storage": "mssql",
+          "customSql": "false"
+        },
+        {
+          "storage": "mongo",
           "customSql": "false"
         }
       ]
@@ -176,68 +45,40 @@
       "field": "table",
       "conditions": [
         {
-          "storage": "DB2",
+          "storage": "db2",
           "customSql": "false"
-        }
-      ]
-    },
-    {
-      "field": "option.dbtable",
-      "conditions": [
-        {
-          "storage": "DB2",
-          "customSql": "true"
-        }
-      ]
-    },
-    {
-      "field": "customSql",
-      "conditions": [
-        {
-          "storage": "DB2"
-        }
-      ]
-    },
-    {
-      "field": "certData",
-      "conditions": [
-        {
-          "storage": "DB2"
         },
         {
-          "storage": "elastic"
-        }
-      ]
-    },
-    {
-      "field": "nodes",
-      "conditions": [
+          "storage": "postgresql",
+          "customSql": "false"
+        },
         {
-          "storage": "elastic"
-        }
-      ]
-    },
-    {
-      "field": "ssl",
-      "conditions": [
+          "storage": "sqlite",
+          "customSql": "false"
+        },
         {
-          "storage": "elastic"
-        }
-      ]
-    },
-    {
-      "field": "port",
-      "conditions": [
+          "storage": "oracle",
+          "customSql": "false"
+        },
         {
-          "storage": "elastic"
-        }
-      ]
-    },
-    {
-      "field": "index",
-      "conditions": [
+          "storage": "mysql",
+          "customSql": "false"
+        },
         {
-          "storage": "elastic"
+          "storage": "redis",
+          "customSql": "false"
+        },
+        {
+          "storage": "cassandra",
+          "customSql": "false"
+        },
+        {
+          "storage": "mssql",
+          "customSql": "false"
+        },
+        {
+          "storage": "mongo",
+          "customSql": "false"
         }
       ]
     }

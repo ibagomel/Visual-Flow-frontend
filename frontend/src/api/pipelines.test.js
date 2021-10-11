@@ -23,6 +23,7 @@ import axiosInstance from './axiosInstance';
 describe('pipelines', () => {
     const projectId = 'some_id';
     const pipelineId = 'some_id';
+    const nodeId = 'some_id';
     const expected = { data: {} };
 
     it('should get pipelines by projectId', () => {
@@ -44,7 +45,7 @@ describe('pipelines', () => {
     it('should update pipelines', () => {
         const pipeline = { graph: {} };
         jest.spyOn(axiosInstance, 'post').mockResolvedValue(expected);
-        return pipelines.updatePipeline(projectId, pipeline,1).then(result => {
+        return pipelines.updatePipeline(projectId, pipeline, 1).then(result => {
             expect(result).toEqual(expected);
         });
     });
@@ -104,7 +105,7 @@ describe('pipelines', () => {
     it('should update pipeline', () => {
         const pipeline = { graph: {} };
         jest.spyOn(axiosInstance, 'post').mockResolvedValue(expected);
-        return pipelines.updatePipeline(projectId, pipeline,1).then(result => {
+        return pipelines.updatePipeline(projectId, pipeline, 1).then(result => {
             expect(result).toEqual(expected);
         });
     });
@@ -116,5 +117,16 @@ describe('pipelines', () => {
             expect(result).toEqual(expected);
             expect(spy).toHaveBeenCalledWith(requestURL);
         });
+    });
+
+    it('should get logs', () => {
+        const requestURL = `/project/${projectId}/pipeline/${pipelineId}/${nodeId}/logs`;
+        const spy = jest.spyOn(axiosInstance, 'get').mockResolvedValue(expected);
+        return pipelines
+            .getPipelineLogs(projectId, pipelineId, nodeId)
+            .then(result => {
+                expect(result).toEqual(expected);
+                expect(spy).toHaveBeenCalledWith(requestURL);
+            });
     });
 });

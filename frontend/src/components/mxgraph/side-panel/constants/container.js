@@ -17,39 +17,27 @@
  * limitations under the License.
  */
 
-import { palette } from '../../translations/en/jobDesigner.json';
-import { JOB, NOTIFICATION, PIPELINE, CONTAINER } from './constants';
+export const LIMITS = ['requestsCpu', 'requestsMemory', 'limitsCpu', 'limitsMemory'];
 
-const pipelinesStages = [
-    {
-        operation: JOB,
-        name: palette.JOB,
-        color: '#E9F5FE',
-        show: true
-    },
-    {
-        operation: PIPELINE,
-        name: palette.PIPELINE,
-        color: '#FFF5E5',
-        show: false
-    },
-    {
-        operation: NOTIFICATION,
-        name: palette.NOTIFICATION,
-        color: '#EDF7ED',
-        show: true
-    },
-    {
-        operation: CONTAINER,
-        name: palette.CONTAINER,
-        color: '#FFF5E5',
-        show: true
-    }
-].filter(stage => stage.show);
+export const CPU = {
+    CORES: { label: 'cores', value: 'c' },
+    MILICORES: { label: 'milicores', value: 'm' }
+};
 
-const pipelinesStagesByType = Object.assign(
-    {},
-    ...pipelinesStages.map(stage => ({ [stage.operation]: stage }))
-);
+export const MEMORY = {
+    KB: { label: 'KB', value: 'k' },
+    MB: { label: 'MB', value: 'M' },
+    GB: { label: 'GB', value: 'G' }
+};
 
-export { pipelinesStages, pipelinesStagesByType };
+export const IMAGE_PULL_POLICY = [
+    { label: 'If not present', value: 'IfNotPresent' },
+    { label: 'Always', value: 'Always' },
+    { label: 'Never', value: 'Never' }
+];
+
+export const IMAGE_PULL_SECRET_TYPE = {
+    NOT_APPLICABLE: { label: 'Not applicable', value: 'NOT_APPLICABLE' },
+    NEW: { label: 'New', value: 'NEW' },
+    PROVIDED: { label: 'Provided', value: 'PROVIDED' }
+};

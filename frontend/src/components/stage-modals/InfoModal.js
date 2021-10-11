@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import PopupForm from '../popup-form/PopupForm';
-import { DB2, COS, ELASTIC, STDOUT, AWS } from '../mxgraph/constants';
+import { STORAGES } from '../mxgraph/constants';
 
 import useStyles from './InfoModal.Style';
 
@@ -44,17 +44,23 @@ const InfoModal = ({
 
     const [storage, setStorage] = React.useState('');
 
+    // eslint-disable-next-line complexity
     const chosenStorage = () => {
         switch (storage) {
-            case DB2:
+            case STORAGES.DB2.label:
+            case STORAGES.POSTGRE.label:
+            case STORAGES.SQLITE.label:
+            case STORAGES.ORACLE.label:
+            case STORAGES.MYSQL.label:
+            case STORAGES.MSSQL.label:
                 return db2;
-            case COS:
+            case STORAGES.COS.label:
                 return cos;
-            case AWS:
+            case STORAGES.AWS.label:
                 return aws;
-            case ELASTIC:
+            case STORAGES.ELASTIC.label:
                 return elastic;
-            case STDOUT:
+            case STORAGES.STDOUT.label:
                 return stdout;
             default:
                 return null;
@@ -132,7 +138,10 @@ const InfoModal = ({
                         <option aria-label="None" value="" />
                         {storages?.map(
                             value =>
-                                !(value === STDOUT && title === 'Read') && (
+                                !(
+                                    value === STORAGES.STDOUT.value &&
+                                    title === 'Read'
+                                ) && (
                                     <option key={value} value={value}>
                                         {value}
                                     </option>
@@ -144,7 +153,7 @@ const InfoModal = ({
             {(title === 'Read' || title === 'Write') && (
                 <Box className={classNames(classes.name, classes.wrapper)}>
                     {storage &&
-                        !(storage === STDOUT && title === 'Read') &&
+                        !(storage === STORAGES.STDOUT.value && title === 'Read') &&
                         chosenStorage()?.map(section => {
                             const other = Object.keys(section).slice(1);
                             return (

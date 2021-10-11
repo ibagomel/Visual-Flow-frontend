@@ -20,51 +20,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
-import { Divider, MenuItem, TextField } from '@material-ui/core';
-import { get } from 'lodash';
+import { Divider, TextField } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import Db2Storage from './db2-storage/Db2Storage';
 import CosStorage from './cos-storage/CosStorage';
 import AwsStorage from './aws-storage/AwsStorage';
 import ElasticStorage from './elastic-storage/ElasticStorage';
-import { READ, DB2, COS, ELASTIC, STDOUT, AWS } from '../../constants';
-
-export const storages = [
-    {
-        value: 'DB2',
-        label: DB2
-    },
-    {
-        value: 'cos',
-        label: COS
-    },
-    {
-        value: 's3',
-        label: AWS
-    },
-    {
-        value: 'elastic',
-        label: ELASTIC
-    },
-    {
-        value: 'STDOUT',
-        label: STDOUT,
-        hide: [READ]
-    }
-];
+import { STORAGES } from '../../constants';
 
 const ReadWriteConfiguration = ({ state, ableToEdit, onChange, t, openModal }) => {
+    // eslint-disable-next-line complexity
     const getStorageComponent = name => {
         switch (name) {
-            case 'DB2':
+            case STORAGES.DB2.value:
+            case STORAGES.POSTGRE.value:
+            case STORAGES.SQLITE.value:
+            case STORAGES.ORACLE.value:
+            case STORAGES.MYSQL.value:
+            case STORAGES.MSSQL.value:
                 return Db2Storage;
-            case 'cos':
+            case STORAGES.COS.value:
                 return CosStorage;
-            case 's3':
+            case STORAGES.AWS.value:
                 return AwsStorage;
-            case 'elastic':
+            case STORAGES.ELASTIC.value:
                 return ElasticStorage;
-            case 'STDOUT':
+            case STORAGES.STDOUT.value:
                 return () => null;
             default:
                 throw new Error(`Unsupported storage: ${name}`);
@@ -84,32 +66,30 @@ const ReadWriteConfiguration = ({ state, ableToEdit, onChange, t, openModal }) =
             />
         );
     };
-
     return (
         <>
-            <TextField
+            <Autocomplete
                 disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.Storage')}
-                placeholder={t('jobDesigner:readConfiguration.Storage')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
                 name="storage"
-                value={state.storage || ''}
-                onChange={event => onChange(event.target.name, event.target.value)}
-            >
-                {storages
-                    .filter(
-                        storage =>
-                            !get(storage, 'hide', []).includes(state.operation)
-                    )
-                    .map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-            </TextField>
+                options={Object.values(STORAGES)}
+                getOptionLabel={option => option.label || option}
+                value={
+                    Object.values(STORAGES).find(el => el.value === state.storage) ||
+                    null
+                }
+                onChange={(event, newValue) =>
+                    onChange('storage', newValue?.value || undefined)
+                }
+                renderInput={params => (
+                    <TextField
+                        {...params}
+                        variant="outlined"
+                        margin="normal"
+                        placeholder={t('jobDesigner:readConfiguration.Storage')}
+                        label={t('jobDesigner:readConfiguration.Storage')}
+                    />
+                )}
+            />
             <Divider />
             {state.storage && renderStorageComponent(state.storage)}
         </>

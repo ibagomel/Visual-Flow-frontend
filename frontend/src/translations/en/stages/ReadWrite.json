@@ -22,8 +22,8 @@
         "JDBCURL": {
             "name": "JDBC URL",
             "value": "A database connection URL is a string that your DBMS JDBC driver uses to connect to a database",
-            "value1": "The connection URL format for the DB2 driver is:",
-            "value2": "jdbc:db2://hostname:port[;property=value[;...]]"
+            "value1": "The connection URL format for the driver is:",
+            "value2": "jdbc:database-type://hostname:port[;property=value[;...]]"
         },
         "user": {
             "name": "User",

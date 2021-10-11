@@ -29,6 +29,7 @@ export const TRANSFORM = 'TRANSFORM';
 export const FILTER = 'FILTER';
 export const JOB = 'JOB';
 export const NOTIFICATION = 'NOTIFICATION';
+export const CONTAINER = 'CONTAINER';
 export const PIPELINE = 'PIPELINE';
 export const PENDING = 'Pending';
 export const RUNNING = 'Running';
@@ -36,9 +37,60 @@ export const DRAFT = 'Draft';
 export const SUCCEEDED = 'Succeeded';
 export const FAILED = 'Failed';
 export const ERROR = 'Error';
+export const SKIPPED = 'Skipped';
 
-export const DB2 = 'DB2';
-export const COS = 'IBM COS';
-export const AWS = 'AWS S3';
-export const ELASTIC = 'Elasticsearch';
-export const STDOUT = 'STDOUT';
+export const STORAGES = {
+    AWS: {
+        value: 's3',
+        label: 'AWS S3'
+    },
+    CASSANDRA: {
+        value: 'cassandra',
+        label: 'Cassandra'
+    },
+    DB2: {
+        value: 'db2',
+        label: 'DB2'
+    },
+    ELASTIC: {
+        value: 'elastic',
+        label: 'Elasticsearch'
+    },
+    COS: {
+        value: 'cos',
+        label: 'IBM COS'
+    },
+    MYSQL: {
+        value: 'mysql',
+        label: 'MySQL'
+    },
+    MONGO: {
+        value: 'mongo',
+        label: 'Mongo'
+    },
+    MSSQL: {
+        value: 'mssql',
+        label: 'MSSQL'
+    },
+    ORACLE: {
+        value: 'oracle',
+        label: 'Oracle'
+    },
+    POSTGRE: {
+        value: 'postgresql',
+        label: 'PostgreSQL'
+    },
+    REDIS: {
+        value: 'redis',
+        label: 'Redis'
+    },
+    SQLITE: {
+        value: 'sqlite',
+        label: 'SQLite'
+    },
+    STDOUT: {
+        value: 'STDOUT',
+        label: 'STDOUT',
+        hide: [READ]
+    }
+};

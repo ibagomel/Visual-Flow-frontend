@@ -18,14 +18,15 @@
  */
 
 import { FETCH_LOGS_START, FETCH_LOGS_FAIL, FETCH_LOGS_SUCCESS } from './types';
-import api from '../../api/jobs';
+import apiJobs from '../../api/jobs';
+import apiPipelines from '../../api/pipelines';
 
-const fetchLogs = (projectId, jobId) => dispatch => {
+export const fetchJobLogs = (projectId, jobId) => dispatch => {
     dispatch({
         type: FETCH_LOGS_START
     });
 
-    return api.getJobLogs(projectId, jobId).then(
+    return apiJobs.getJobLogs(projectId, jobId).then(
         response =>
             dispatch({
                 type: FETCH_LOGS_SUCCESS,
@@ -39,4 +40,11 @@ const fetchLogs = (projectId, jobId) => dispatch => {
     );
 };
 
-export default fetchLogs;
+export const fetchContainerLogs = (projectId, pipelineId, nodeId) => dispatch => {
+    dispatch({ type: FETCH_LOGS_START });
+
+    return apiPipelines.getPipelineLogs(projectId, pipelineId, nodeId).then(
+        response => dispatch({ type: FETCH_LOGS_SUCCESS, payload: response.data }),
+        error => dispatch({ type: FETCH_LOGS_FAIL, payload: { error } })
+    );
+};

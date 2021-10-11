@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 import NotificationConfiguration from './notification-configuration/NotificationConfiguration';
 import JobConfiguration from './job-configuration/JobConfiguration';
 import Configuration from './Configuration';
+import ContainerConfiguration from './container-configuration';
 
 const RenderPipelineConfiguration = ({
     configuration,
@@ -47,6 +48,18 @@ const RenderPipelineConfiguration = ({
         JOB: {
             component: JobConfiguration,
             props: {
+                isDisabled: inputValues => !inputValues.name,
+                ableToEdit,
+                setPanelDirty,
+                configuration,
+                saveCell,
+                graph
+            }
+        },
+        CONTAINER: {
+            component: Configuration,
+            props: {
+                Component: ContainerConfiguration,
                 isDisabled: inputValues => !inputValues.name,
                 ableToEdit,
                 setPanelDirty,

@@ -45,7 +45,10 @@
         "Port": "Port",
         "SSL": "SSL",
         "Nodes": "Nodes",
-        "Index": "Index"
+        "Index": "Index",
+        "Database": "Database",
+        "Collection": "Collection",
+        "Host": "Host"
     },
     "writeConfiguration": {
         "Header": "Header",
@@ -100,7 +103,14 @@
         "Addressees": "To",
         "Message": "Message"
     },
-    "Zoom": "Zoom",
+    "Zoom": {
+        "Zoom": "Zoom",
+        "In": "Zoom in",
+        "Out": "Zoom out",
+        "Restore": "Restore",
+        "Select": "Select",
+        "Move": "Move"
+    },
     "Path": "Path",
     "Configuration": "Configuration",
     "STAGE": "STAGE"

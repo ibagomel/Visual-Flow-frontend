@@ -51,7 +51,7 @@ const Routes = () => (
         <PrivateRoute exact path="/:projectId/jobs" component={withParams(Jobs)} />
         <PrivateRoute
             exact
-            path="/jobs/:jobId/logs/:projId/:jobName"
+            path="/jobs/:jobId/logs/:projId"
             component={withParams(Logs)}
         />
         <PrivateRoute

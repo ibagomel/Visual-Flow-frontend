@@ -53,7 +53,7 @@ const PipelineDesigner = ({
         });
 
         projectId &&
-            getPipeline(projectId, pipelineId) &&
+            getPipeline(projectId, pipelineId, t) &&
             getParameters(projectId) &&
             getJobs(projectId);
     }, [projectId, pipelineId]);

@@ -38,6 +38,7 @@ import job from './translations/en/stages/job.json';
 import notification from './translations/en/stages/notification.json';
 import container from './translations/en/stages/container.json';
 import pipelineDesigner from './translations/en/pipelineDesigner.json';
+import filters from './translations/en/filters.json';
 
 export const resources = {
     en: {
@@ -57,7 +58,8 @@ export const resources = {
         job,
         notification,
         container,
-        pipelineDesigner
+        pipelineDesigner,
+        filters
     }
 };
 

@@ -53,44 +53,39 @@ const LogsHeader = ({
                     spacing={3}
                     className={classes.right}
                 >
-                    <>
-                        <Grid item>
-                            <FormControl variant="outlined">
-                                <InputLabel
-                                    htmlFor="outlined-age-native-simple"
-                                    className={classes.InputLabel}
-                                >
-                                    {t('jobs:Level')}
-                                </InputLabel>
-                                <Select
-                                    native
-                                    onChange={onSelect}
-                                    label="Lavel"
-                                    className={classNames(classes.selectButton)}
-                                    value={lvl}
-                                >
-                                    <option aria-label="None" value="" />
-                                    {dropList?.map(value => (
-                                        <option key={value} value={value}>
-                                            {t(`jobs:level.${value}`) || value}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                className={classNames(
-                                    classes.button,
-                                    classes.refreshBtn
-                                )}
-                                variant="contained"
-                                color="primary"
-                                startIcon={<RefreshIcon />}
-                                onClick={onRefreshClick}
-                            />
-                        </Grid>
-                    </>
+                    <Grid item>
+                        <FormControl variant="outlined" size="small">
+                            <InputLabel className={classes.InputLabel}>
+                                {t('jobs:Level')}
+                            </InputLabel>
+                            <Select
+                                native
+                                onChange={onSelect}
+                                label="Level"
+                                className={classNames(classes.selectButton)}
+                                value={lvl}
+                            >
+                                <option aria-label="None" value="" />
+                                {dropList?.map(value => (
+                                    <option key={value} value={value}>
+                                        {t(`jobs:level.${value}`) || value}
+                                    </option>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            className={classNames(
+                                classes.button,
+                                classes.refreshBtn
+                            )}
+                            variant="contained"
+                            color="primary"
+                            startIcon={<RefreshIcon />}
+                            onClick={onRefreshClick}
+                        />
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

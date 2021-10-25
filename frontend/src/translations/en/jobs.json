@@ -3,17 +3,7 @@
     "Level": "Level",
     "CPU": "CPU",
     "Memory": "Memory",
-    "lastRun": "Last Run",
-    "lastFinished": "Last Finished",
-    "lastEdit": "Last Edit",
     "JOB_ID": "JOB_ID*",
-    "status": {
-        "Draft": "Draft",
-        "Pending": "Pending",
-        "Running": "Running",
-        "Failed": "Failed",
-        "Completed": "Completed"
-    },
     "level": {
         "INFO": "INFO",
         "WARN": "WARNING",
@@ -23,6 +13,10 @@
     "tooltip": {
         "Play": "Run",
         "Stop": "Stop",
+        "Save": "Save",
+        "Undo": "Undo",
+        "Redo": "Redo",
+        "Refresh": "Refresh",
         "Logs": "Logs",
         "Copy": "Copy",
         "Remove": "Remove",
@@ -31,14 +25,6 @@
         "Export selected": "Export selected"
     },
     "noItems": "No items to display",
-    "timeRange": {
-        "last hour": "last hour",
-        "last 3 hours": "last 3 hours",
-        "last 8 hours": "last 8 hours",
-        "1 day ago": "1 day ago",
-        "3 days ago": "3 days ago",
-        "7 days ago": "7 days ago"
-    },
     "confirm": {
         "delete": "Are you sure you want to delete {{name}} job(s)?"
     },

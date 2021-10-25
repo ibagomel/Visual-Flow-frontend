@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { isEmpty } from 'lodash';
 import {
     FETCH_JOB_START,
     FETCH_JOB_SUCCESS,
@@ -39,6 +40,9 @@ import jobsApi from '../../api/jobs';
 import pipelinesApi from '../../api/pipelines';
 import { updateJobStatus } from './oneJobStatusAction';
 import { updatePipelineStatus } from './onePipelineStatusActions';
+import history from '../../utils/history';
+import showNotification from '../../components/notification/showNotification';
+import { DRAFT } from '../../components/mxgraph/constants';
 
 export const setSidePanel = isOpen => ({
     type: SET_SIDE_PANEL,
@@ -75,20 +79,43 @@ export const setParams = params => ({
     payload: params
 });
 
-export const fetchJob = (projectId, jobId) => dispatch => {
+const checkIsCreatedFromUI = (dispatch, data, t, func, success, fail) => {
+    let isCreatedFromUI;
+    if (isEmpty(data.definition) || isEmpty(data.definition.graph)) {
+        // new, definition is empty or
+        // entered only params, graph is empty
+        isCreatedFromUI = true;
+    } else {
+        // existing, check if contains data for graph
+        isCreatedFromUI = !!data.definition?.graph[0].geometry;
+    }
+    if (isCreatedFromUI) {
+        dispatch({ type: success, payload: data });
+        dispatch(func);
+    } else {
+        history.goBack();
+        showNotification(t('main:error.GUI'), 'error');
+        dispatch({ type: fail, payload: { error: t('main:error.GUI') } });
+    }
+};
+
+export const fetchJob = (projectId, jobId, t) => dispatch => {
     dispatch({
         type: FETCH_JOB_START
     });
     const promise = jobId
         ? jobsApi.getJobById(projectId, jobId)
-        : Promise.resolve({ data: { definition: {}, status: 'Draft', params: {} } });
+        : Promise.resolve({ data: { definition: {}, status: DRAFT, params: {} } });
     return promise.then(
         response => {
-            dispatch({
-                type: FETCH_JOB_SUCCESS,
-                payload: response.data
-            });
-            dispatch(updateJobStatus(jobId, response.data.status));
+            checkIsCreatedFromUI(
+                dispatch,
+                response.data,
+                t,
+                updateJobStatus(jobId, response.data.status),
+                FETCH_JOB_SUCCESS,
+                FETCH_JOB_FAIL
+            );
         },
         error =>
             dispatch({
@@ -98,25 +125,26 @@ export const fetchJob = (projectId, jobId) => dispatch => {
     );
 };
 
-export const fetchPipelineById = (projectId, pipelineId) => dispatch => {
+export const fetchPipelineById = (projectId, pipelineId, t) => dispatch => {
     dispatch({
         type: FETCH_PIPELINE_START
     });
     const promise = pipelineId
         ? pipelinesApi.getPipelineById(projectId, pipelineId)
-        : Promise.resolve({ data: { definition: {}, status: 'Draft', params: {} } });
+        : Promise.resolve({ data: { definition: {}, status: DRAFT, params: {} } });
     return promise.then(
         response => {
-            dispatch({
-                type: FETCH_PIPELINE_SUCCESS,
-                payload: response.data
-            });
-            dispatch(
+            checkIsCreatedFromUI(
+                dispatch,
+                response.data,
+                t,
                 updatePipelineStatus(
                     pipelineId,
                     response.data.status,
                     response.data.progress
-                )
+                ),
+                FETCH_PIPELINE_SUCCESS,
+                FETCH_PIPELINE_FAIL
             );
         },
         error =>

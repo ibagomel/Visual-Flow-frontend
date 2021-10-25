@@ -44,7 +44,7 @@ const DropdownFilter = ({ items, label, value, onChange, classes }) => {
                 onChange={onChange}
             >
                 <MenuItem value="">
-                    <em>{t('main:dropDown.None')}</em>
+                    <em>{t('filters:dropDown.None')}</em>
                 </MenuItem>
                 {items?.map(item => (
                     <MenuItem value={item.value} key={item.value}>

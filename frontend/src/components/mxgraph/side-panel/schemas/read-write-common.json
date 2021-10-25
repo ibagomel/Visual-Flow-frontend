@@ -143,9 +143,6 @@
           "storage": "postgresql"
         },
         {
-          "storage": "sqlite"
-        },
-        {
           "storage": "oracle"
         },
         {
@@ -159,9 +156,6 @@
         },
         {
           "storage": "mssql"
-        },
-        {
-          "storage": "mongo"
         }
       ]
     },
@@ -175,9 +169,6 @@
           "storage": "postgresql"
         },
         {
-          "storage": "sqlite"
-        },
-        {
           "storage": "oracle"
         },
         {
@@ -194,9 +185,6 @@
         },
         {
           "storage": "mssql"
-        },
-        {
-          "storage": "mongo"
         }
       ]
     },
@@ -210,9 +198,6 @@
           "storage": "postgresql"
         },
         {
-          "storage": "sqlite"
-        },
-        {
           "storage": "oracle"
         },
         {
@@ -229,9 +214,6 @@
         },
         {
           "storage": "mssql"
-        },
-        {
-          "storage": "mongo"
         }
       ]
     },
@@ -244,10 +226,6 @@
         },
         {
           "storage": "postgresql",
-          "customSql": "true"
-        },
-        {
-          "storage": "sqlite",
           "customSql": "true"
         },
         {
@@ -269,10 +247,6 @@
         {
           "storage": "mssql",
           "customSql": "true"
-        },
-        {
-          "storage": "mongo",
-          "customSql": "true"
         }
       ]
     },
@@ -284,9 +258,6 @@
         },
         {
           "storage": "postgresql"
-        },
-        {
-          "storage": "sqlite"
         },
         {
           "storage": "oracle"
@@ -302,9 +273,6 @@
         },
         {
           "storage": "mssql"
-        },
-        {
-          "storage": "mongo"
         }
       ]
     },
@@ -316,9 +284,6 @@
         },
         {
           "storage": "postgresql"
-        },
-        {
-          "storage": "sqlite"
         },
         {
           "storage": "oracle"
@@ -337,9 +302,6 @@
         },
         {
           "storage": "mssql"
-        },
-        {
-          "storage": "mongo"
         }
       ]
     },

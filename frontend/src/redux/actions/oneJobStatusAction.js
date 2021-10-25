@@ -26,6 +26,7 @@ import {
     UPDATE_JOB_STATUS_SUCCESS
 } from './types';
 import api from '../../api/jobs';
+import { DRAFT } from '../../components/mxgraph/constants';
 
 const fetchJobStatus = (projectId, jobId) => dispatch => {
     dispatch({
@@ -33,7 +34,7 @@ const fetchJobStatus = (projectId, jobId) => dispatch => {
     });
     const promise = jobId
         ? api.getJobById(projectId, jobId)
-        : Promise.resolve({ status: 'Draft' });
+        : Promise.resolve({ status: DRAFT });
     return promise.then(
         response =>
             dispatch({

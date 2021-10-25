@@ -31,6 +31,7 @@ export const JOB = 'JOB';
 export const NOTIFICATION = 'NOTIFICATION';
 export const CONTAINER = 'CONTAINER';
 export const PIPELINE = 'PIPELINE';
+
 export const PENDING = 'Pending';
 export const RUNNING = 'Running';
 export const DRAFT = 'Draft';
@@ -38,15 +39,29 @@ export const SUCCEEDED = 'Succeeded';
 export const FAILED = 'Failed';
 export const ERROR = 'Error';
 export const SKIPPED = 'Skipped';
+const TERMINATED = 'Terminated';
+const SUSPENDED = 'Suspended';
+const STOPPED = 'Stopped';
+const UNKNOWN = 'Unknown';
+
+export const JOB_STATUSES = [DRAFT, FAILED, PENDING, RUNNING, SUCCEEDED, UNKNOWN];
+
+export const PIPELINE_STATUSES = [
+    DRAFT,
+    ERROR,
+    FAILED,
+    PENDING,
+    RUNNING,
+    STOPPED,
+    SUCCEEDED,
+    SUSPENDED,
+    TERMINATED
+];
 
 export const STORAGES = {
     AWS: {
         value: 's3',
         label: 'AWS S3'
-    },
-    CASSANDRA: {
-        value: 'cassandra',
-        label: 'Cassandra'
     },
     DB2: {
         value: 'db2',
@@ -60,13 +75,13 @@ export const STORAGES = {
         value: 'cos',
         label: 'IBM COS'
     },
+    // MONGO: {
+    //     value: 'mongo',
+    //     label: 'Mongo'
+    // },
     MYSQL: {
         value: 'mysql',
         label: 'MySQL'
-    },
-    MONGO: {
-        value: 'mongo',
-        label: 'Mongo'
     },
     MSSQL: {
         value: 'mssql',
@@ -80,16 +95,8 @@ export const STORAGES = {
         value: 'postgresql',
         label: 'PostgreSQL'
     },
-    REDIS: {
-        value: 'redis',
-        label: 'Redis'
-    },
-    SQLITE: {
-        value: 'sqlite',
-        label: 'SQLite'
-    },
     STDOUT: {
-        value: 'STDOUT',
+        value: 'stdout',
         label: 'STDOUT',
         hide: [READ]
     }

@@ -26,7 +26,6 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ExportIcon from '@material-ui/icons/Publish';
-import { uniq } from 'lodash';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -52,16 +51,20 @@ import timeRange from '../../utils/timeRangeOptions';
 import DropdownFilter from '../../components/table/DropdownFilter';
 import history from '../../utils/history';
 import ExportModalWindow from '../../components/export-modal-window/ExportModalWindow';
-import { PENDING, RUNNING } from '../../components/mxgraph/constants';
+import {
+    PENDING,
+    PIPELINE_STATUSES,
+    RUNNING
+} from '../../components/mxgraph/constants';
 
 const utilizationField = (t, lastRun, onChange, classname) => (
     <Grid item className={classname}>
         <DropdownFilter
             items={Object.keys(timeRange).map(value => ({
                 value,
-                label: t(`pipelines:timeRange.${value}`) || value
+                label: t(`filters:timeRange.${value}`) || value
             }))}
-            label={t('pipelines:lastRun')}
+            label={t('filters:lastRun')}
             value={lastRun}
             onChange={onChange}
         />
@@ -89,8 +92,6 @@ const PipelinesTable = ({
     const [selectedPipelines, setSelectedPipelines] = React.useState([]);
 
     const byId = id => data?.find(item => item.id === id);
-
-    const statuses = uniq(data?.map(v => v.status));
 
     const getActions = item => [
         ![RUNNING, PENDING].includes(item.status)
@@ -169,8 +170,8 @@ const PipelinesTable = ({
             actions={ableToEdit ? getGlobalActions() : getGlobalActions().slice(-1)}
             orderColumns={[
                 { id: 'name', name: t('main:form.Name') },
-                { id: 'startedAt', name: t('pipelines:lastRun') },
-                { id: 'status', name: t('pipelines:Status') }
+                { id: 'startedAt', name: t('filters:lastRun') },
+                { id: 'status', name: t('filters:status') }
             ]}
             filter={
                 <>
@@ -183,11 +184,11 @@ const PipelinesTable = ({
                     />
                     <Grid item className={classes.status}>
                         <DropdownFilter
-                            items={statuses?.map(value => ({
+                            items={PIPELINE_STATUSES.map(value => ({
                                 value,
-                                label: t(`pipelines:${value}`) || value
+                                label: t(`filters:statuses.${value}`) || value
                             }))}
-                            label={t('pipelines:Status')}
+                            label={t('filters:status')}
                             value={status}
                             onChange={event => {
                                 setStatus(event.target.value);

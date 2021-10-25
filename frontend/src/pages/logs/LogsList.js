@@ -28,26 +28,22 @@ import LogsHeader from '../../components/logs-header/LogsHeader';
 
 const lvls = ['INFO', 'WARN', 'ERROR', 'DEBUG'];
 
-const LogsList = ({ data, modal, onRefresh }) => {
+const LogsList = ({ data, modal, onRefresh, search, onSearch, lvl, onSelect }) => {
     const classes = useStyles();
     const errorMes = useSelector(state => state.pages.logs.error);
-
-    const [search, setSearch] = React.useState('');
-    const [lvl, setLevel] = React.useState('');
 
     const highlight = (string, value) => {
         if (!value) {
             return string;
         }
-        return string
-            .split(new RegExp(`(${value})`, 'gi'))
-            .map(item =>
-                item === value ? (
-                    <span className={classes.highlight}>{item}</span>
-                ) : (
-                    <span>{item}</span>
-                )
-            );
+        return string.split(new RegExp(`(${value})`, 'gi')).map((item, index) => (
+            <span
+                key={index} // eslint-disable-line react/no-array-index-key
+                className={classNames({ [classes.highlight]: item === value })}
+            >
+                {item}
+            </span>
+        ));
     };
 
     const logs = list =>
@@ -66,11 +62,11 @@ const LogsList = ({ data, modal, onRefresh }) => {
         >
             <Grid item xs={12}>
                 <LogsHeader
-                    onSearch={event => setSearch(event.target.value)}
+                    onSearch={event => onSearch(event.target.value)}
                     searchValue={search}
                     onRefreshClick={onRefresh}
                     dropList={lvls}
-                    onSelect={event => setLevel(event.target.value)}
+                    onSelect={event => onSelect(event.target.value)}
                     lvl={lvl}
                 />
             </Grid>
@@ -116,7 +112,11 @@ const LogsList = ({ data, modal, onRefresh }) => {
 LogsList.propTypes = {
     modal: PropTypes.bool,
     data: PropTypes.array,
-    onRefresh: PropTypes.func
+    onRefresh: PropTypes.func,
+    search: PropTypes.string,
+    onSearch: PropTypes.func,
+    lvl: PropTypes.string,
+    onSelect: PropTypes.func
 };
 
 export default LogsList;

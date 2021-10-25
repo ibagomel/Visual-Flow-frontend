@@ -30,6 +30,8 @@ import React from 'react';
 import moment from 'moment';
 import styles from './PipelineTitleCell.Styles';
 
+const NA = 'filters:N/A';
+
 const PipelineTitleCell = ({
     title,
     lastRun,
@@ -56,18 +58,18 @@ const PipelineTitleCell = ({
                 className={classes.subtitle}
             >
                 <span className={classes.item}>
-                    <span className={classes.hint}>{t('pipelines:lastRun')}: </span>
-                    {formatDate(lastRun) || t('main:N/A')}
+                    <span className={classes.hint}>{t('filters:lastRun')}: </span>
+                    {formatDate(lastRun) || t(NA)}
                 </span>
                 <span className={classes.item}>
                     <span className={classes.hint}>
-                        {t('pipelines:lastFinished')}:{' '}
+                        {t('filters:lastFinished')}:{' '}
                     </span>
-                    {formatDate(lastFinished) || t('main:N/A')}
+                    {formatDate(lastFinished) || t(NA)}
                 </span>
                 <span className={classes.item}>
-                    <span className={classes.hint}>{t('pipelines:lastEdit')}: </span>
-                    {formatDate(lastEdit) || t('main:N/A')}
+                    <span className={classes.hint}>{t('filters:lastEdit')}: </span>
+                    {formatDate(lastEdit) || t(NA)}
                 </span>
             </Typography>
         </Grid>

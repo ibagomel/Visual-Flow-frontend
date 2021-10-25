@@ -52,10 +52,9 @@ const ReadWriteStage = ({ stage, t }) => {
 
     // eslint-disable-next-line complexity
     const renderStorageData = () => {
-        switch (stage.storage) {
+        switch (stage.storage.toLowerCase()) {
             case STORAGES.DB2.value:
             case STORAGES.POSTGRE.value:
-            case STORAGES.SQLITE.value:
             case STORAGES.ORACLE.value:
             case STORAGES.MYSQL.value:
             case STORAGES.MSSQL.value:
@@ -82,20 +81,41 @@ const ReadWriteStage = ({ stage, t }) => {
                 );
             case STORAGES.ELASTIC.value:
                 return (
-                    <>
-                        <Typography
-                            variant="caption"
-                            component="div"
-                            className={classes.bucket}
-                            color="textSecondary"
-                        >
-                            {t('jobDesigner:readConfiguration.Index')}: {stage.index}
-                        </Typography>
-                    </>
+                    <Typography
+                        variant="caption"
+                        component="div"
+                        className={classes.bucket}
+                        color="textSecondary"
+                    >
+                        {t('jobDesigner:readConfiguration.Index')}: {stage.index}
+                    </Typography>
                 );
             case STORAGES.COS.value:
             case STORAGES.AWS.value:
                 return cosStageFields();
+            case STORAGES.MONGO.value:
+                return (
+                    <>
+                        <Typography
+                            variant="caption"
+                            component="div"
+                            className={classes.schema}
+                            color="textSecondary"
+                        >
+                            {t('jobDesigner:readConfiguration.Database')}:{' '}
+                            {stage.database}
+                        </Typography>
+                        <Typography
+                            variant="caption"
+                            component="div"
+                            className={classes.table}
+                            color="textSecondary"
+                        >
+                            {t('jobDesigner:readConfiguration.Collection')}:{' '}
+                            {stage.collection}
+                        </Typography>
+                    </>
+                );
             case STORAGES.STDOUT.value:
                 return null;
             default:

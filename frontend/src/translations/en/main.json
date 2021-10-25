@@ -80,10 +80,6 @@
         "unsaved" : "Are you sure? Unsaved changes will be lost"
     },
     "404": "Sorry, we can’t find the page you are looking for.",
-    "N/A": "N/A",
-    "dropDown": {
-        "None": "None"
-    },
     "unsavedChanges": {
         "sidePanelIsDirty": "Your configuration has not been saved",
         "paramsIsDirty": "Your parameters have not been saved",
@@ -120,5 +116,8 @@
         "confirm": "Jobs (pipelines) with the same names will be overwritten.",
         "Notice": "Notice:",
         "NotAutorized": "You are not authorized for import within this project"
+    },
+    "error": {
+        "GUI": "GUI is absent. Possible reason: created via API."
     }
 }

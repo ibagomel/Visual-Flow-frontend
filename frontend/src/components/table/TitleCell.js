@@ -32,6 +32,8 @@ import React from 'react';
 import moment from 'moment';
 import styles from './TitleCell.Styles';
 
+const NA = 'filters:N/A';
+
 const TitleCell = ({
     hasInstance,
     title,
@@ -83,21 +85,21 @@ const TitleCell = ({
                     >
                         <span className={classes.item}>
                             <span className={classes.hint}>
-                                {t('jobs:lastRun')}:{' '}
+                                {t('filters:lastRun')}:{' '}
                             </span>
-                            {formatDate(lastRun) || t('main:N/A')}
+                            {formatDate(lastRun) || t(NA)}
                         </span>
                         <span className={classes.item}>
                             <span className={classes.hint}>
-                                {t('jobs:lastFinished')}:{' '}
+                                {t('filters:lastFinished')}:{' '}
                             </span>
-                            {formatDate(lastFinished) || t('main:N/A')}
+                            {formatDate(lastFinished) || t(NA)}
                         </span>
                         <span className={classes.item}>
                             <span className={classes.hint}>
-                                {t('jobs:lastEdit')}:{' '}
+                                {t('filters:lastEdit')}:{' '}
                             </span>
-                            {formatDate(lastEdit) || t('main:N/A')}
+                            {formatDate(lastEdit) || t(NA)}
                         </span>
                     </Typography>
                 </Grid>

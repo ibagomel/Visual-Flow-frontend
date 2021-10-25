@@ -21,7 +21,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { IconButton, Divider, Typography } from '@material-ui/core';
+import { IconButton, Divider, Typography, Tooltip } from '@material-ui/core';
 import { withTranslation } from 'react-i18next';
 import { Description, Save } from '@material-ui/icons';
 
@@ -39,7 +39,7 @@ import history from '../../../../utils/history';
 import RunStopButtons from '../run-stop-buttons';
 import EditDesignerButtons from '../edit-designer-buttons';
 import { fetchJob } from '../../../../redux/actions/mxGraphActions';
-import { PENDING, RUNNING } from '../../constants';
+import { DRAFT, PENDING, RUNNING } from '../../constants';
 
 const JobsToolbar = ({
     t,
@@ -114,19 +114,24 @@ const JobsToolbar = ({
                 )}
                 {enableViewMode() && (
                     <IconButton aria-label="saveIcon" onClick={createUpdateJob}>
-                        <Save />
+                        <Tooltip title={t('jobs:tooltip.Save')} arrow>
+                            <Save />
+                        </Tooltip>
                     </IconButton>
                 )}
                 <IconButton
-                    disabled={status === PENDING || !data.startedAt}
+                    disabled={[DRAFT, PENDING].includes(status) || !data.startedAt}
                     aria-label="descriptionIcon"
                     onClick={() => setShowModal(true)}
                 >
-                    <Description />
+                    <Tooltip title={t('jobs:tooltip.Logs')} arrow>
+                        <Description />
+                    </Tooltip>
                 </IconButton>
             </div>
             <Divider orientation="vertical" flexItem />
             <EditDesignerButtons
+                t={t}
                 editable={!has(data, 'editable') || enableViewMode()}
                 data={data}
                 graph={graph}

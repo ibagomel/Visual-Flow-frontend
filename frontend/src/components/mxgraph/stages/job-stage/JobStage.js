@@ -24,11 +24,12 @@ import { Typography } from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import stageIcon from '../../sidebar/palette/stageIcon';
 import useStyles from './JobStage.Styles';
-import { DRAFT } from '../../constants';
+import { DRAFT, PENDING, SKIPPED } from '../../constants';
 
 const JobStage = ({ stage }) => {
     const classes = useStyles();
-    const visibleLogsIcon = stage.status && stage.status !== DRAFT;
+    const visibleLogsIcon =
+        stage.status && ![DRAFT, PENDING, SKIPPED].includes(stage.status);
 
     return (
         <div className={classes.root}>

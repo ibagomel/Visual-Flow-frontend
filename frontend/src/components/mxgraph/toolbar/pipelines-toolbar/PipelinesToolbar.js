@@ -21,7 +21,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { IconButton, Divider, Typography } from '@material-ui/core';
+import { IconButton, Divider, Typography, Tooltip } from '@material-ui/core';
 import { withTranslation } from 'react-i18next';
 import { Save } from '@material-ui/icons';
 
@@ -134,12 +134,15 @@ const PipelinesToolbar = ({
                 )}
                 {enableViewMode() && (
                     <IconButton aria-label="saveIcon" onClick={createUpdatePipeline}>
-                        <Save />
+                        <Tooltip title={t('jobs:tooltip.Save')} arrow>
+                            <Save />
+                        </Tooltip>
                     </IconButton>
                 )}
             </div>
             <Divider orientation="vertical" flexItem />
             <EditDesignerButtons
+                t={t}
                 editable={!has(data, 'editable') || enableViewMode()}
                 data={data}
                 graph={graph}

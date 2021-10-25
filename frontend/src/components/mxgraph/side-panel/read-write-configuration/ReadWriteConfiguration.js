@@ -23,23 +23,26 @@ import { withTranslation } from 'react-i18next';
 import { Divider, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import Db2Storage from './db2-storage/Db2Storage';
-import CosStorage from './cos-storage/CosStorage';
-import AwsStorage from './aws-storage/AwsStorage';
-import ElasticStorage from './elastic-storage/ElasticStorage';
+import { get } from 'lodash';
+import Db2Storage from './db2-storage';
+import CosStorage from './cos-storage';
+import AwsStorage from './aws-storage';
+import ElasticStorage from './elastic-storage';
+// import MongoStorage from './mongo-storage';
 import { STORAGES } from '../../constants';
 
 const ReadWriteConfiguration = ({ state, ableToEdit, onChange, t, openModal }) => {
     // eslint-disable-next-line complexity
     const getStorageComponent = name => {
-        switch (name) {
+        switch (name.toLowerCase()) {
             case STORAGES.DB2.value:
             case STORAGES.POSTGRE.value:
-            case STORAGES.SQLITE.value:
             case STORAGES.ORACLE.value:
             case STORAGES.MYSQL.value:
             case STORAGES.MSSQL.value:
                 return Db2Storage;
+            // case STORAGES.MONGO.value:
+            //     return MongoStorage;
             case STORAGES.COS.value:
                 return CosStorage;
             case STORAGES.AWS.value:
@@ -71,7 +74,9 @@ const ReadWriteConfiguration = ({ state, ableToEdit, onChange, t, openModal }) =
             <Autocomplete
                 disabled={!ableToEdit}
                 name="storage"
-                options={Object.values(STORAGES)}
+                options={Object.values(STORAGES).filter(
+                    storage => !get(storage, 'hide', []).includes(state.operation)
+                )}
                 getOptionLabel={option => option.label || option}
                 value={
                     Object.values(STORAGES).find(el => el.value === state.storage) ||

@@ -19,8 +19,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import { PlayArrow, Stop } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
 
 const RunStopButtons = ({
     isNotRunning,
@@ -33,6 +34,8 @@ const RunStopButtons = ({
     const PlayArrowColor = !runnable || changesNotSaved ? 'lightgrey' : 'green';
     const StopColor = stopable ? 'red' : 'lightgrey';
     const Tip = changesNotSaved ? 'Please save your changes to run the job' : null;
+    const { t } = useTranslation();
+
     return isNotRunning ? (
         <div title={Tip}>
             <IconButton
@@ -40,12 +43,16 @@ const RunStopButtons = ({
                 aria-label="playArrowIcon"
                 onClick={run}
             >
-                <PlayArrow htmlColor={PlayArrowColor} />
+                <Tooltip title={t('jobs:tooltip.Play')} arrow>
+                    <PlayArrow htmlColor={PlayArrowColor} />
+                </Tooltip>
             </IconButton>
         </div>
     ) : (
         <IconButton disabled={!stopable} aria-label="stopIcon" onClick={stop}>
-            <Stop htmlColor={StopColor} />
+            <Tooltip title={t('jobs:tooltip.Stop')} arrow>
+                <Stop htmlColor={StopColor} />
+            </Tooltip>
         </IconButton>
     );
 };

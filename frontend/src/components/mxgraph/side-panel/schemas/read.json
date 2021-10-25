@@ -12,10 +12,6 @@
           "customSql": "false"
         },
         {
-          "storage": "sqlite",
-          "customSql": "false"
-        },
-        {
           "storage": "oracle",
           "customSql": "false"
         },
@@ -33,10 +29,6 @@
         },
         {
           "storage": "mssql",
-          "customSql": "false"
-        },
-        {
-          "storage": "mongo",
           "customSql": "false"
         }
       ]
@@ -53,10 +45,6 @@
           "customSql": "false"
         },
         {
-          "storage": "sqlite",
-          "customSql": "false"
-        },
-        {
           "storage": "oracle",
           "customSql": "false"
         },
@@ -74,10 +62,6 @@
         },
         {
           "storage": "mssql",
-          "customSql": "false"
-        },
-        {
-          "storage": "mongo",
           "customSql": "false"
         }
       ]

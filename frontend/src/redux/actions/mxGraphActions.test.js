@@ -27,18 +27,21 @@ import {
     FETCH_JOB_START,
     FETCH_PIPELINE_START,
     FETCH_PIPELINE_SUCCESS,
-    FETCH_PIPELINE_FAIL, SET_ZOOM_VALUE
+    FETCH_PIPELINE_FAIL,
+    SET_ZOOM_VALUE
 } from './types';
 import {
     setFields,
     setCurrentCell,
     setParams,
-    setSidePanel, setZoomValue
+    setSidePanel,
+    setZoomValue
 } from './mxGraphActions';
 import api from '../../api/jobs';
 import { fetchJob } from './mxGraphActions';
 import apiPipelines from '../../api/pipelines';
 import { fetchPipelineById } from './mxGraphActions';
+import { DRAFT } from '../../components/mxgraph/constants';
 
 describe('mxGraph actions', () => {
     it('should call SET_SIDE_PANEL', () => {
@@ -107,7 +110,7 @@ describe('mxGraph actions', () => {
                             type: FETCH_JOB_SUCCESS,
                             payload: {
                                 definition: {},
-                                status: 'Draft',
+                                status: DRAFT,
                                 params: {}
                             }
                         }
@@ -173,7 +176,7 @@ describe('mxGraph actions', () => {
                             payload: {
                                 definition: {},
                                 params: {},
-                                status: 'Draft'
+                                status: DRAFT
                             }
                         }
                     ],

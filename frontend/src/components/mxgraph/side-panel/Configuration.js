@@ -27,7 +27,7 @@ import { withTranslation } from 'react-i18next';
 
 import styles from './Configuration.Styles';
 import SaveCancelButtons from './SaveCancelButtons';
-import ParametersModal from './read-write-configuration/parameters-modal/ParametersModal';
+import ParametersModal from './read-write-configuration/parameters-modal';
 import { JOIN, CDC } from '../constants';
 
 const Configuration = ({

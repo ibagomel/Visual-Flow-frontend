@@ -34,6 +34,7 @@ const InfoModal = ({
     cos,
     aws,
     elastic,
+    // mongo,
     stdout,
     display,
     title,
@@ -49,7 +50,6 @@ const InfoModal = ({
         switch (storage) {
             case STORAGES.DB2.label:
             case STORAGES.POSTGRE.label:
-            case STORAGES.SQLITE.label:
             case STORAGES.ORACLE.label:
             case STORAGES.MYSQL.label:
             case STORAGES.MSSQL.label:
@@ -60,6 +60,8 @@ const InfoModal = ({
                 return aws;
             case STORAGES.ELASTIC.label:
                 return elastic;
+            // case STORAGES.MONGO.label:
+            //     return mongo;
             case STORAGES.STDOUT.label:
                 return stdout;
             default:
@@ -190,6 +192,7 @@ InfoModal.propTypes = {
     db2: PropTypes.array,
     cos: PropTypes.array,
     aws: PropTypes.array,
+    // mongo: PropTypes.array,
     elastic: PropTypes.array,
     stdout: PropTypes.array,
     display: PropTypes.bool,

@@ -17,31 +17,6 @@
  * limitations under the License.
  */
 
-import { makeStyles } from '@material-ui/core/styles';
+import AwsStorage from './AwsStorage';
 
-export default makeStyles(theme => ({
-    root: {
-        margin: theme.spacing(2, 0, 4)
-    },
-    right: {
-        width: 330,
-        height: 40,
-        padding: 0,
-        verticalAlign: 'center'
-    },
-    InputLabel: {
-        background: '#E0E0E0'
-    },
-    selectButton: {
-        background: '#E0E0E0',
-        width: 200,
-        border: 0
-    },
-    button: {
-        width: 20,
-        height: 40
-    },
-    refreshBtn: {
-        justifyContent: 'flex-end'
-    }
-}));
+export default AwsStorage;

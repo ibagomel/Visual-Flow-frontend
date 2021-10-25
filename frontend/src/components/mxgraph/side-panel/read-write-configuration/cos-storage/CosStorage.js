@@ -23,7 +23,7 @@ import { withTranslation } from 'react-i18next';
 import { TextField } from '@material-ui/core';
 import ReadTextFields from '../ReadWriteTextFields';
 import getMenuItems from '../../helpers/getMenuItems';
-import CosProperties from '../common/CosProperties';
+import CosProperties from '../common';
 
 const authType = [
     {

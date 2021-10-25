@@ -27,7 +27,6 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ExportIcon from '@material-ui/icons/Publish';
-import { uniq } from 'lodash';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -40,7 +39,12 @@ import UtilizationCell from '../../components/table/UtilizationCell';
 import ActionsCell from '../../components/table/ActionsCell';
 import EnhancedTable from '../../components/table/EnhancedTable';
 import toggleConfirmationWindow from '../../redux/actions/modalsActions';
-import { PENDING, RUNNING } from '../../components/mxgraph/constants';
+import {
+    DRAFT,
+    JOB_STATUSES,
+    PENDING,
+    RUNNING
+} from '../../components/mxgraph/constants';
 import {
     deleteJob,
     runJob,
@@ -59,15 +63,15 @@ import ExportModalWindow from '../../components/export-modal-window/ExportModalW
 const withRunAction = (act, getActions) =>
     act.runnable ? getActions(act).slice(0, 3) : getActions(act).slice(1, 3);
 
+const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
+
 const filterData = (data, status, lastRun) =>
     data?.filter(
         item =>
             (!status || item.status === status) &&
             (!timeRange[lastRun] ||
                 timeRange[lastRun](
-                    moment(item.startedAt, 'YYYY-MM-DD HH:mm:ss').format(
-                        'YYYY-MM-DD HH:mm:ss'
-                    )
+                    moment(item.startedAt, DATE_FORMAT).format(DATE_FORMAT)
                 ))
     );
 
@@ -96,71 +100,10 @@ const JobsTable = ({
     const projId = projectId;
     const resolveStatus = value => ({
         value,
-        label: t(`main:status.${value}`) || value
+        label: t(`filters:statuses.${value}`) || value
     });
 
-    const statuses = uniq(data?.map(v => v.status)).map(resolveStatus);
-
-    const getActions = icon => [
-        ![RUNNING, PENDING].includes(icon.status)
-            ? {
-                  title: t('jobs:tooltip.Play'),
-                  Icon: PlayArrowOutlinedIcon,
-                  disable: !icon.runnable,
-                  onClick: () => {
-                      run(projectId, icon.id);
-                  }
-              }
-            : {
-                  title: t('jobs:tooltip.Stop'),
-                  Icon: StopOutlinedIcon,
-                  disable: !!icon.pipelineId,
-                  onClick: () => {
-                      stop(projectId, icon.id);
-                  }
-              },
-        {
-            title: t('jobs:tooltip.jobDesigner'),
-            Icon: PaletteOutlinedIcon,
-            onClick: () => {
-                history.push(
-                    `/jobs/${projectId}/${
-                        icon.pipelineInstances === null
-                            ? data.find(
-                                  dataItem =>
-                                      dataItem.name === icon.name && !icon.runnable
-                              ).id
-                            : icon.id
-                    }`
-                );
-            }
-        },
-        {
-            title: t('jobs:tooltip.Logs'),
-            Icon: DescriptionOutlinedIcon,
-            disable: icon.status === PENDING || !icon.startedAt,
-            onClick: () =>
-                history.push(
-                    `/jobs/${icon.id}/logs/${projId}/${icon.name}/?backTo=jobsTable`
-                )
-        },
-        {
-            title: t('jobs:tooltip.Copy'),
-            Icon: FileCopyOutlinedIcon,
-            disable: !!icon.pipelineId,
-            onClick: () => copy(projectId, icon.id)
-        },
-        {
-            title: t('jobs:tooltip.Remove'),
-            Icon: DeleteOutlinedIcon,
-            disable: icon.pipelineInstances?.length !== 0,
-            onClick: () =>
-                confirmationWindow({
-                    body: t('jobs:confirm.delete', { name: icon.name }),
-                    callback: () => remove(projectId, [icon.id])
-                })
-        }
-    ];
+    const statuses = JOB_STATUSES.map(resolveStatus);
 
     const getGlobalActions = () => [
         {
@@ -184,14 +127,70 @@ const JobsTable = ({
         }
     ];
 
+    const getActions = item => [
+        ![RUNNING, PENDING].includes(item.status)
+            ? {
+                  title: t('jobs:tooltip.Play'),
+                  Icon: PlayArrowOutlinedIcon,
+                  disable: !item.runnable,
+                  onClick: () => run(projectId, item.id)
+              }
+            : {
+                  title: t('jobs:tooltip.Stop'),
+                  Icon: StopOutlinedIcon,
+                  disable: !!item.pipelineId,
+                  onClick: () => stop(projectId, item.id)
+              },
+        {
+            title: t('jobs:tooltip.jobDesigner'),
+            Icon: PaletteOutlinedIcon,
+            onClick: () =>
+                history.push(
+                    `/jobs/${projectId}/${
+                        item.pipelineInstances === null
+                            ? data.find(
+                                  dataItem =>
+                                      dataItem.name === item.name && !item.runnable
+                              ).id
+                            : item.id
+                    }`
+                )
+        },
+        {
+            title: t('jobs:tooltip.Logs'),
+            Icon: DescriptionOutlinedIcon,
+            disable: [DRAFT, PENDING].includes(item.status) || !item.startedAt,
+            onClick: () =>
+                history.push(
+                    `/jobs/${item.id}/logs/${projId}/?backTo=jobsTable&jobName=${item.name}`
+                )
+        },
+        {
+            title: t('jobs:tooltip.Copy'),
+            Icon: FileCopyOutlinedIcon,
+            disable: !!item.pipelineId,
+            onClick: () => copy(projectId, item.id)
+        },
+        {
+            title: t('jobs:tooltip.Remove'),
+            Icon: DeleteOutlinedIcon,
+            disable: item.pipelineInstances?.length !== 0,
+            onClick: () =>
+                confirmationWindow({
+                    body: t('jobs:confirm.delete', { name: item.name }),
+                    callback: () => remove(projectId, [item.id])
+                })
+        }
+    ];
+
     return (
         <EnhancedTable
             data={filterData(data, status, lastRun)}
             actions={ableToEdit ? getGlobalActions() : getGlobalActions().slice(-1)}
             orderColumns={[
                 { id: 'name', name: t('main:form.Name') },
-                { id: 'startedAt', name: t('jobs:lastRun') },
-                { id: 'status', name: t('jobs:Status') }
+                { id: 'startedAt', name: t('filters:lastRun') },
+                { id: 'status', name: t('filters:status') }
             ]}
             filter={
                 <>
@@ -204,7 +203,7 @@ const JobsTable = ({
                     <Grid item className={classes.status}>
                         <DropdownFilter
                             items={statuses}
-                            label={t('jobs:Status')}
+                            label={t('filters:status')}
                             value={status}
                             onChange={event => {
                                 setStatus(event.target.value);
@@ -216,9 +215,9 @@ const JobsTable = ({
                         <DropdownFilter
                             items={Object.keys(timeRange).map(value => ({
                                 value,
-                                label: t(`jobs:timeRange.${value}`) || value
+                                label: t(`filters:timeRange.${value}`) || value
                             }))}
-                            label={t('jobs:lastRun')}
+                            label={t('filters:lastRun')}
                             value={lastRun}
                             onChange={event => {
                                 setLastRun(event.target.value);

@@ -177,6 +177,7 @@ const RWModal = props => {
             paragraph1: t('ReadWrite:ELASTIC.certData.value1')
         }
     ];
+    // const mongo = [{}];
     const stdout = [
         {
             title: t('ReadWrite:noAdditionalFields')

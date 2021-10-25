@@ -110,7 +110,7 @@ const JobDesigner = ({
             }
         });
 
-        project && getJob(project, jobId) && getParameters(project);
+        project && getJob(project, jobId, t) && getParameters(project);
     }, [project, jobId]);
     return loading ? <PageSkeleton /> : <GraphDesigner type={JOB} />;
 };

@@ -20,7 +20,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import { Tooltip, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Slider from '@material-ui/core/Slider';
@@ -73,9 +73,11 @@ const Zoom = ({ graph, zoomVal, zoom, setZoomVal, panning, setPan }) => {
 
     return (
         <div className={classes.zoom}>
-            <Typography variant="body2">{t('jobDesigner:Zoom')}:</Typography>
+            <Typography variant="body2">{t('jobDesigner:Zoom.Zoom')}:</Typography>
             <IconButton aria-label="zoomOutIcon" onClick={() => zoom(zoomVal - 0.1)}>
-                <RemoveIcon />
+                <Tooltip title={t('jobDesigner:Zoom.Out')} arrow>
+                    <RemoveIcon />
+                </Tooltip>
             </IconButton>
             <Slider
                 min={0.5}
@@ -87,13 +89,25 @@ const Zoom = ({ graph, zoomVal, zoom, setZoomVal, panning, setPan }) => {
                 onChange={(e, value) => zoom(value)}
             />
             <IconButton aria-label="zoomInIcon" onClick={() => zoom(zoomVal + 0.1)}>
-                <AddIcon />
+                <Tooltip title={t('jobDesigner:Zoom.In')}>
+                    <AddIcon />
+                </Tooltip>
             </IconButton>
             <IconButton aria-label="zoomOutMapIcon" onClick={restoreZoom}>
-                <ZoomOutMapIcon />
+                <Tooltip title={t('jobDesigner:Zoom.Restore')}>
+                    <ZoomOutMapIcon />
+                </Tooltip>
             </IconButton>
             <IconButton aria-label="PanToolIcon" onClick={panHandler}>
-                {panning ? <NearMeOutlinedIcon /> : <PanToolIcon />}
+                {panning ? (
+                    <Tooltip title={t('jobDesigner:Zoom.Select')}>
+                        <NearMeOutlinedIcon />
+                    </Tooltip>
+                ) : (
+                    <Tooltip title={t('jobDesigner:Zoom.Move')}>
+                        <PanToolIcon />
+                    </Tooltip>
+                )}
             </IconButton>
         </div>
     );

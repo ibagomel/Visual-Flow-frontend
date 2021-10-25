@@ -30,7 +30,6 @@ import history from '../../utils/history';
 
 const Logs = ({
     projId,
-    jobName,
     jobId,
     logs: { data, loading },
     getJobLogs,
@@ -39,19 +38,20 @@ const Logs = ({
     pipelineId,
     nodeId
 }) => {
-    const callGetLogs = () => {
-        if (nodeId) {
-            getContainerLogs(projId, pipelineId, nodeId);
-        } else {
-            getJobLogs(projId, jobId);
-        }
-    };
+    const [search, setSearch] = React.useState('');
+    const [lvl, setLevel] = React.useState('');
+
+    const callGetLogs = () =>
+        nodeId
+            ? getContainerLogs(projId, pipelineId, nodeId)
+            : getJobLogs(projId, jobId);
 
     React.useEffect(() => {
         callGetLogs();
     }, [nodeId, jobId]);
 
     const backTo = new URLSearchParams(history.location.search).get('backTo');
+    const jobName = new URLSearchParams(history.location.search).get('jobName');
 
     const arrowLink = () => {
         switch (backTo) {
@@ -92,6 +92,10 @@ const Logs = ({
                             projId={projId}
                             jobId={jobId}
                             onRefresh={callGetLogs}
+                            search={search}
+                            onSearch={setSearch}
+                            lvl={lvl}
+                            onSelect={setLevel}
                         />
                     )}
                 </Grid>
@@ -103,7 +107,6 @@ const Logs = ({
 Logs.propTypes = {
     modal: PropTypes.bool,
     projId: PropTypes.string,
-    jobName: PropTypes.string,
     jobId: PropTypes.string,
     pipelineId: PropTypes.string,
     nodeId: PropTypes.string,

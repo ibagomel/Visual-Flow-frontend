@@ -26,6 +26,7 @@ import {
     UPDATE_PIPELINE_STATUS_FAIL
 } from './types';
 import api from '../../api/pipelines';
+import { DRAFT } from '../../components/mxgraph/constants';
 
 const fetchPipelineStatus = (projectId, pipelineId) => dispatch => {
     dispatch({
@@ -33,7 +34,7 @@ const fetchPipelineStatus = (projectId, pipelineId) => dispatch => {
     });
     const promise = pipelineId
         ? api.getPipelineById(projectId, pipelineId)
-        : Promise.resolve({ status: 'Draft', progress: 0 });
+        : Promise.resolve({ status: DRAFT, progress: 0 });
     return promise.then(
         response =>
             dispatch({

@@ -19,7 +19,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import { Undo, Redo, Delete, Refresh } from '@material-ui/icons';
 import { has } from 'lodash';
 
@@ -31,7 +31,8 @@ const EditDesignerButtons = ({
     editable,
     setSidePanel,
     sidePanelIsOpen,
-    setDirty
+    setDirty,
+    t
 }) => (
     <>
         {editable && (
@@ -42,7 +43,9 @@ const EditDesignerButtons = ({
                         reversible.undo();
                     }}
                 >
-                    <Undo />
+                    <Tooltip title={t('jobs:tooltip.Undo')} arrow>
+                        <Undo />
+                    </Tooltip>
                 </IconButton>
                 <IconButton
                     aria-label="redoIcon"
@@ -50,7 +53,9 @@ const EditDesignerButtons = ({
                         reversible.redo();
                     }}
                 >
-                    <Redo />
+                    <Tooltip title={t('jobs:tooltip.Redo')} arrow>
+                        <Redo />
+                    </Tooltip>
                 </IconButton>
                 <IconButton
                     aria-label="deleteIcon"
@@ -65,13 +70,17 @@ const EditDesignerButtons = ({
                         }
                     }}
                 >
-                    <Delete />
+                    <Tooltip title={t('jobs:tooltip.Remove')} arrow>
+                        <Delete />
+                    </Tooltip>
                 </IconButton>
             </>
         )}
         {has(data, 'editable') && (
             <IconButton aria-label="refreshIcon" onClick={refresh}>
-                <Refresh />
+                <Tooltip title={t('jobs:tooltip.Refresh')} arrow>
+                    <Refresh />
+                </Tooltip>
             </IconButton>
         )}
     </>
@@ -85,7 +94,8 @@ EditDesignerButtons.propTypes = {
     graph: PropTypes.object,
     reversible: PropTypes.object,
     refresh: PropTypes.func,
-    editable: PropTypes.bool
+    editable: PropTypes.bool,
+    t: PropTypes.func
 };
 
 export default EditDesignerButtons;

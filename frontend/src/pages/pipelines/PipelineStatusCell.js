@@ -27,6 +27,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import { connect } from 'react-redux';
 import styles from '../../components/status/Status.Styles';
 import { resumePipeline } from '../../redux/actions/pipelinesActions';
+import { ERROR } from '../../components/mxgraph/constants';
 
 const PipelineStatusCell = ({
     projectId,
@@ -52,7 +53,7 @@ const PipelineStatusCell = ({
             >
                 {hint || t('pipelines:Status')}
             </Typography>
-            {status !== 'Error' ? (
+            {status !== ERROR ? (
                 <Chip
                     label={t(`pipelines:${capitalize(status)}`)}
                     variant="outlined"

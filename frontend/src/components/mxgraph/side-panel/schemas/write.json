@@ -19,9 +19,6 @@
           "storage": "postgresql"
         },
         {
-          "storage": "sqlite"
-        },
-        {
           "storage": "oracle"
         },
         {
@@ -35,9 +32,6 @@
         },
         {
           "storage": "mssql"
-        },
-        {
-          "storage": "mongo"
         }
       ]
     },
@@ -51,7 +45,30 @@
           "storage": "postgresql"
         },
         {
-          "storage": "sqlite"
+          "storage": "oracle"
+        },
+        {
+          "storage": "mysql"
+        },
+        {
+          "storage": "redis"
+        },
+        {
+          "storage": "cassandra"
+        },
+        {
+          "storage": "mssql"
+        }
+      ]
+    },
+    {
+      "field": "table",
+      "conditions": [
+        {
+          "storage": "db2"
+        },
+        {
+          "storage": "postgresql"
         },
         {
           "storage": "oracle"
@@ -67,93 +84,6 @@
         },
         {
           "storage": "mssql"
-        },
-        {
-          "storage": "mongo"
-        }
-      ]
-    },
-    {
-      "field": "table",
-      "conditions": [
-        {
-          "storage": "db2"
-        },
-        {
-          "storage": "postgresql"
-        },
-        {
-          "storage": "sqlite"
-        },
-        {
-          "storage": "oracle"
-        },
-        {
-          "storage": "mysql"
-        },
-        {
-          "storage": "redis"
-        },
-        {
-          "storage": "cassandra"
-        },
-        {
-          "storage": "mssql"
-        },
-        {
-          "storage": "mongo"
-        }
-      ]
-    },
-    {
-      "field": "schema",
-      "conditions": [
-        {
-          "storage": "db2"
-        },
-        {
-          "storage": "postgresql"
-        },
-        {
-          "storage": "sqlite"
-        },
-        {
-          "storage": "oracle"
-        },
-        {
-          "storage": "mysql"
-        },
-        {
-          "storage": "redis"
-        },
-        {
-          "storage": "cassandra"
-        }
-      ]
-    },
-    {
-      "field": "table",
-      "conditions": [
-        {
-          "storage": "db2"
-        },
-        {
-          "storage": "postgresql"
-        },
-        {
-          "storage": "sqlite"
-        },
-        {
-          "storage": "oracle"
-        },
-        {
-          "storage": "mysql"
-        },
-        {
-          "storage": "redis"
-        },
-        {
-          "storage": "cassandra"
         }
       ]
     }

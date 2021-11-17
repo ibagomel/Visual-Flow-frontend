@@ -26,7 +26,7 @@ import {
     UPDATE_PIPELINE_STATUS_FAIL
 } from './types';
 import api from '../../api/pipelines';
-import { DRAFT } from '../../components/mxgraph/constants';
+import { DRAFT } from '../../mxgraph/constants';
 
 const fetchPipelineStatus = (projectId, pipelineId) => dispatch => {
     dispatch({

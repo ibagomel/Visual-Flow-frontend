@@ -22,10 +22,10 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { fetchJob, setFields } from '../../redux/actions/mxGraphActions';
-import GraphDesigner from '../../components/mxgraph/GraphDesigner';
+import GraphDesigner from '../../mxgraph';
 import { PageSkeleton } from '../../components/skeleton';
 import { fetchParameters } from '../../redux/actions/settingsParametersActions';
-import { JOB } from '../../components/mxgraph/constants';
+import { JOB } from '../../mxgraph/constants';
 
 const JobDesigner = ({
     project,

@@ -204,7 +204,7 @@ describe('Pipelines action', () => {
     describe('stopPipeline', () => {
         let data;
         beforeEach(() => {
-            data = { status: ''};
+            data = { status: '' };
             dispatch = jest.fn();
             jest.spyOn(api, 'stopPipeline').mockResolvedValue({ data });
         });
@@ -242,7 +242,7 @@ describe('Pipelines action', () => {
     describe('resumePipeline', () => {
         let data;
         beforeEach(() => {
-            data = { status: ''};
+            data = { status: '' };
             dispatch = jest.fn();
             jest.spyOn(api, 'resumePipeline').mockResolvedValue({ data });
         });
@@ -281,11 +281,11 @@ describe('Pipelines action', () => {
         let data;
         let wrongData;
         const graph = { getModel: jest.fn(() => ({ cells: [] })) };
-        const pipelineData = {param: 'value'};
+        const pipelineData = { param: 'value' };
         const projectId = 'some_id';
         beforeEach(() => {
-            data = {param: 'value'};
-            wrongData = {wrongParam: 'wrongValue'};
+            data = { param: 'value' };
+            wrongData = { wrongParam: 'wrongValue' };
             dispatch = jest.fn();
             jest.spyOn(api, 'createPipeline').mockResolvedValue({ data });
         });
@@ -310,7 +310,7 @@ describe('Pipelines action', () => {
         });
 
         it('should dispatch CREATE_PIPELINE_FAIL on failure', () => {
-            jest.spyOn(api, 'createPipeline').mockRejectedValue({wrongData});
+            jest.spyOn(api, 'createPipeline').mockRejectedValue({ wrongData });
             return createPipeline(
                 graph,
                 projectId,
@@ -318,7 +318,12 @@ describe('Pipelines action', () => {
             )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: CREATE_PIPELINE_START }],
-                    [{ type: CREATE_PIPELINE_FAIL, payload: { error: {wrongData} } }]
+                    [
+                        {
+                            type: CREATE_PIPELINE_FAIL,
+                            payload: { error: { wrongData } }
+                        }
+                    ]
                 ]);
             });
         });
@@ -328,12 +333,12 @@ describe('Pipelines action', () => {
         let data;
         let wrongData;
         const graph = { getModel: jest.fn(() => ({ cells: [] })) };
-        const pipelineData = {param: 'value'};
+        const pipelineData = { param: 'value' };
         const id = 'id';
         const projectId = 'some_id';
         beforeEach(() => {
-            data = {param: 'value'};
-            wrongData = {wrongParam: 'wrongValue'};
+            data = { param: 'value' };
+            wrongData = { wrongParam: 'wrongValue' };
             dispatch = jest.fn();
             jest.spyOn(api, 'updatePipeline').mockResolvedValue({ data });
         });
@@ -359,7 +364,7 @@ describe('Pipelines action', () => {
         });
 
         it('should dispatch UPDATE_PIPELINE_FAIL on failure', () => {
-            jest.spyOn(api, 'updatePipeline').mockRejectedValue({wrongData});
+            jest.spyOn(api, 'updatePipeline').mockRejectedValue({ wrongData });
             return updatePipeline(
                 graph,
                 projectId,
@@ -368,7 +373,12 @@ describe('Pipelines action', () => {
             )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: UPDATE_PIPELINE_START }],
-                    [{ type: UPDATE_PIPELINE_FAIL, payload: { error: {wrongData} } }]
+                    [
+                        {
+                            type: UPDATE_PIPELINE_FAIL,
+                            payload: { error: { wrongData } }
+                        }
+                    ]
                 ]);
             });
         });
@@ -377,7 +387,7 @@ describe('Pipelines action', () => {
     describe('runPipelineAndRefreshIt', () => {
         let data, projectId, pipelineId;
         beforeEach(() => {
-            data = { status: ''};
+            data = { status: '' };
             projectId = '';
             pipelineId = '';
             dispatch = jest.fn();
@@ -386,17 +396,24 @@ describe('Pipelines action', () => {
 
         it('should dispatch FETCH_PIPELINE_STATUS_START', () => {
             fetchPipelineStatus()(dispatch);
-            expect(dispatch).toHaveBeenCalledWith({ type: FETCH_PIPELINE_STATUS_START });
+            expect(dispatch).toHaveBeenCalledWith({
+                type: FETCH_PIPELINE_STATUS_START
+            });
         });
 
         it('should dispatch FETCH_PIPELINE_STATUS_SUCCESS on success', () => {
-            return fetchPipelineStatus(projectId, pipelineId)(dispatch).then(() => {
+            return fetchPipelineStatus(
+                projectId,
+                pipelineId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: FETCH_PIPELINE_STATUS_START }],
-                    [{
-                        type: FETCH_PIPELINE_STATUS_SUCCESS,
-                        payload: { id: pipelineId }
-                    }]
+                    [
+                        {
+                            type: FETCH_PIPELINE_STATUS_SUCCESS,
+                            payload: { id: pipelineId }
+                        }
+                    ]
                 ]);
             });
         });
@@ -405,7 +422,7 @@ describe('Pipelines action', () => {
     describe('stopPipelineAndRefreshIt', () => {
         let data, projectId, pipelineId;
         beforeEach(() => {
-            data = { status: ''};
+            data = { status: '' };
             projectId = '';
             pipelineId = '';
             dispatch = jest.fn();
@@ -414,17 +431,24 @@ describe('Pipelines action', () => {
 
         it('should dispatch FETCH_PIPELINE_STATUS_START', () => {
             fetchPipelineStatus()(dispatch);
-            expect(dispatch).toHaveBeenCalledWith({ type: FETCH_PIPELINE_STATUS_START });
+            expect(dispatch).toHaveBeenCalledWith({
+                type: FETCH_PIPELINE_STATUS_START
+            });
         });
 
         it('should dispatch FETCH_PIPELINE_STATUS_SUCCESS on success', () => {
-            return fetchPipelineStatus(projectId, pipelineId)(dispatch).then(() => {
+            return fetchPipelineStatus(
+                projectId,
+                pipelineId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: FETCH_PIPELINE_STATUS_START }],
-                    [{
-                        type: FETCH_PIPELINE_STATUS_SUCCESS,
-                        payload: { id: pipelineId }
-                    }]
+                    [
+                        {
+                            type: FETCH_PIPELINE_STATUS_SUCCESS,
+                            payload: { id: pipelineId }
+                        }
+                    ]
                 ]);
             });
         });
@@ -433,7 +457,7 @@ describe('Pipelines action', () => {
     describe('copyPipeline', () => {
         let data, projectId, pipelineId;
         beforeEach(() => {
-            data = { status: ''};
+            data = { status: '' };
             projectId = 'some_id';
             pipelineId = 'id';
             dispatch = jest.fn();
@@ -446,7 +470,10 @@ describe('Pipelines action', () => {
         });
 
         it('should dispatch COPY_PIPELINE_START_SUCCESS on success', () => {
-            return copyPipeline(projectId, pipelineId)(dispatch).then(() => {
+            return copyPipeline(
+                projectId,
+                pipelineId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: COPY_PIPELINE_START }],
                     [{ type: COPY_PIPELINE_SUCCESS }],
@@ -457,7 +484,10 @@ describe('Pipelines action', () => {
 
         it('should dispatch COPY_PIPELINE_FAIL on failure', () => {
             jest.spyOn(api, 'copyPipeline').mockRejectedValue('error');
-            return copyPipeline(projectId, pipelineId)(dispatch).then(() => {
+            return copyPipeline(
+                projectId,
+                pipelineId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: COPY_PIPELINE_START }],
                     [{ type: COPY_PIPELINE_FAIL, payload: { error: 'error' } }]

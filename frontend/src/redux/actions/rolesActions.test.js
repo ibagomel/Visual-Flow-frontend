@@ -19,11 +19,7 @@
 
 import fetchRoles from './rolesActions';
 import api from '../../api/users';
-import {
-    FETCH_ROLES_START,
-    FETCH_ROLES_FAIL,
-    FETCH_ROLES_SUCCESS
-} from './types';
+import { FETCH_ROLES_START, FETCH_ROLES_FAIL, FETCH_ROLES_SUCCESS } from './types';
 
 describe('roles actions', () => {
     let data;

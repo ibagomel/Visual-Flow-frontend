@@ -41,7 +41,9 @@ describe('users and roles action', () => {
 
         it('should dispatch FETCH_USERS_AND_ROLES_START', () => {
             fetchProjectUsers()(dispatch);
-            expect(dispatch).toHaveBeenCalledWith({ type: FETCH_USERS_AND_ROLES_START });
+            expect(dispatch).toHaveBeenCalledWith({
+                type: FETCH_USERS_AND_ROLES_START
+            });
         });
 
         it('should dispatch FETCH_USERS_AND_ROLES_SUCCESS on success', () => {
@@ -66,7 +68,9 @@ describe('users and roles action', () => {
 
     describe('updateProjectUsers', () => {
         const projectId = 'projectId';
-        const users = [{ username: 'TTest', name: 'Tested Testing', role: 'Administrator' }];
+        const users = [
+            { username: 'TTest', name: 'Tested Testing', role: 'Administrator' }
+        ];
         beforeEach(() => {
             data = {};
             dispatch = jest.fn();
@@ -79,21 +83,34 @@ describe('users and roles action', () => {
 
         it('should dispatch UPDATE_PARAMETERS_START', () => {
             updateProjectUsers(projectId, users)(dispatch);
-            expect(dispatch).toHaveBeenCalledWith(expected_UPDATE_USERS_AND_ROLES_START);
+            expect(dispatch).toHaveBeenCalledWith(
+                expected_UPDATE_USERS_AND_ROLES_START
+            );
         });
 
         it('should dispatch UPDATE_USERS_AND_ROLES_SUCCESS on success', () => {
-            return updateProjectUsers(projectId, users)(dispatch).then(() => {
+            return updateProjectUsers(
+                projectId,
+                users
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [expected_UPDATE_USERS_AND_ROLES_START],
-                    [{ type: UPDATE_USERS_AND_ROLES_SUCCESS, payload: { [users[0].username]: users[0].role } }]
+                    [
+                        {
+                            type: UPDATE_USERS_AND_ROLES_SUCCESS,
+                            payload: { [users[0].username]: users[0].role }
+                        }
+                    ]
                 ]);
             });
         });
 
         it('should dispatch UPDATE_USERS_AND_ROLES_FAIL on failure', () => {
             jest.spyOn(api, 'updateProjectUsers').mockRejectedValue({});
-            return updateProjectUsers(projectId, users)(dispatch).then(() => {
+            return updateProjectUsers(
+                projectId,
+                users
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [expected_UPDATE_USERS_AND_ROLES_START],
                     [{ type: UPDATE_USERS_AND_ROLES_FAIL, payload: { error: {} } }]

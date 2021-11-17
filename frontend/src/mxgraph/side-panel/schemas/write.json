@@ -1,0 +1,91 @@
+{
+  "WRITE": [
+    {
+      "field": "writeMode",
+      "condition": [
+        {
+          "storage": "cos"
+        },
+        {
+          "storage": "s3"
+        },
+        {
+          "storage": "db2"
+        },
+        {
+          "storage": "elastic"
+        },
+        {
+          "storage": "postgresql"
+        },
+        {
+          "storage": "oracle"
+        },
+        {
+          "storage": "mysql"
+        },
+        {
+          "storage": "redis"
+        },
+        {
+          "storage": "cassandra"
+        },
+        {
+          "storage": "mssql"
+        },
+        {
+          "storage": "mongo"
+        }
+      ]
+    },
+    {
+      "field": "schema",
+      "conditions": [
+        {
+          "storage": "db2"
+        },
+        {
+          "storage": "postgresql"
+        },
+        {
+          "storage": "oracle"
+        },
+        {
+          "storage": "mysql"
+        },
+        {
+          "storage": "redis"
+        },
+        {
+          "storage": "mssql"
+        }
+      ]
+    },
+    {
+      "field": "table",
+      "conditions": [
+        {
+          "storage": "db2"
+        },
+        {
+          "storage": "postgresql"
+        },
+        {
+          "storage": "oracle"
+        },
+        {
+          "storage": "mysql"
+        },
+        {
+          "storage": "redis"
+        },
+        {
+          "storage": "mssql"
+        },
+        {
+          "storage": "cassandra"
+        }
+      ]
+    }
+  ]
+}

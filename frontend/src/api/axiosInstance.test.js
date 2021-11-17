@@ -17,7 +17,12 @@
  * limitations under the License.
  */
 
-import { axiosMockInstance, axiosInstance, getLocation, login } from './axiosInstance';
+import {
+    axiosMockInstance,
+    axiosInstance,
+    getLocation,
+    login
+} from './axiosInstance';
 
 describe('axiosInstance', () => {
     require('./axiosInstance');
@@ -30,7 +35,7 @@ describe('axiosInstance', () => {
                     response
                 );
                 expect(actual).toBe(response);
-            })
+            });
         });
 
         it('should reject error', () => {
@@ -42,7 +47,7 @@ describe('axiosInstance', () => {
                     error
                 );
                 expect(actual).rejects.toEqual(error);
-            })
+            });
         });
     });
 
@@ -59,7 +64,6 @@ describe('axiosInstance', () => {
             `/login?redirect=${encodeURIComponent('home/pathname')}`
         );
     });
-
 
     it('login should set window.location', () => {
         window.BASE_URL = 'baseUrl/';

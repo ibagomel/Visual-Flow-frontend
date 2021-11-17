@@ -36,8 +36,9 @@ import Timeline from '@material-ui/icons/Timeline';
 import moment from 'moment';
 
 import useStyles from './ImportModal.Styles';
-import PopupForm from '../../../components/popup-form/PopupForm';
+import PopupForm from '../../../components/popup-form';
 import toggleConfirmationWindow from '../../../redux/actions/modalsActions';
+import { DATE_FORMAT } from '../../../globalConstants';
 
 const ImportModal = ({
     display,
@@ -103,8 +104,7 @@ const ImportModal = ({
         }
     };
 
-    const formatDate = date =>
-        date && moment(date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
+    const formatDate = date => date && moment(date, DATE_FORMAT).format(DATE_FORMAT);
 
     const handleImportResources = () => {
         if (existedList.some(item => selected.includes(item.id))) {

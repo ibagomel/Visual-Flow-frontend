@@ -19,11 +19,7 @@
 
 import fetchUsers from './usersActions';
 import api from '../../api/users';
-import {
-    FETCH_USERS_START,
-    FETCH_USERS_FAIL,
-    FETCH_USERS_SUCCESS
-} from './types';
+import { FETCH_USERS_START, FETCH_USERS_FAIL, FETCH_USERS_SUCCESS } from './types';
 
 describe('users actions', () => {
     let data;

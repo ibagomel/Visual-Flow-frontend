@@ -28,11 +28,11 @@ import { ErrorOutlineRounded } from '@material-ui/icons';
 
 import { store, synthHistory } from './redux';
 import Routes from './routes';
-import Header from './components/header/Header';
+import Header from './components/header';
 import useStyles from './App.Styles';
 import theme from './theme';
-import Notifications from './components/notification/Notifications';
-import ConfirmationWindow from './components/confirmation-window/ConfirmationWindow';
+import Notifications from './components/notification';
+import ConfirmationWindow from './components/confirmation-window';
 import { GLOBAL_CONFIRMATION_ID } from './redux/actions/modalsActions';
 import i18n from './i18n';
 

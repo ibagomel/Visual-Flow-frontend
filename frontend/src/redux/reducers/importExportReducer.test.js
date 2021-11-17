@@ -89,7 +89,7 @@ describe('importExportReducer', () => {
             };
             expect(importExportReducer(undefined, action)).toEqual({
                 ...initialState,
-                accessToImport: true,
+                accessToImport: true
             });
         });
 

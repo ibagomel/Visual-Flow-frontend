@@ -25,8 +25,8 @@ import { useTranslation } from 'react-i18next';
 
 import { fetchJobs, setJobSearchField } from '../../redux/actions/jobsActions';
 import { setCurrentTablePage } from '../../redux/actions/enhancedTableActions';
-import JobsTable from './JobsTable';
-import PageHeader from '../../components/page-header/PageHeader';
+import JobsTable from './table';
+import PageHeader from '../../components/page-header';
 import history from '../../utils/history';
 import { PageSkeleton } from '../../components/skeleton';
 import { fetchPipelines } from '../../redux/actions/pipelinesActions';

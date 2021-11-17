@@ -23,11 +23,11 @@ import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 
 import { fetchPipelineById, setFields } from '../../redux/actions/mxGraphActions';
-import GraphDesigner from '../../components/mxgraph/GraphDesigner';
+import GraphDesigner from '../../mxgraph';
 import { PageSkeleton } from '../../components/skeleton';
 import { fetchParameters } from '../../redux/actions/settingsParametersActions';
 import { fetchJobs } from '../../redux/actions/jobsActions';
-import { PIPELINE } from '../../components/mxgraph/constants';
+import { PIPELINE } from '../../mxgraph/constants';
 
 const PipelineDesigner = ({
     projectId,

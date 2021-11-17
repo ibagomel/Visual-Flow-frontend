@@ -180,7 +180,10 @@ describe('Jobs Reducer', () => {
                 type: SET_JOBS_LAST_RUN,
                 payload: '1 day ago'
             };
-            expect(jobsReducer(undefined, action)).toEqual({...initialState, lastRun: '1 day ago'});
+            expect(jobsReducer(undefined, action)).toEqual({
+                ...initialState,
+                lastRun: '1 day ago'
+            });
         });
 
         it('should handle SET_JOBS_STATUS', () => {
@@ -188,7 +191,10 @@ describe('Jobs Reducer', () => {
                 type: SET_JOBS_STATUS,
                 payload: 'draft'
             };
-            expect(jobsReducer(undefined, action)).toEqual({...initialState, status: 'draft'});
+            expect(jobsReducer(undefined, action)).toEqual({
+                ...initialState,
+                status: 'draft'
+            });
         });
-    });        
+    });
 });

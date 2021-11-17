@@ -109,7 +109,9 @@ describe('pipelines Reducer', () => {
             payload: { id: ['pipeline-id'], success }
         };
         const data = { pipelines: [{ name: 'pipeline2', id: 'pipeline2-id' }] };
-        const initialState = { data: { pipelines: [{ name: 'pipeline1', id: 'pipeline-id' }, data]} };
+        const initialState = {
+            data: { pipelines: [{ name: 'pipeline1', id: 'pipeline-id' }, data] }
+        };
         expect(pipelinesReducer(initialState, action)).toEqual({
             data: [data],
             success
@@ -313,7 +315,7 @@ describe('pipelines Reducer', () => {
                 loading: true
             });
         });
-    
+
         it('should handle COPY_PIPELINE_SUCCESS', () => {
             const action = {
                 type: COPY_PIPELINE_SUCCESS
@@ -323,7 +325,7 @@ describe('pipelines Reducer', () => {
                 loading: false
             });
         });
-    
+
         it('should handle COPY_PIPELINE_FAIL', () => {
             const action = {
                 type: COPY_PIPELINE_FAIL,

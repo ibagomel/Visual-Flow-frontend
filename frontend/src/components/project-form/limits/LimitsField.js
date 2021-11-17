@@ -22,7 +22,7 @@ import { Grid, TextField, InputAdornment } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 import { useTranslation } from 'react-i18next';
-import { isPositiveNumber } from '../../../utils/ProjectValidations';
+import { isPositiveNumber } from '../../../utils/projectValidations';
 
 const LimitsField = ({
     card,

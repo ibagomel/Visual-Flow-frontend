@@ -35,7 +35,7 @@ import {
 import { PageSkeleton } from '../../components/skeleton';
 import { fetchJobs } from '../../redux/actions/jobsActions';
 import { fetchPipelines } from '../../redux/actions/pipelinesActions';
-import AlertWindow from '../../components/alert-window/AlertWindow';
+import AlertWindow from '../../components/alert-window';
 
 const Import = ({
     t,
@@ -131,7 +131,7 @@ const Import = ({
                 />
 
                 <input
-                    accept=".txt"
+                    accept=".json"
                     className={classes.input}
                     id="contained-button-file"
                     multiple

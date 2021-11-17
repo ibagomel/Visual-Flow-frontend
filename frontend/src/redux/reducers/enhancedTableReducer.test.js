@@ -21,7 +21,6 @@ import enhancedTableReducer from './enhancedTableReducer';
 import { SET_CURRENT_PAGE, SET_ROWS_PER_PAGE, SET_DEFAULT } from '../actions/types';
 
 describe('EnhancedTable Reducer', () => {
-
     it('should return the initial state', () => {
         expect(enhancedTableReducer(undefined)).toEqual({
             page: 0,

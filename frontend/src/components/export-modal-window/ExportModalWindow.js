@@ -25,7 +25,7 @@ import classNames from 'classnames';
 import { Box, Button, TextField, Typography, Checkbox } from '@material-ui/core';
 
 import useStyles from './ExportModalWindow.Styles';
-import PopupForm from '../popup-form/PopupForm';
+import PopupForm from '../popup-form';
 import {
     exportResources,
     setExportFileName,
@@ -58,7 +58,7 @@ const ExportModalWindow = ({
                 type: 'text/plain;charset=utf-8'
             });
             element.href = URL.createObjectURL(file);
-            element.download = `${exportFileName}.txt`;
+            element.download = `${exportFileName}.json`;
             document.body.appendChild(element);
             element.click();
 

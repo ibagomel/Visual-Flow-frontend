@@ -42,7 +42,7 @@ import { updateJobStatus } from './oneJobStatusAction';
 import { updatePipelineStatus } from './onePipelineStatusActions';
 import history from '../../utils/history';
 import showNotification from '../../components/notification/showNotification';
-import { DRAFT } from '../../components/mxgraph/constants';
+import { DRAFT } from '../../mxgraph/constants';
 
 export const setSidePanel = isOpen => ({
     type: SET_SIDE_PANEL,

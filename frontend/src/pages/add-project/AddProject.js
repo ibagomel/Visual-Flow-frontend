@@ -20,7 +20,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import useStyles from './AddProject.Styles';
-import AddProjectForm from '../../components/project-form/ProjectForm';
+import AddProjectForm from '../../components/project-form';
 
 const AddProject = () => {
     const classes = useStyles();

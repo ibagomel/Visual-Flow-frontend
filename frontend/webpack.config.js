@@ -59,7 +59,10 @@ module.exports = {
     },
     module: {
         rules: [
-            { parser: { System: false } },
+            {
+                test: /\.js$/,
+                parser: { System: false }
+            },
             {
                 test: /\.s?[ac]ss$/i,
                 use: [

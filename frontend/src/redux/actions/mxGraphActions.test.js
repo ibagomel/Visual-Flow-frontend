@@ -41,7 +41,7 @@ import api from '../../api/jobs';
 import { fetchJob } from './mxGraphActions';
 import apiPipelines from '../../api/pipelines';
 import { fetchPipelineById } from './mxGraphActions';
-import { DRAFT } from '../../components/mxgraph/constants';
+import { DRAFT } from '../../mxgraph/constants';
 
 describe('mxGraph actions', () => {
     it('should call SET_SIDE_PANEL', () => {

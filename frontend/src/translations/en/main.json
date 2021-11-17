@@ -88,15 +88,6 @@
         "leaveWithUnsavedChanges": "Unsaved changes will be lost"
     },
     "enterJobName": "Please enter name and save params",
-    "status": {
-        "Draft": "Draft",
-        "Pending": "Pending",
-        "Running": "Running",
-        "Failed": "Failed",
-        "Succeeded": "Succeeded",
-        "Unknown": "Unknown",
-        "Error": "Error"
-    },
     "tooltip": {
         "MoveDown":"Move down",
         "MoveUp": "Move up",

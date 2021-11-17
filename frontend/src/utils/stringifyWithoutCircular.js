@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import JsonCodec from '../components/mxgraph/sidebar/JsonCodec';
+import JsonCodec from '../mxgraph/sidebar/json-codec/JsonCodec';
 
 const getJsonModel = currentGraph => {
     const encoder = new JsonCodec();

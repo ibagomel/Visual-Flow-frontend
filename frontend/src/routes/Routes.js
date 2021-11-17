@@ -19,21 +19,21 @@
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import NotFound from '../pages/not-found/NotFound';
-import Overview from '../pages/overview/Overview';
-import Pipelines from '../pages/pipelines/Pipelines';
-import Jobs from '../pages/jobs/Jobs';
-import Basic from '../pages/settings/Basic';
-import Parameters from '../pages/settings/Parameters';
-import Users from '../pages/settings/Users';
-import AddProject from '../pages/add-project/AddProject';
-import Main from '../pages/main/Main';
-import Logs from '../pages/logs/Logs';
+import NotFound from '../pages/not-found';
+import Overview from '../pages/overview';
+import Pipelines from '../pages/pipelines';
+import Jobs from '../pages/jobs';
+import Basic from '../pages/settings/basic';
+import Parameters from '../pages/settings/parameters';
+import Users from '../pages/settings/users';
+import AddProject from '../pages/add-project';
+import Main from '../pages/main';
+import Logs from '../pages/logs-modal/logs';
 import withParams from './withParams';
-import PrivateRoute from '../components/routes/private/PrivateRoute';
-import JobDesigner from '../pages/job-designer/JobDesigner';
-import PipelineDesigner from '../pages/pipeline-designer/PipelineDesigner';
-import Import from '../pages/import/Import';
+import PrivateRoute from '../components/routes/private';
+import JobDesigner from '../pages/job-designer';
+import PipelineDesigner from '../pages/pipeline-designer';
+import Import from '../pages/import';
 
 const Routes = () => (
     <Switch>

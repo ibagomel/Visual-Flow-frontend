@@ -26,7 +26,7 @@ import {
 } from './types';
 import jobApi from '../../api/jobs';
 import pipelineApi from '../../api/pipelines';
-import { DRAFT } from '../../components/mxgraph/constants';
+import { DRAFT } from '../../mxgraph/constants';
 
 describe('Overview actions', () => {
     const projectData = {
@@ -60,9 +60,14 @@ describe('Overview actions', () => {
         },
         pipelinesStat: {
             Draft: 1,
+            Pending: 0,
             Running: 0,
             Succeeded: 0,
-            Error: 0
+            Failed: 0,
+            Error: 0,
+            Stopped: 0,
+            Suspended: 0,
+            Terminated: 0
         },
         description: 'description',
         name: 'name',

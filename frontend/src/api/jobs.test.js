@@ -49,7 +49,7 @@ describe('jobs', () => {
     it('should updata job by updateJob', () => {
         const job = { graph: {} };
         jest.spyOn(axiosInstance, 'post').mockResolvedValue(expected);
-        return jobs.updateJob(projectId, job,1).then(result => {
+        return jobs.updateJob(projectId, job, 1).then(result => {
             expect(result).toEqual(expected);
         });
     });

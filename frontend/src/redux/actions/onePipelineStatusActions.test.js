@@ -40,17 +40,24 @@ describe('OnePipelineStatus action', () => {
 
         it('should dispatch FETCH_PIPELINE_STATUS_START', () => {
             fetchPipelineStatus()(dispatch);
-            expect(dispatch).toHaveBeenCalledWith({ type: FETCH_PIPELINE_STATUS_START });
+            expect(dispatch).toHaveBeenCalledWith({
+                type: FETCH_PIPELINE_STATUS_START
+            });
         });
 
         it('should dispatch FETCH_PIPELINE_STATUS_SUCCESS on success', () => {
-            return fetchPipelineStatus(projectId, pipelineId)(dispatch).then(() => {
+            return fetchPipelineStatus(
+                projectId,
+                pipelineId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: FETCH_PIPELINE_STATUS_START }],
-                    [{
-                        type: FETCH_PIPELINE_STATUS_SUCCESS,
-                        payload: { id: pipelineId }
-                    }]
+                    [
+                        {
+                            type: FETCH_PIPELINE_STATUS_SUCCESS,
+                            payload: { id: pipelineId }
+                        }
+                    ]
                 ]);
             });
         });
@@ -65,10 +72,9 @@ describe('OnePipelineStatus action', () => {
                 pipelineId
             )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
-                        [{ type: FETCH_PIPELINE_STATUS_START }],
-                        [{ type: FETCH_PIPELINE_STATUS_FAIL, payload: { error } }]
-                    ]
-                );
+                    [{ type: FETCH_PIPELINE_STATUS_START }],
+                    [{ type: FETCH_PIPELINE_STATUS_FAIL, payload: { error } }]
+                ]);
             });
         });
     });

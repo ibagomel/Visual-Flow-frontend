@@ -19,7 +19,7 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import InfoModal from '../InfoModal';
+import InfoModal from '../info';
 
 const RemoveDuplicatesModal = props => {
     const { t } = useTranslation();

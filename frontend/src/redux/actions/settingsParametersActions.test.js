@@ -84,7 +84,10 @@ describe('Parameters action', () => {
         });
 
         it('should dispatch UPDATE_PARAMETERS_SUCCESS on success', () => {
-            return updateParameters(projectId, parameters)(dispatch).then(() => {
+            return updateParameters(
+                projectId,
+                parameters
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [expected_UPDATE_PARAMETERS_START],
                     [{ type: UPDATE_PARAMETERS_SUCCESS, payload: parameters }]
@@ -94,7 +97,10 @@ describe('Parameters action', () => {
 
         it('should dispatch UPDATE_PARAMETERS_FAIL on failure', () => {
             jest.spyOn(api, 'updateProjectParameters').mockRejectedValue({});
-            return updateParameters(projectId, parameters)(dispatch).then(() => {
+            return updateParameters(
+                projectId,
+                parameters
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [expected_UPDATE_PARAMETERS_START],
                     [{ type: UPDATE_PARAMETERS_FAIL, payload: { error: {} } }]

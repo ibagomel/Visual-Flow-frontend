@@ -28,7 +28,9 @@ import {
 } from '../actions/types';
 
 describe('settings users and roles Reducer', () => {
-    const payload = [{ username: 'TTest', name: 'Tested Testing', grant: 'Administrator' }];
+    const payload = [
+        { username: 'TTest', name: 'Tested Testing', grant: 'Administrator' }
+    ];
 
     it('should return the initial state', () => {
         expect(settingsUsersRolesReducer(undefined, {})).toEqual({

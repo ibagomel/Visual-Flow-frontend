@@ -26,7 +26,7 @@ import {
     UPDATE_JOB_STATUS_SUCCESS
 } from './types';
 import api from '../../api/jobs';
-import { DRAFT } from '../../components/mxgraph/constants';
+import { DRAFT } from '../../mxgraph/constants';
 
 const fetchJobStatus = (projectId, jobId) => dispatch => {
     dispatch({

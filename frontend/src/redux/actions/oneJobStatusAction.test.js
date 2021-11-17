@@ -39,26 +39,35 @@ describe('One Job Status action', () => {
 
         it('should dispatch FETCH_JOB_STATUS_START without using params', () => {
             fetchJobStatus(projectId, jobId)(dispatch);
-            expect(dispatch).toHaveBeenCalledWith({type: FETCH_JOB_STATUS_START});
+            expect(dispatch).toHaveBeenCalledWith({ type: FETCH_JOB_STATUS_START });
         });
 
         it('should dispatch jobId with FETCH_JOB_STATUS_SUCCESS on success', () => {
-            jest.spyOn(api, 'getJobById').mockResolvedValue({...data} );
-            return fetchJobStatus(projectId, jobId)(dispatch).then(() => {
+            jest.spyOn(api, 'getJobById').mockResolvedValue({ ...data });
+            return fetchJobStatus(
+                projectId,
+                jobId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
-                    [{type: FETCH_JOB_STATUS_START}],
-                    [{type: FETCH_JOB_STATUS_SUCCESS,
-                        payload: {
-                            id: jobId
+                    [{ type: FETCH_JOB_STATUS_START }],
+                    [
+                        {
+                            type: FETCH_JOB_STATUS_SUCCESS,
+                            payload: {
+                                id: jobId
+                            }
                         }
-                    }]
+                    ]
                 ]);
             });
         });
 
         it('should dispatch jobId with FETCH_JOB_STATUS_FAIL on failure', () => {
             jest.spyOn(api, 'getJobById').mockRejectedValue('error');
-            return fetchJobStatus(projectId, jobId)(dispatch).then(() => {
+            return fetchJobStatus(
+                projectId,
+                jobId
+            )(dispatch).then(() => {
                 expect(dispatch.mock.calls).toEqual([
                     [{ type: FETCH_JOB_STATUS_START }],
                     [{ type: FETCH_JOB_STATUS_FAIL, payload: { error: 'error' } }]

@@ -160,5 +160,73 @@
             "value1": "Enter certification data for SSL connection if needed."
         }
     },
+    "MONGO": {
+        "database": {
+            "name": "Database",
+            "value": "MongoDB database name."
+        },
+        "collection": {
+            "name": "Collection",
+            "value": "MongoDB database name."
+        },
+        "host": {
+            "name": "Host",
+            "value": "MongoDB hostname or IP address."
+        },
+        "port": {
+            "name": "Port",
+            "value": "MongoDB port."
+        },
+        "user": {
+            "name": "User",
+            "value": "Name of the MongoDB user."
+        },
+        "password": {
+            "name": "Password",
+            "value": "Password of the MongoDB user."
+        }
+    },
+    "CASSANDRA": {
+        "keyspace": {
+            "name": "Keyspace",
+            "value": "Name of the keyspace to connect to."
+        },
+        "table": {
+            "name": "Table",
+            "value": "Name of the table to connect to."
+        },
+        "cluster": {
+            "name": "Cluster (optional)",
+            "value": "Name of the cluster to connect to."
+        },
+        "host": {
+            "name": "Host",
+            "value": "Contact point to connect to the Cassandra cluster."
+        },
+        "port": {
+            "name": "Port",
+            "value": "Cassandra native connection port."
+        },
+        "ssl": {
+            "name": "SSL",
+            "value": "Enable secure connection to Cassandra cluster."
+        },
+        "username": {
+            "name": "Username",
+            "value": "Login name for password authentication."
+        },
+        "password": {
+            "name": "Password",
+            "value": "Password for password authentication."
+        },
+        "pushdownEnabled": {
+            "name": "Push down enabled",
+            "value": "Whether to use pushdown optimizations."
+        },
+        "certData": {
+            "name": "certData (optional)",
+            "value": "Custom certificate for ssl connection."
+        }
+    },
     "noAdditionalFields": "There are no additional fields."
 }

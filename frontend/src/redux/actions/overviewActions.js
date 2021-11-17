@@ -55,9 +55,14 @@ export const fetchResourceUtilization = id => dispatch => {
             };
             const initPipelinesObj = {
                 Draft: 0,
+                Pending: 0,
                 Running: 0,
                 Succeeded: 0,
-                Error: 0
+                Failed: 0,
+                Error: 0,
+                Stopped: 0,
+                Suspended: 0,
+                Terminated: 0
             };
             const jobsStat = jobs.data.jobs.reduce(callback, initJobsObj);
             const pipelinesStat = pipelines.data.pipelines.reduce(

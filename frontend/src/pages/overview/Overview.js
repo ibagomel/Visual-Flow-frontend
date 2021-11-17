@@ -22,9 +22,9 @@ import { Box, Grid, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Skeleton from '@material-ui/lab/Skeleton';
-import JobsStats from './JobsStats';
-import PipelinesStats from './PipelinesStats';
-import Utilization from './Utilization';
+import JobsStats from './jobs-stats';
+import PipelinesStats from './pipeline-stats';
+import Utilization from './utilization';
 import { fetchResourceUtilization } from '../../redux/actions/overviewActions';
 
 const Overview = ({

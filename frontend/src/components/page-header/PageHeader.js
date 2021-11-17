@@ -24,7 +24,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import useStyles from './PageHeader.Styles';
-import SearchInput from '../search-input/SearchInput';
+import SearchInput from '../search-input';
 
 const PageHeader = ({
     header,

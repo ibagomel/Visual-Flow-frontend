@@ -24,5 +24,5 @@ import { resources } from './i18n';
 describe('i18n', () => {
     it('should load translations without any error', () => {
         expect(resources).toHaveProperty('en');
-    })
+    });
 });

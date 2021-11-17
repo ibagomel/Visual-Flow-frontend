@@ -24,15 +24,15 @@ import { get, isEqual } from 'lodash';
 import { Grid, TextField } from '@material-ui/core';
 
 import { useTranslation } from 'react-i18next';
-import { isCorrectName, isCorrectDescription } from '../../utils/ProjectValidations';
+import { isCorrectName, isCorrectDescription } from '../../utils/projectValidations';
 import { createProject } from '../../redux/actions/projectsActions';
 import { updateProject } from '../../redux/actions/settingsActions';
 import history from '../../utils/history';
-import FormWrapper from '../form-wrapper/FormWrapper';
+import FormWrapper from '../form-wrapper';
 import useStyles from './ProjectForm.Styles';
-import LimitsField from './limits/LimitsField';
-import LimitSubtitle from './limit-subtitle/limitSubtitle';
-import { isEmpty, isValidationPassed } from './buttons/validations';
+import LimitsField from './limits';
+import LimitSubtitle from './limit-subtitle';
+import { isEmpty, isValidationPassed } from './validations/validations';
 import useUnsavedChangesWarning from '../../pages/settings/useUnsavedChangesWarning';
 
 const ProjectForm = ({ project, create, update }) => {

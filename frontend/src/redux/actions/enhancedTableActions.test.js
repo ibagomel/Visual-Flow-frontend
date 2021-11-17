@@ -25,7 +25,6 @@ import {
 import { SET_CURRENT_PAGE, SET_ROWS_PER_PAGE, SET_DEFAULT } from './types';
 
 describe('EnhancedTable Action', () => {
-
     it('should call SET_CURRENT_PAGE', () => {
         const expectedAction = { type: SET_CURRENT_PAGE, payload: 1 };
         expect(setCurrentTablePage(1)).toEqual(expectedAction);

@@ -33,10 +33,10 @@ import { useSelector } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import { useTranslation } from 'react-i18next';
 import useStyles from './Header.Styles';
-import MenuBar from '../menu/MenuBar';
+import MenuBar from '../menu';
 import getMenu from '../menu/menu';
 import history from '../../utils/history';
-import SelectProject from '../select-project/SelectProject';
+import SelectProject from '../select-project';
 
 const Header = () => {
     const { t } = useTranslation();
@@ -47,13 +47,9 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState(true);
     const opened = menuOpen && menu;
 
-    const handleDrawerOpen = () => {
-        setMenuOpen(true);
-    };
+    const handleDrawerOpen = () => setMenuOpen(true);
 
-    const handleDrawerClose = () => {
-        setMenuOpen(false);
-    };
+    const handleDrawerClose = () => setMenuOpen(false);
 
     const handleItemClick = item => {
         if (item.link) {

@@ -14,13 +14,13 @@
         "eslint-plugin-prettier": "^3.1.2",
         "eslint-plugin-react": "^7.17.0",
         "eslint-plugin-react-hooks": "^2.3.0",
-        "jest": "^26.6.3",
-        "jest-junit": "^10.0.0",
+        "jest": "^27.3.1",
+        "jest-junit": "^13.0.0",
         "jest-sonar-reporter": "^2.0.0",
         "nodemon": "^2.0.4",
         "owasp-dependency-check": "^0.0.18",
         "prettier": "^1.19.1",
-        "supertest": "^4.0.2"
+        "supertest": "^6.1.6"
     },
     "dependencies": {
         "axios": "^0.21.1",

@@ -25,8 +25,8 @@ import { useTranslation } from 'react-i18next';
 
 import { fetchPipelines } from '../../redux/actions/pipelinesActions';
 import { setCurrentTablePage } from '../../redux/actions/enhancedTableActions';
-import PipelinesTable from './PipelinesTable';
-import PageHeader from '../../components/page-header/PageHeader';
+import PipelinesTable from './table';
+import PageHeader from '../../components/page-header';
 import history from '../../utils/history';
 import { PageSkeleton } from '../../components/skeleton';
 

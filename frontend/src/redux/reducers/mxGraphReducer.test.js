@@ -27,7 +27,8 @@ import {
     FETCH_JOB_SUCCESS,
     FETCH_PIPELINE_START,
     FETCH_PIPELINE_SUCCESS,
-    FETCH_PIPELINE_FAIL, SET_ZOOM_VALUE
+    FETCH_PIPELINE_FAIL,
+    SET_ZOOM_VALUE
 } from '../actions/types';
 import mxGraphReducer from './mxGraphReducer';
 
@@ -158,7 +159,7 @@ describe('mxGraph Reducer', () => {
     });
 
     describe('fetch pipiline', () => {
-        const mockPipeline = { id: '123', name: 'mock_name'};
+        const mockPipeline = { id: '123', name: 'mock_name' };
         const error = 'error';
 
         it('should handle FETCH_PIPELINE_START', () => {
@@ -170,7 +171,7 @@ describe('mxGraph Reducer', () => {
                 loading: true
             });
         });
-    
+
         it('should handle FETCH_PIPELINE_SUCCESS', () => {
             const action = {
                 type: FETCH_PIPELINE_SUCCESS,
@@ -183,7 +184,7 @@ describe('mxGraph Reducer', () => {
                 data: { mockPipeline }
             });
         });
-    
+
         it('should handle FETCH_PIPELINE_FAIL', () => {
             const action = {
                 type: FETCH_PIPELINE_FAIL,

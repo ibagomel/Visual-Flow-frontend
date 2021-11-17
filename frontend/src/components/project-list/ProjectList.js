@@ -24,7 +24,8 @@ import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import history from '../../utils/history';
 import { fetchProjects } from '../../redux/actions/projectsActions';
-import ProjectCard, { ProjectCardSkeleton } from '../project-card/ProjectCard';
+import ProjectCard from '../project-card';
+import { ProjectCardSkeleton } from '../project-card/ProjectCard';
 
 const ProjectList = ({ projects: { data, loading }, getProjects }) => {
     React.useEffect(() => {

@@ -37,6 +37,7 @@
         "Path": "Path in bucket",
         "JDBCURL": "JDBC URL",
         "User": "User",
+        "Username": "Username",
         "Password": "Password",
         "Schema": "Schema",
         "Table": "Table",
@@ -48,7 +49,10 @@
         "Index": "Index",
         "Database": "Database",
         "Collection": "Collection",
-        "Host": "Host"
+        "Host": "Host",
+        "Keyspace": "Keyspace",
+        "PushdownEnabled": "Push down enabled",
+        "Cluster": "Cluster (optional)"
     },
     "writeConfiguration": {
         "Header": "Header",

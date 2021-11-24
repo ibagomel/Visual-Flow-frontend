@@ -248,6 +248,51 @@ const getCassandra = t => [
     getWriteMode(t)
 ];
 
+const getRedis = t => [
+    {
+        title: t('ReadWrite:REDIS.host.name'),
+        paragraph: t('ReadWrite:REDIS.host.value')
+    },
+    {
+        title: t('ReadWrite:REDIS.port.name'),
+        paragraph: t('ReadWrite:REDIS.port.value')
+    },
+    {
+        title: t('ReadWrite:REDIS.password.name'),
+        paragraph: t('ReadWrite:REDIS.password.value')
+    },
+    {
+        title: t('ReadWrite:REDIS.ssl.name'),
+        paragraph: t('ReadWrite:REDIS.ssl.value')
+    },
+    {
+        title: t('ReadWrite:REDIS.model.name'),
+        paragraph: t('ReadWrite:REDIS.model.value')
+    },
+    {
+        title: t('ReadWrite:REDIS.keyColumn.name'),
+        paragraph: t('ReadWrite:REDIS.keyColumn.value'),
+        paragraph1: t('ReadWrite:REDIS.keyColumn.value1')
+    },
+    {
+        title: t('ReadWrite:REDIS.readMode.name'),
+        paragraph: t('ReadWrite:REDIS.readMode.value')
+    },
+    {
+        title: t('ReadWrite:REDIS.table.name'),
+        paragraph: t('ReadWrite:REDIS.table.value')
+    },
+    {
+        title: t('ReadWrite:REDIS.keysPattern.name'),
+        paragraph: t('ReadWrite:REDIS.keysPattern.value')
+    },
+    {
+        title: t('ReadWrite:REDIS.ttl.name'),
+        paragraph: t('ReadWrite:REDIS.ttl.value')
+    },
+    getWriteMode(t)
+];
+
 const getStdout = t => [
     {
         title: t('ReadWrite:noAdditionalFields')
@@ -268,6 +313,7 @@ const RWModal = props => {
             elastic={getElastic(t)}
             mongo={getMongo(t)}
             cassandra={getCassandra(t)}
+            redis={getRedis(t)}
             stdout={getStdout(t)}
             {...props}
         />

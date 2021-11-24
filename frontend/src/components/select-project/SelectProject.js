@@ -23,11 +23,13 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import PropTypes from 'prop-types';
 import InputBase from '@material-ui/core/InputBase';
 import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import history from '../../utils/history';
 import { fetchProjects } from '../../redux/actions/projectsActions';
 import useStyles from './SelectProject.Styles';
 
 const SelectProject = ({ projects, getProjects, loading, projectId }) => {
+    const { t } = useTranslation();
     const classes = useStyles();
     useEffect(() => {
         if (isEmpty(projects)) {
@@ -42,7 +44,7 @@ const SelectProject = ({ projects, getProjects, loading, projectId }) => {
         setValueSelected(selectedProject);
     }, [selectedProject]);
 
-    const defaultText = loading ? 'Loading...' : '';
+    const defaultText = loading ? t('main:Loading') : '';
 
     return (
         <Autocomplete
@@ -61,7 +63,7 @@ const SelectProject = ({ projects, getProjects, loading, projectId }) => {
                 <div ref={params.InputProps.ref} className={classes.search}>
                     <InputBase
                         {...params.inputProps}
-                        placeholder="Switch projects"
+                        placeholder={t('main:Switch')}
                         classes={{
                             root: classes.inputRoot,
                             input: classes.inputInput

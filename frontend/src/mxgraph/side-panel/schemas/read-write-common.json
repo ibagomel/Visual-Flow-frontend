@@ -149,9 +149,6 @@
           "storage": "mysql"
         },
         {
-          "storage": "redis"
-        },
-        {
           "storage": "mssql"
         }
       ]
@@ -170,9 +167,6 @@
         },
         {
           "storage": "mysql"
-        },
-        {
-          "storage": "redis"
         },
         {
           "storage": "elastic"
@@ -237,10 +231,6 @@
           "customSql": "true"
         },
         {
-          "storage": "redis",
-          "customSql": "true"
-        },
-        {
           "storage": "mssql",
           "customSql": "true"
         }
@@ -262,9 +252,6 @@
           "storage": "mysql"
         },
         {
-          "storage": "redis"
-        },
-        {
           "storage": "mssql"
         }
       ]
@@ -283,9 +270,6 @@
         },
         {
           "storage": "mysql"
-        },
-        {
-          "storage": "redis"
         },
         {
           "storage": "elastic"
@@ -317,6 +301,9 @@
         },
         {
           "storage": "mongo"
+        },
+        {
+          "storage": "redis"
         }
       ]
     },
@@ -331,6 +318,9 @@
         },
         {
           "storage": "cassandra"
+        },
+        {
+          "storage": "redis"
         }
       ]
     },
@@ -366,6 +356,9 @@
         },
         {
           "storage": "cassandra"
+        },
+        {
+          "storage": "redis"
         }
       ]
     },
@@ -398,6 +391,22 @@
       "conditions": [
         {
           "storage": "cassandra"
+        }
+      ]
+    },
+    {
+      "field": "keyColumn",
+      "conditions": [
+        {
+          "storage": "redis"
+        }
+      ]
+    },
+    {
+      "field": "model",
+      "conditions": [
+        {
+          "storage": "redis"
         }
       ]
     }

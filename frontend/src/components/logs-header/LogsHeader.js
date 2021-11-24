@@ -18,7 +18,15 @@
  */
 
 import React from 'react';
-import { Grid, Button, Select, FormControl, InputLabel } from '@material-ui/core';
+import {
+    Grid,
+    Button,
+    Select,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Checkbox
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import classNames from 'classnames';
@@ -32,7 +40,7 @@ const LogsHeader = ({
     onSearch,
     searchValue,
     onSelect,
-    lvl
+    levels
 }) => {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -59,17 +67,22 @@ const LogsHeader = ({
                                 {t('jobs:Level')}
                             </InputLabel>
                             <Select
-                                native
+                                multiple
                                 onChange={onSelect}
                                 label="Level"
                                 className={classNames(classes.selectButton)}
-                                value={lvl}
+                                value={levels}
+                                renderValue={selected => selected.join(', ')}
                             >
-                                <option aria-label="None" value="" />
-                                {dropList?.map(value => (
-                                    <option key={value} value={value}>
-                                        {t(`jobs:level.${value}`) || value}
-                                    </option>
+                                {dropList.map(value => (
+                                    <MenuItem key={value} value={value}>
+                                        <Checkbox
+                                            checked={levels.indexOf(value) > -1}
+                                        />
+                                        <option key={value} value={value}>
+                                            {t(`jobs:level.${value}`) || value}
+                                        </option>
+                                    </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
@@ -98,7 +111,7 @@ LogsHeader.propTypes = {
     onSearch: PropTypes.func,
     onSelect: PropTypes.func,
     searchValue: PropTypes.string,
-    lvl: PropTypes.string
+    levels: PropTypes.array
 };
 
 export default LogsHeader;

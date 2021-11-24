@@ -19,6 +19,7 @@
 
 import axios from 'axios';
 import showNotification from '../components/notification/showNotification';
+import i18n from '../i18n';
 
 export const axiosInstance = axios.create({
     baseURL: `${window.BASE_URL}backend/api`
@@ -39,7 +40,7 @@ axiosInstance.interceptors.response.use(
         if (response.config.method !== 'get') {
             showNotification(
                 response.statusText === 'No Content'
-                    ? 'Deleted successfully'
+                    ? i18n.t('main:Deleted')
                     : response.statusText,
                 'success'
             );

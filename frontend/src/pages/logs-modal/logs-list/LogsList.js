@@ -26,9 +26,17 @@ import classNames from 'classnames';
 import useStyles from './LogsList.Styles';
 import LogsHeader from '../../../components/logs-header';
 
-const lvls = ['INFO', 'WARN', 'ERROR', 'DEBUG'];
+const LEVELS = ['INFO', 'WARN', 'ERROR', 'DEBUG'];
 
-const LogsList = ({ data, modal, onRefresh, search, onSearch, lvl, onSelect }) => {
+const LogsList = ({
+    data,
+    modal,
+    onRefresh,
+    search,
+    onSearch,
+    levels,
+    onSelect
+}) => {
     const classes = useStyles();
     const errorMes = useSelector(state => state.pages.logs.error);
 
@@ -65,9 +73,9 @@ const LogsList = ({ data, modal, onRefresh, search, onSearch, lvl, onSelect }) =
                     onSearch={event => onSearch(event.target.value)}
                     searchValue={search}
                     onRefreshClick={onRefresh}
-                    dropList={lvls}
+                    dropList={LEVELS}
                     onSelect={event => onSelect(event.target.value)}
-                    lvl={lvl}
+                    levels={levels}
                 />
             </Grid>
             <Grid item xs={12}>
@@ -87,7 +95,11 @@ const LogsList = ({ data, modal, onRefresh, search, onSearch, lvl, onSelect }) =
                     ) : (
                         logs(data)
                             .filter(item =>
-                                lvl ? item?.includes(` - ${lvl} - `) : item
+                                levels.length
+                                    ? levels.some(level =>
+                                          item.includes(` - ${level} - `)
+                                      )
+                                    : item
                             )
                             .filter(item => (search ? item?.includes(search) : item))
                             .map((str, i) => (
@@ -115,7 +127,7 @@ LogsList.propTypes = {
     onRefresh: PropTypes.func,
     search: PropTypes.string,
     onSearch: PropTypes.func,
-    lvl: PropTypes.string,
+    levels: PropTypes.array,
     onSelect: PropTypes.func
 };
 

@@ -99,6 +99,10 @@ export const STORAGES = {
         value: 'postgresql',
         label: 'PostgreSQL'
     },
+    REDIS: {
+        value: 'redis',
+        label: 'Redis'
+    },
     STDOUT: {
         value: 'stdout',
         label: 'STDOUT',

@@ -52,7 +52,14 @@
         "Host": "Host",
         "Keyspace": "Keyspace",
         "PushdownEnabled": "Push down enabled",
-        "Cluster": "Cluster (optional)"
+        "Cluster": "Cluster (optional)",
+        "Model": "Model",
+        "KeyColumn": "Key column",
+        "ReadMode": "Read mode",
+        "KeysPattern": "Keys pattern",
+        "Binary": "Binary",
+        "Hash": "Hash",
+        "ttl": "ttl"
     },
     "writeConfiguration": {
         "Header": "Header",

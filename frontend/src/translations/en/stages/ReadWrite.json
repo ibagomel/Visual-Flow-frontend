@@ -228,5 +228,48 @@
             "value": "Custom certificate for ssl connection."
         }
     },
+    "REDIS": {
+        "host": {
+            "name": "Host",
+            "value": "Host or IP of the initial node we connect to. The connector will read the cluster topology from the initial node, so there is no need to provide the rest of the cluster nodes."
+        },
+        "port": {
+            "name": "Port",
+            "value": "The initial node's TCP redis port."
+        },
+        "password": {
+            "name": "Password",
+            "value": "The initial node's AUTH password"
+        },
+        "ssl": {
+            "name": "ssl",
+            "value": "Set to true to use tls. currently it's not allowed to pass client's certificate."
+        },
+        "model": {
+            "name": "Model [binary, hash]",
+            "value": "Defines the Redis model used to persist DataFrame, default is hash."
+        },
+        "keyColumn": {
+            "name": "Key column",
+            "value": "When writing - specifies unique column used as a Redis key, by default a key is auto-generated.",
+            "value1": "When reading - specifies column name to store hash key."
+        },
+        "readMode": {
+            "name": "Read mode [key, pattern]",
+            "value": "Defines the way that the read operation would be handled. If \"key\" is selected, then the read would be done based on the \"table\" field. In case of the \"pattern\", a provided pattern(option \"keysPattern\") will dictate what redis keys will be read."
+        },
+        "table": {
+            "name": "Table",
+            "value": "The table name is used to organize Redis keys in a namespace."
+        },
+        "keysPattern": {
+            "name": "Keys pattern",
+            "value": "Spark-Redis tries to extract the key based on the key pattern:\nif the pattern ends with * and it's the only wildcard, the trailing substring will be extracted\notherwise there is no extraction - the key is kept as is."
+        },
+        "ttl": {
+            "name": "ttl",
+            "value": "Data time to live in seconds. Data doesn't expire if ttl is less than 1. Be default it's 0."
+        }
+    },
     "noAdditionalFields": "There are no additional fields."
 }

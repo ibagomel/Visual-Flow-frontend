@@ -14,6 +14,9 @@
     "jobDesigner": "Job Designer",
     "search": "Search...",
     "FileName": "File Name",
+    "Deleted": "Deleted successfully",
+    "Loading": "Loading...",
+    "Switch": "Switch projects",
     "sorted": {
         "descending": "sorted descending",
         "ascending": "sorted ascending"

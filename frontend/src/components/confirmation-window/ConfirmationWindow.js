@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import toggleConfirmationWindow from '../../redux/actions/modalsActions';
 
-const ConfirmationWindow = ({ id, modals, toggleConfirmationWindow: toggle }) => {
+const ConfirmationWindow = ({ id, modals, toggle }) => {
     const { t } = useTranslation();
     const modalProps = modals[id] || {};
     const {
@@ -42,9 +42,7 @@ const ConfirmationWindow = ({ id, modals, toggleConfirmationWindow: toggle }) =>
         cancel = t('main:confirm.No')
     } = modalProps;
 
-    const handleClose = () => {
-        toggle({ id });
-    };
+    const handleClose = () => toggle({ id });
 
     const handleSubmit = () => {
         callback();
@@ -70,7 +68,7 @@ const ConfirmationWindow = ({ id, modals, toggleConfirmationWindow: toggle }) =>
 };
 ConfirmationWindow.propTypes = {
     id: PropTypes.string.isRequired,
-    toggleConfirmationWindow: PropTypes.func.isRequired,
+    toggle: PropTypes.func.isRequired,
     modals: PropTypes.object
 };
 
@@ -83,7 +81,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    toggleConfirmationWindow
+    toggle: toggleConfirmationWindow
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmationWindow);

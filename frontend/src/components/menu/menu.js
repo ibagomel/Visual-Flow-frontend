@@ -25,49 +25,50 @@ import {
     TransformSharp,
     ExitToAppSharp
 } from '@material-ui/icons';
+import i18n from '../../i18n';
 
 const menu = id =>
     id && [
         {
-            name: 'Overview',
+            name: i18n.t('main:Overview'),
             link: `/${id}/overview`,
             Icon: Home
         },
         {
-            name: 'Jobs',
+            name: i18n.t('main:Jobs'),
             link: `/${id}/jobs`,
             Icon: TransformSharp
         },
         {
-            name: 'Pipelines',
+            name: i18n.t('main:Pipelines'),
             link: `/${id}/pipelines`,
             Icon: Timeline
         },
         {
-            name: 'Import',
+            name: i18n.t('main:Import'),
             link: `/${id}/import`,
             Icon: ImportExport
         },
         {
-            name: 'Settings',
+            name: i18n.t('main:Settings'),
             items: [
                 {
-                    name: 'Basic',
+                    name: i18n.t('main:Basic'),
                     link: `/${id}/settings/basic`
                 },
                 {
-                    name: 'Parameters',
+                    name: i18n.t('main:Parameters'),
                     link: `/${id}/settings/parameters`
                 },
                 {
-                    name: 'Users/Roles',
+                    name: i18n.t('main:Users/Roles'),
                     link: `/${id}/settings/users`
                 }
             ],
             Icon: Settings
         },
         {
-            name: 'Exit',
+            name: i18n.t('main:Exit'),
             link: '/',
             Icon: ExitToAppSharp
         }

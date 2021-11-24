@@ -54,9 +54,6 @@
           "storage": "mysql"
         },
         {
-          "storage": "redis"
-        },
-        {
           "storage": "mssql"
         }
       ]
@@ -77,13 +74,21 @@
           "storage": "mysql"
         },
         {
-          "storage": "redis"
-        },
-        {
           "storage": "mssql"
         },
         {
           "storage": "cassandra"
+        },
+        {
+          "storage": "redis"
+        }
+      ]
+    },
+    {
+      "field": "ttl",
+      "conditions": [
+        {
+          "storage": "redis"
         }
       ]
     }

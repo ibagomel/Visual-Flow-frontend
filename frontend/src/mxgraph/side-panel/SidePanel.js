@@ -28,7 +28,7 @@ import { withStyles } from '@material-ui/styles';
 import { Box, Drawer, Toolbar, Typography, IconButton } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CloseIcon from '@material-ui/icons/Close';
-import { get } from 'lodash';
+import { get, isEqual } from 'lodash';
 import {
     setCurrentCell,
     setGraphDirty,
@@ -141,9 +141,9 @@ class SidePanel extends React.Component {
             );
             graph.resizeCell(cell, newCellSize);
         }
+        setDirty(!isEqual(this.state.configuration, cleanConfiguration));
         this.setState({ configuration: cleanConfiguration });
         setPanelDirty(false);
-        setDirty(true);
         this.props.setSidePanel(false);
     };
 

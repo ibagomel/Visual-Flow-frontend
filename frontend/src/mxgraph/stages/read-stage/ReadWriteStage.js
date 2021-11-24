@@ -139,6 +139,28 @@ const ReadWriteStage = ({ stage }) => {
                         </Typography>
                     </>
                 );
+            case STORAGES.REDIS.value:
+                return (
+                    <>
+                        <Typography
+                            variant="caption"
+                            component="div"
+                            className={classes.schema}
+                            color="textSecondary"
+                        >
+                            {t('jobDesigner:readConfiguration.Host')}: {stage.host}
+                        </Typography>
+                        <Typography
+                            variant="caption"
+                            component="div"
+                            className={classes.table}
+                            color="textSecondary"
+                        >
+                            {t('jobDesigner:readConfiguration.KeyColumn')}:{' '}
+                            {stage.keyColumn}
+                        </Typography>
+                    </>
+                );
             case STORAGES.STDOUT.value:
                 return null;
             default:

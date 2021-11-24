@@ -42,7 +42,7 @@ const Logs = ({
     nodeId
 }) => {
     const [search, setSearch] = React.useState('');
-    const [lvl, setLevel] = React.useState('');
+    const [levels, setLevels] = React.useState([]);
 
     const callGetLogs = () =>
         nodeId
@@ -97,8 +97,8 @@ const Logs = ({
                             onRefresh={callGetLogs}
                             search={search}
                             onSearch={setSearch}
-                            lvl={lvl}
-                            onSelect={setLevel}
+                            levels={levels}
+                            onSelect={setLevels}
                         />
                     )}
                 </Grid>

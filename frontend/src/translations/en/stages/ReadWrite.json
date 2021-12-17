@@ -21,9 +21,9 @@
     "DB2": {
         "JDBCURL": {
             "name": "JDBC URL",
-            "value": "A database connection URL is a string that your DBMS JDBC driver uses to connect to a database",
+            "value": "A database connection URL is a string that your DBMS JDBC driver uses to connect to a database.",
             "value1": "The connection URL format for the driver is:",
-            "value2": "jdbc:database-type://hostname:port[;property=value[;...]]"
+            "value2": "jdbc:database-type://hostname:port[;property=value[;...]]."
         },
         "user": {
             "name": "User",
@@ -99,7 +99,7 @@
     "AWS": {
         "anonymousAccess": {
             "name": "Anonymous access",
-            "value": "Anonymous access which does not display accessKey and secretKey"
+            "value": "Anonymous access which does not display accessKey and secretKey."
         },
         "endpoint": {
             "name": "Endpoint",
@@ -167,7 +167,7 @@
         },
         "collection": {
             "name": "Collection",
-            "value": "MongoDB database name."
+            "value": "MongoDB collection name."
         },
         "host": {
             "name": "Host",
@@ -184,6 +184,10 @@
         "password": {
             "name": "Password",
             "value": "Password of the MongoDB user."
+        },
+        "ssl": {
+            "name": "SSL",
+            "value": "Enables/Disables SSL connection. Does not work with self-signed certificates."
         }
     },
     "CASSANDRA": {
@@ -224,8 +228,8 @@
             "value": "Whether to use pushdown optimizations."
         },
         "certData": {
-            "name": "certData (optional)",
-            "value": "Custom certificate for ssl connection."
+            "name": "CertData (optional)",
+            "value": "Custom certificate for SSL connection."
         }
     },
     "REDIS": {
@@ -235,15 +239,15 @@
         },
         "port": {
             "name": "Port",
-            "value": "The initial node's TCP redis port."
+            "value": "The initial node's TCP Redis port."
         },
         "password": {
             "name": "Password",
-            "value": "The initial node's AUTH password"
+            "value": "The initial node's AUTH password."
         },
         "ssl": {
-            "name": "ssl",
-            "value": "Set to true to use tls. currently it's not allowed to pass client's certificate."
+            "name": "SSL",
+            "value": "Set to true to use TLS. currently it's not allowed to pass client's certificate."
         },
         "model": {
             "name": "Model [binary, hash]",
@@ -256,7 +260,7 @@
         },
         "readMode": {
             "name": "Read mode [key, pattern]",
-            "value": "Defines the way that the read operation would be handled. If \"key\" is selected, then the read would be done based on the \"table\" field. In case of the \"pattern\", a provided pattern(option \"keysPattern\") will dictate what redis keys will be read."
+            "value": "Defines the way that the read operation would be handled. If \"key\" is selected, then the read would be done based on the \"table\" field. In case of the \"pattern\", a provided pattern(option \"keysPattern\") will dictate what Redis keys will be read."
         },
         "table": {
             "name": "Table",
@@ -267,8 +271,8 @@
             "value": "Spark-Redis tries to extract the key based on the key pattern:\nif the pattern ends with * and it's the only wildcard, the trailing substring will be extracted\notherwise there is no extraction - the key is kept as is."
         },
         "ttl": {
-            "name": "ttl",
-            "value": "Data time to live in seconds. Data doesn't expire if ttl is less than 1. Be default it's 0."
+            "name": "TTL",
+            "value": "Data time to live in seconds. Data doesn't expire if TTL is less than 1. By default, it's 0."
         }
     },
     "noAdditionalFields": "There are no additional fields."

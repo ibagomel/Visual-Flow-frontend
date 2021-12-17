@@ -18,23 +18,39 @@
  */
 
 import { makeStyles } from '@material-ui/core/styles';
+import { CELL_HEIGHT, CELL_WIDTH } from '../../side-panel/SidePanel';
 
 export default makeStyles(theme => ({
-    wrapper: {
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        position: 'relative',
+        width: CELL_WIDTH,
+        height: CELL_HEIGHT,
+        overflow: 'hidden',
+        padding: theme.spacing(1)
+    },
+    name: {
+        display: 'flex',
+        whiteSpace: 'normal',
+        flexShrink: 0
+    },
+    icon: {
+        marginRight: theme.spacing(0.5)
+    },
+    removeBy: {
+        flexGrow: 1,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        flexWrap: 'wrap'
     },
-    heading: {
-        width: theme.spacing(5)
-    },
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    divider: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(2)
+    key: {
+        color: theme.palette.getContrastText(theme.palette.success.dark),
+        backgroundColor: theme.palette.success.dark,
+        borderRadius: theme.spacing(0.5),
+        padding: theme.spacing(0, 0.5),
+        margin: theme.spacing(0.25),
+        minWidth: theme.spacing(3)
     }
 }));

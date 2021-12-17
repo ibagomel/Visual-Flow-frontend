@@ -42,5 +42,8 @@ export default makeStyles(theme => ({
         width: 200,
         height: 28,
         border: 0
+    },
+    example: {
+        fontFamily: 'courier'
     }
 }));

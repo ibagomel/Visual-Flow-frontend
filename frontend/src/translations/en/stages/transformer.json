@@ -1,14 +1,23 @@
 {
-  "name": {
-    "name": "Name",
-    "value": "Provide Stage name."
-  },
-  "output": {
-    "name": "Output",
-    "value1": "Syntax: <column_name_1> as <alias_1>, function(<column_name_2>) as <alias_2>",
-    "value2": "Examples:",
-    "value3": "> col1, concat(col1, col2);",
-    "value4": "> count(*) as count",
-    "value5": "All available functions are listed here"
-  }
+    "name": {
+        "name": "Name",
+        "value": "Provide Stage name."
+    },
+    "output": {
+        "name": "Output",
+        "value1": "Transformer stage gives the user an ability to modify columns that will be written to some data storage later on.",
+        "value2": "The customization allows for (and not limited to):",
+        "value3": "1. Specify only needed columns. ",
+        "value4": "2. Provide alias for columns.",
+        "value5": "3. Use spark-sql functions/procedures to modify (or create new) columns.",
+        "value6": "For more information about Built-in Functions click here.",
+        "value7": "Syntax:",
+        "value8": " <column_name_1> as <alias_1>, function(<column_name_2>) as <alias_2>",
+        "value9": "Examples:",
+        "value10": "1) col1, concat(col1, col2)",
+        "value11": "2) count(*) as count",
+        "value12": "3) a, b, row_number() OVER (PARTITION BY a ORDER BY b)",
+        "value13": "4) col, exists(col, x -> x % 2 == 0)",
+        "value14": "5) col, collect_list(col)"
+    }
 }

@@ -23,11 +23,11 @@ import { Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
-import useStyles from '../groupby-stage/GroupByStage.Styles';
+import useStyles from './RemoveDuplicatesStage.Styles';
 
 const RemoveDuplicatesStage = ({ stage }) => {
-    const { t } = useTranslation();
     const classes = useStyles();
+    const { t } = useTranslation();
 
     return (
         <div className={classes.root}>
@@ -38,7 +38,7 @@ const RemoveDuplicatesStage = ({ stage }) => {
             <Typography
                 variant="caption"
                 component="div"
-                className={classes.groupBy}
+                className={classes.removeBy}
                 color="textSecondary"
             >
                 {t('jobDesigner:RemoveDuplConfiguration.Key')}:

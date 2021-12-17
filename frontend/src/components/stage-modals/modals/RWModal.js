@@ -22,6 +22,9 @@ import { useTranslation } from 'react-i18next';
 import InfoModal from '../info';
 import { STORAGES } from '../../../mxgraph/constants';
 
+const READ = 'Read';
+const WRITE = 'Write';
+
 const getWriteMode = t => ({
     title: t('ReadWrite:writeMode.name'),
     paragraph: t('ReadWrite:writeMode.value'),
@@ -29,7 +32,8 @@ const getWriteMode = t => ({
     paragraph2: t('ReadWrite:writeMode.value2'),
     paragraph3: t('ReadWrite:writeMode.value3'),
     paragraph4: t('ReadWrite:writeMode.value4'),
-    paragraph5: t('ReadWrite:writeMode.value5')
+    paragraph5: t('ReadWrite:writeMode.value5'),
+    hide: READ
 });
 
 const getContent = t => [
@@ -85,7 +89,8 @@ const getDB2 = t => [
     },
     {
         title: t('ReadWrite:DB2.customSql.name'),
-        paragraph: t('ReadWrite:DB2.customSql.value')
+        paragraph: t('ReadWrite:DB2.customSql.value'),
+        hide: WRITE
     },
     {
         title: t('ReadWrite:DB2.schema.name'),
@@ -100,7 +105,8 @@ const getDB2 = t => [
         paragraph: t('ReadWrite:DB2.optionDbtable.value'),
         paragraph1: t('ReadWrite:DB2.optionDbtable.value1'),
         paragraph2: t('ReadWrite:DB2.optionDbtable.value2'),
-        paragraph3: t('ReadWrite:DB2.optionDbtable.value3')
+        paragraph3: t('ReadWrite:DB2.optionDbtable.value3'),
+        hide: WRITE
     },
     getWriteMode(t),
     {
@@ -201,6 +207,10 @@ const getMongo = t => [
         title: t('ReadWrite:MONGO.password.name'),
         paragraph: t('ReadWrite:MONGO.password.value')
     },
+    {
+        title: t('ReadWrite:MONGO.ssl.name'),
+        paragraph: t('ReadWrite:MONGO.ssl.value')
+    },
     getWriteMode(t)
 ];
 
@@ -276,7 +286,8 @@ const getRedis = t => [
     },
     {
         title: t('ReadWrite:REDIS.readMode.name'),
-        paragraph: t('ReadWrite:REDIS.readMode.value')
+        paragraph: t('ReadWrite:REDIS.readMode.value'),
+        hide: WRITE
     },
     {
         title: t('ReadWrite:REDIS.table.name'),
@@ -288,7 +299,8 @@ const getRedis = t => [
     },
     {
         title: t('ReadWrite:REDIS.ttl.name'),
-        paragraph: t('ReadWrite:REDIS.ttl.value')
+        paragraph: t('ReadWrite:REDIS.ttl.value'),
+        hide: READ
     },
     getWriteMode(t)
 ];

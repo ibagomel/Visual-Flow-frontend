@@ -101,13 +101,13 @@ const JoinConfiguration = ({
                     <Typography variant="body2" color="textSecondary">
                         {t('jobDesigner:joinConfiguration.LinkOrdering')}
                     </Typography>
-                    <Box className={classes.fieldWrapper}>
+                    <Box className={classes.wrapper}>
                         <div>
-                            <div className={classes.fieldRow}>
+                            <div className={classes.row}>
                                 <Typography
                                     variant="caption"
                                     color="textSecondary"
-                                    className={classes.caption}
+                                    className={classes.heading}
                                 >
                                     {`${t('jobDesigner:joinConfiguration.Left')}: `}
                                 </Typography>
@@ -115,11 +115,11 @@ const JoinConfiguration = ({
                                     {edgeLabels[0]}
                                 </Typography>
                             </div>
-                            <div className={classes.fieldRow}>
+                            <div className={classes.row}>
                                 <Typography
                                     variant="caption"
                                     color="textSecondary"
-                                    className={classes.caption}
+                                    className={classes.heading}
                                 >
                                     {`${t('jobDesigner:joinConfiguration.Right')}: `}
                                 </Typography>

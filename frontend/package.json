@@ -83,7 +83,9 @@
         "format": "prettier --write \"./src/**/*.{js,md,scss}\"",
         "format:diff": "prettier --list-different \"./src/**/*.{js,md,scss}\"",
         "lint": "eslint ./src -f json -o reports/eslint-report.json",
-        "lint-fix": "eslint --fix ./src"
+        "lint-fix": "eslint --fix ./src",
+        "lint:js": "eslint ./src --color --max-warnings 0 --no-ignore",
+        "lint:js:fix": "eslint ./src --color --max-warnings 0 --no-ignore --fix"
     },
     "jest": {
         "setupFilesAfterEnv": [

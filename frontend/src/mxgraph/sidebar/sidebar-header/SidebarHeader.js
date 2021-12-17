@@ -57,9 +57,12 @@ const SidebarHeader = ({
 
     const fetchJob = () => {
         const currentPath = history.location.pathname.split('/');
-        const currentDesigner = currentPath[1];
-        const currentProject = currentPath[2];
-        const currentJobOrPipeline = currentPath[3];
+        const [
+            ,
+            currentDesigner,
+            currentProject,
+            currentJobOrPipeline
+        ] = currentPath;
         if (currentDesigner !== 'pipelines') {
             if (currentJobOrPipeline) {
                 updateCurrentJob(graph, currentProject, currentJobOrPipeline, data);

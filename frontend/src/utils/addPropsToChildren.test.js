@@ -17,24 +17,31 @@
  * limitations under the License.
  */
 
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import addPropsToChildren from './addPropsToChildren';
 
-export default makeStyles(theme => ({
-    wrapper: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-    heading: {
-        width: theme.spacing(5)
-    },
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    divider: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(2)
-    }
-}));
+describe('addPropsToChildren', () => {
+    let children;
+    const props = {
+        a: 1,
+        b: 2
+    };
+    it('should return null', () => {
+        children = null;
+        expect(addPropsToChildren(children, props)).toEqual(null);
+    });
+
+    it('should return undefined', () => {
+        children = undefined;
+        expect(addPropsToChildren(children, props)).toEqual(undefined);
+    });
+
+    it('should return value', () => {
+        children = React.createElement('type', { c: 3 });
+        expect(addPropsToChildren(children, props)[0].props).toEqual({
+            a: 1,
+            b: 2,
+            c: 3
+        });
+    });
+});

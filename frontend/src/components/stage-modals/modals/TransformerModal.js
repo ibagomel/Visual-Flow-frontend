@@ -34,7 +34,16 @@ const TransformerModal = props => {
             paragraph2: t('transformer:output.value2'),
             paragraph3: t('transformer:output.value3'),
             paragraph4: t('transformer:output.value4'),
-            link: t('transformer:output.value5')
+            paragraph5: t('transformer:output.value5'),
+            link: t('transformer:output.value6'),
+            paragraph6: t('transformer:output.value7'),
+            example1: t('transformer:output.value8'),
+            paragraph7: t('transformer:output.value9'),
+            example2: t('transformer:output.value10'),
+            example3: t('transformer:output.value11'),
+            example4: t('transformer:output.value12'),
+            example5: t('transformer:output.value13'),
+            example6: t('transformer:output.value14')
         }
     ];
     return <InfoModal content={content} {...props} />;

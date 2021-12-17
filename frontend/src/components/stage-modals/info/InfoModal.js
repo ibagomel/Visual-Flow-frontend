@@ -75,6 +75,11 @@ const InfoModal = ({
         }
     };
 
+    const clearStorage = () =>
+        chosenStorage()
+            ?.filter(key => !key.hide || key.hide !== title)
+            .map(({ hide, ...cleanValue }) => cleanValue);
+
     const linkFilter = () => {
         switch (title) {
             case 'Filter':
@@ -82,7 +87,7 @@ const InfoModal = ({
             case 'Group By':
                 return 'https://sparkbyexamples.com/spark/using-groupby-on-dataframe/';
             case 'Transformer':
-                return 'https://towardsdatascience.com/dataframe-transform-spark-function-composition-eb8ec296c108';
+                return 'https://spark.apache.org/docs/latest/api/sql/index.html';
             default:
                 return null;
         }
@@ -122,7 +127,14 @@ const InfoModal = ({
                                     key={paragraph.slice(7)}
                                     variant="body2"
                                     color="textSecondary"
-                                    className={classes.paragraph}
+                                    className={
+                                        (paragraph.includes('example') &&
+                                            classNames(
+                                                classes.paragraph,
+                                                classes.example
+                                            )) ||
+                                        classes.paragraph
+                                    }
                                 >
                                     {section[paragraph]}
                                 </Typography>
@@ -147,7 +159,7 @@ const InfoModal = ({
                         {storages?.map(
                             value =>
                                 !(
-                                    value === STORAGES.STDOUT.value &&
+                                    value === STORAGES.STDOUT.label &&
                                     title === 'Read'
                                 ) && (
                                     <option key={value} value={value}>
@@ -161,8 +173,7 @@ const InfoModal = ({
             {(title === 'Read' || title === 'Write') && (
                 <Box className={classNames(classes.name, classes.wrapper)}>
                     {storage &&
-                        !(storage === STORAGES.STDOUT.value && title === 'Read') &&
-                        chosenStorage()?.map(section => {
+                        clearStorage()?.map(section => {
                             const other = Object.keys(section).slice(1);
                             return (
                                 <Box className={classes.root} key={section.title}>

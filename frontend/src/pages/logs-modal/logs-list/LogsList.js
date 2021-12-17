@@ -26,7 +26,7 @@ import classNames from 'classnames';
 import useStyles from './LogsList.Styles';
 import LogsHeader from '../../../components/logs-header';
 
-const LEVELS = ['INFO', 'WARN', 'ERROR', 'DEBUG'];
+const LEVELS = ['INFO', 'WARN', 'ERROR', 'DEBUG', 'RESULT'];
 
 const LogsList = ({
     data,
@@ -47,7 +47,9 @@ const LogsList = ({
         return string.split(new RegExp(`(${value})`, 'gi')).map((item, index) => (
             <span
                 key={index} // eslint-disable-line react/no-array-index-key
-                className={classNames({ [classes.highlight]: item === value })}
+                className={classNames({
+                    [classes.highlight]: item.toLowerCase() === value.toLowerCase()
+                })}
             >
                 {item}
             </span>
@@ -101,7 +103,13 @@ const LogsList = ({
                                       )
                                     : item
                             )
-                            .filter(item => (search ? item?.includes(search) : item))
+                            .filter(item =>
+                                search
+                                    ? item
+                                          .toLowerCase()
+                                          ?.includes(search.toLowerCase())
+                                    : item
+                            )
                             .map((str, i) => (
                                 <ul
                                     key={`${i + str.slice(17, 24)}_${str.slice(-5)}`}

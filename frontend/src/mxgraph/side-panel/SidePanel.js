@@ -55,6 +55,7 @@ class SidePanel extends React.Component {
         super(props);
         this.state = {
             configuration: {},
+            changedConfiguration: {},
             showModal: false
         };
     }
@@ -73,7 +74,10 @@ class SidePanel extends React.Component {
                 const attribute = selectedCell.value.attributes[attrKey];
                 results[attribute.nodeName] = attribute.nodeValue;
             });
-            this.setState({ configuration: { ...results } });
+            this.setState({
+                configuration: { ...results },
+                changedConfiguration: this.configurationResults()
+            });
         }
         if (graph.getSelectionCell() && type === PIPELINE) {
             this.changeFillColor(graph.getSelectionCell());
@@ -111,6 +115,30 @@ class SidePanel extends React.Component {
         return result;
     };
 
+    configurationResults = () => {
+        const { graph } = this.props;
+        const { edges, value: { attributes } = {} } = graph.getSelectionCell() || {};
+        let results = {};
+        if (attributes) {
+            results = Object.keys(attributes).reduce(
+                (acc, attrKey) => ({
+                    ...acc,
+                    [attributes[attrKey].nodeName]: attributes[attrKey].nodeValue
+                }),
+                {}
+            );
+            if (edges && attributes.operation.value === 'JOB') {
+                results = {
+                    ...results,
+                    jobSuccessPath: edges.map(
+                        obj => obj.value.attributes.successPath.value
+                    )
+                };
+            }
+        }
+        return results;
+    };
+
     saveCell = configuration => {
         const commonSchema = get(schemas, 'COMMON_SCHEMA', []);
         const schema = get(schemas, configuration.operation, []);
@@ -120,6 +148,7 @@ class SidePanel extends React.Component {
         ]);
 
         const { graph, currentCell, setDirty, setPanelDirty } = this.props;
+        const { changedConfiguration } = this.state;
 
         const cell = graph.model.getCell(currentCell);
         // update the cell
@@ -141,8 +170,10 @@ class SidePanel extends React.Component {
             );
             graph.resizeCell(cell, newCellSize);
         }
-        setDirty(!isEqual(this.state.configuration, cleanConfiguration));
-        this.setState({ configuration: cleanConfiguration });
+        setDirty(!isEqual(changedConfiguration, this.configurationResults()));
+        this.setState({
+            configuration: cleanConfiguration
+        });
         setPanelDirty(false);
         this.props.setSidePanel(false);
     };

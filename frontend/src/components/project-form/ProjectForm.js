@@ -97,9 +97,8 @@ const ProjectForm = ({ project, create, update }) => {
     const editTitle = editMode ? 'editProject' : 'viewProject';
     const formTitle = project ? editTitle : 'createProject';
 
-    const isSaveBtnDisabled = () => {
-        return isEmpty(card) || !isValidationPassed(card) || isEqual(project, card);
-    };
+    const isSaveBtnDisabled = () =>
+        isEmpty(card) || !isValidationPassed(card) || isEqual(project, card);
 
     return (
         <FormWrapper

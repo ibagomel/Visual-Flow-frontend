@@ -59,7 +59,7 @@
         "KeysPattern": "Keys pattern",
         "Binary": "Binary",
         "Hash": "Hash",
-        "ttl": "ttl"
+        "ttl": "TTL"
     },
     "writeConfiguration": {
         "Header": "Header",

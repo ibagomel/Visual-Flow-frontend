@@ -81,7 +81,7 @@ const stageIcon = stageName => {
         case CONTAINER:
             return <DeveloperModeOutlinedIcon style={style} />;
         default:
-            return '';
+            return <></>;
     }
 };
 

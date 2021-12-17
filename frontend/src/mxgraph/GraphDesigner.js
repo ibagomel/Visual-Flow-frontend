@@ -281,7 +281,7 @@ class GraphDesigner extends Component {
                     }
                 }
                 if (operation === CONTAINER) {
-                    if (data?.jobsStatuses) {
+                    if (data?.jobsStatuses && data?.jobsStatuses[cell.id]) {
                         results.status = data?.jobsStatuses[cell.id];
                     }
                 }

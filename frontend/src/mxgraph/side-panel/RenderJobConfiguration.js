@@ -30,6 +30,7 @@ import RemoveDuplicatesConfiguration from './remove-duplicates-configuration';
 import Configuration from './configuration';
 import TransformConfiguration from './transform-configuration';
 import FilterConfiguration from './filter-configuration';
+import CacheConfiguration from './cache-configuration';
 
 const checkReadWriteFields = ({ name, storage, anonymousAccess }) =>
     !name || !storage || (storage === 's3' && !anonymousAccess);
@@ -156,6 +157,18 @@ const RenderJobConfiguration = ({
             props: {
                 Component: FilterConfiguration,
                 isDisabled: state => !state.name || !state.condition,
+                ableToEdit,
+                setPanelDirty,
+                configuration,
+                saveCell,
+                graph
+            }
+        },
+        CACHE: {
+            component: Configuration,
+            props: {
+                Component: CacheConfiguration,
+                isDisabled: state => !state.name,
                 ableToEdit,
                 setPanelDirty,
                 configuration,

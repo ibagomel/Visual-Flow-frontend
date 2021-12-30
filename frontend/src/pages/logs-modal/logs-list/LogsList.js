@@ -18,7 +18,7 @@
  */
 
 import React from 'react';
-import { List, Grid, ListItem, ListItemText } from '@material-ui/core';
+import { List, Grid, ListItem, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -67,10 +67,10 @@ const LogsList = ({
     return (
         <Grid
             container
-            justify="space-between"
-            classes={{ root: modal ? classes.rootModal : classes.root }}
+            alignItems={modal ? 'flex-start' : 'center'}
+            direction="column"
         >
-            <Grid item xs={12}>
+            <Grid className={classes.logsHeader} item xs={12}>
                 <LogsHeader
                     onSearch={event => onSearch(event.target.value)}
                     searchValue={search}
@@ -87,13 +87,11 @@ const LogsList = ({
                     })}
                 >
                     {errorMes ? (
-                        <ul className={classes.textItem}>
-                            <ListItem className={classes.text}>
-                                <ListItemText className={classes.text}>
-                                    {errorMes?.message}
-                                </ListItemText>
-                            </ListItem>
-                        </ul>
+                        <ListItem className={classes.textItem}>
+                            <Typography className={classes.text}>
+                                {errorMes?.message}
+                            </Typography>
+                        </ListItem>
                     ) : (
                         logs(data)
                             .filter(item =>
@@ -110,18 +108,44 @@ const LogsList = ({
                                           ?.includes(search.toLowerCase())
                                     : item
                             )
-                            .map((str, i) => (
-                                <ul
-                                    key={`${i + str.slice(17, 24)}_${str.slice(-5)}`}
-                                    className={classes.textItem}
-                                >
-                                    <ListItem className={classes.text}>
-                                        <ListItemText className={classes.text}>
+                            .map((str, i) =>
+                                str.includes('\n') ? (
+                                    str.split('\n').map((multiString, index) => (
+                                        <ListItem
+                                            key={`${i +
+                                                multiString.slice(
+                                                    17,
+                                                    24
+                                                )}_${multiString.slice(-5) + index}`}
+                                            className={classes.textItem}
+                                        >
+                                            <Typography
+                                                variant="inherit"
+                                                className={classNames(classes.text, {
+                                                    [classes.textMultisting]:
+                                                        index !== 0
+                                                })}
+                                            >
+                                                {highlight(multiString, search)}
+                                            </Typography>
+                                        </ListItem>
+                                    ))
+                                ) : (
+                                    <ListItem
+                                        key={`${i + str.slice(17, 24)}_${str.slice(
+                                            -5
+                                        )}`}
+                                        className={classes.textItem}
+                                    >
+                                        <Typography
+                                            variant="inherit"
+                                            className={classes.text}
+                                        >
                                             {highlight(str, search)}
-                                        </ListItemText>
+                                        </Typography>
                                     </ListItem>
-                                </ul>
-                            ))
+                                )
+                            )
                     )}
                 </List>
             </Grid>

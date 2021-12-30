@@ -29,6 +29,7 @@ import UnionModal from '../modals/UnionModal';
 import JobModal from '../modals/JobModal';
 import NotificationModal from '../modals/NotificationModal';
 import ContainerModal from '../modals/ContainerModal';
+import CacheModal from '../modals/CacheModal';
 import {
     READ,
     WRITE,
@@ -41,7 +42,8 @@ import {
     FILTER,
     JOB,
     NOTIFICATION,
-    CONTAINER
+    CONTAINER,
+    CACHE
 } from '../../../mxgraph/constants';
 
 const StageModal = ({ stageName, ...restProps }) => {
@@ -71,6 +73,8 @@ const StageModal = ({ stageName, ...restProps }) => {
                 return <NotificationModal {...restProps} />;
             case CONTAINER:
                 return <ContainerModal {...restProps} />;
+            case CACHE:
+                return <CacheModal {...restProps} />;
             default:
                 return null;
         }

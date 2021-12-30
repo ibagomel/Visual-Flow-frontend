@@ -18,7 +18,8 @@
         "JOB": "Job",
         "PIPELINE": "Pipeline",
         "NOTIFICATION": "Notification",
-        "CONTAINER": "Container"
+        "CONTAINER": "Container",
+        "CACHE": "Cache"
     },
     "readConfiguration": {
         "Name": "Name",
@@ -63,7 +64,8 @@
     },
     "writeConfiguration": {
         "Header": "Header",
-        "Delimiter": "Delimiter"
+        "Delimiter": "Delimiter",
+        "PartitionBy": "Partition By"
     },
     "unionConfiguration": {
         "Name": "Name",
@@ -113,6 +115,14 @@
         "Name": "Name",
         "Addressees": "To",
         "Message": "Message"
+    },
+    "cacheConfiguration": {
+        "Name": "Name",
+        "useDisk": "Use disk",
+        "useMemory": "Use memory",
+        "useOffHeap": "Use off heap",
+        "deserialized": "Deserialized",
+        "replication": "Replication"
     },
     "Zoom": {
         "Zoom": "Zoom",

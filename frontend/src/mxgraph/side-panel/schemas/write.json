@@ -91,6 +91,17 @@
           "storage": "redis"
         }
       ]
+    },
+    {
+      "field": "partitionBy",
+      "conditions": [
+        {
+          "storage": "cos"
+        },
+        {
+          "storage": "s3"
+        }
+      ]
     }
   ]
 }

@@ -19,40 +19,37 @@
 
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(theme => ({
-    logsHeader: {
-        minWidth: 700,
-        width: '85vw',
-        maxWidth: '100%'
+export default makeStyles(() => ({
+    root: {
+        position: 'relative'
     },
-    list: {
-        wordBreak: 'break-word',
-        height: '70vh',
-        minWidth: 700,
-        width: '85vw',
-        maxWidth: '100%',
-        overflow: 'auto',
-        borderRadius: 4,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow:
-            '0px 3px 3px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.14), 0px 1px 8px rgba(0, 0, 0, 0.12)'
+    name: {
+        position: 'absolute',
+        left: -100,
+        top: -64,
+        display: 'flex',
+        'white-space': 'normal',
+        width: 215,
+        'text-align': 'left'
     },
-    listModal: {
-        height: '45vh'
+    useDisk: {
+        position: 'absolute',
+        left: -100,
+        top: -16,
+        width: 200,
+        'white-space': 'normal',
+        'line-break': 'anywhere',
+        'line-height': 'normal',
+        'text-align': 'left'
     },
-    textItem: {
-        padding: theme.spacing(0, 2),
-        margin: 0
-    },
-    text: {
-        padding: 0,
-        margin: 0,
-        fontFamily: 'monospace'
-    },
-    highlight: {
-        background: theme.palette.warning.light
-    },
-    textMultisting: {
-        whiteSpace: 'pre'
+    useMemory: {
+        position: 'absolute',
+        left: -100,
+        top: 5,
+        width: 200,
+        'white-space': 'normal',
+        'line-break': 'anywhere',
+        'line-height': 'normal',
+        'text-align': 'left'
     }
 }));

@@ -69,6 +69,13 @@ const getCosInfo = (label, t) => [
         title: t(`ReadWrite:${label}.format.name`),
         paragraph: t(`ReadWrite:${label}.format.value`),
         paragraph1: t(`ReadWrite:${label}.format.value1`)
+    },
+    {
+        title: t(`ReadWrite:${label}.partitionBy.name`),
+        paragraph: t(`ReadWrite:${label}.partitionBy.value`),
+        paragraph1: t(`ReadWrite:${label}.partitionBy.value1`),
+        paragraph2: t(`ReadWrite:${label}.partitionBy.value2`),
+        hide: READ
     }
 ];
 

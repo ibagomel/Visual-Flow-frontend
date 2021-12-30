@@ -19,13 +19,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Divider } from '@material-ui/core';
+import { TextField, Divider, Chip } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { WRITE } from '../../../constants';
 import FileFormat from '../helpers/FileFormat';
 import CsvHeader from '../helpers/CsvHeader';
 import Delimiter from '../helpers/Delimiter';
 import WriteMode from '../helpers/WriteMode';
 import ReadTextFields from '../rw-text-fields';
+import useStyles from '../../groupby-configuration/GroupByConfiguration.Styles';
 
 const CosProperties = ({
     fields,
@@ -33,43 +36,80 @@ const CosProperties = ({
     inputValues,
     ableToEdit,
     handleInputChange
-}) => (
-    <>
-        <ReadTextFields
-            ableToEdit={ableToEdit}
-            fields={fields}
-            inputValues={inputValues}
-            handleInputChange={handleInputChange}
-            openModal={openModal}
-        />
-        {inputValues.operation === WRITE && (
-            <WriteMode
+}) => {
+    const { t } = useTranslation();
+    const classes = useStyles();
+    return (
+        <>
+            <ReadTextFields
+                ableToEdit={ableToEdit}
+                fields={fields}
+                inputValues={inputValues}
+                handleInputChange={handleInputChange}
+                openModal={openModal}
+            />
+            {inputValues.operation === WRITE && (
+                <WriteMode
+                    disabled={!ableToEdit}
+                    value={inputValues.writeMode}
+                    onChange={handleInputChange}
+                />
+            )}
+            <FileFormat
                 disabled={!ableToEdit}
-                value={inputValues.writeMode}
+                value={inputValues.format || ''}
                 onChange={handleInputChange}
             />
-        )}
-
-        <FileFormat
-            disabled={!ableToEdit}
-            value={inputValues.format || ''}
-            onChange={handleInputChange}
-        />
-        {inputValues.format === 'csv' && (
-            <>
-                <Divider />
-                <CsvHeader
-                    value={inputValues['option.header'] || ''}
-                    onChange={handleInputChange}
+            {inputValues.format === 'csv' && (
+                <>
+                    <Divider />
+                    <CsvHeader
+                        value={inputValues['option.header'] || ''}
+                        onChange={handleInputChange}
+                    />
+                    <Delimiter
+                        value={inputValues['option.delimiter'] || ''}
+                        onChange={handleInputChange}
+                    />
+                </>
+            )}
+            {inputValues.operation === WRITE && (
+                <Autocomplete
+                    disabled={!ableToEdit}
+                    id="partitionBy"
+                    multiple
+                    freeSolo
+                    autoSelect
+                    options={[]}
+                    value={inputValues.partitionBy?.split(',') || []}
+                    className={classes.divider}
+                    onChange={(event, value) =>
+                        handleInputChange({
+                            target: { name: 'partitionBy', value: value?.join(',') }
+                        })
+                    }
+                    renderTags={(value, getTagProps) =>
+                        value.map((option, index) => (
+                            <Chip
+                                variant="outlined"
+                                label={option}
+                                {...getTagProps({ index })}
+                            />
+                        ))
+                    }
+                    renderInput={params => (
+                        <TextField
+                            {...params}
+                            fullWidth
+                            variant="outlined"
+                            label={t('jobDesigner:writeConfiguration.PartitionBy')}
+                        />
+                    )}
                 />
-                <Delimiter
-                    value={inputValues['option.delimiter'] || ''}
-                    onChange={handleInputChange}
-                />
-            </>
-        )}
-    </>
-);
+            )}
+        </>
+    );
+};
 
 CosProperties.propTypes = {
     handleInputChange: PropTypes.func,
@@ -81,7 +121,8 @@ CosProperties.propTypes = {
         operation: PropTypes.string,
         writeMode: PropTypes.string,
         'option.header': PropTypes.string,
-        'option.delimiter': PropTypes.string
+        'option.delimiter': PropTypes.string,
+        partitionBy: PropTypes.string
     })
 };
 

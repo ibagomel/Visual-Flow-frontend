@@ -24,6 +24,7 @@ import TransformOutlinedIcon from '@material-ui/icons/TransformOutlined';
 import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined';
 import MailOutlinedIcon from '@material-ui/icons/MailOutlined';
 import DeveloperModeOutlinedIcon from '@material-ui/icons/DeveloperModeOutlined';
+import StorageOutlinedIcon from '@material-ui/icons/StorageOutlined';
 import React from 'react';
 import join16 from '../../../assets/join16.svg';
 import union16 from '../../../assets/union16.svg';
@@ -44,7 +45,8 @@ import {
     JOB,
     NOTIFICATION,
     PIPELINE,
-    CONTAINER
+    CONTAINER,
+    CACHE
 } from '../../constants';
 
 const style = {
@@ -80,6 +82,8 @@ const stageIcon = stageName => {
             return <MailOutlinedIcon style={style} />;
         case CONTAINER:
             return <DeveloperModeOutlinedIcon style={style} />;
+        case CACHE:
+            return <StorageOutlinedIcon style={style} />;
         default:
             return <></>;
     }

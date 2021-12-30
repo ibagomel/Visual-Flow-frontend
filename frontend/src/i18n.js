@@ -39,6 +39,7 @@ import notification from './translations/en/stages/notification.json';
 import container from './translations/en/stages/container.json';
 import pipelineDesigner from './translations/en/pipelineDesigner.json';
 import filters from './translations/en/filters.json';
+import cache from './translations/en/stages/cache.json';
 
 export const resources = {
     en: {
@@ -59,7 +60,8 @@ export const resources = {
         notification,
         container,
         pipelineDesigner,
-        filters
+        filters,
+        cache
     }
 };
 

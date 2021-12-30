@@ -31,6 +31,7 @@ import filter from './filter.json';
 import job from './job.json';
 import container from './container.json';
 import readWriteCommon from './read-write-common.json';
+import cache from './cache.json';
 
 const schemas = {
     ...commonSchema,
@@ -44,6 +45,7 @@ const schemas = {
     ...filter,
     ...job,
     ...container,
+    ...cache,
     READ: [...get(readWriteCommon, 'READ_WRITE'), ...get(read, 'READ')],
     WRITE: [...get(readWriteCommon, 'READ_WRITE'), ...get(write, 'WRITE')]
 };

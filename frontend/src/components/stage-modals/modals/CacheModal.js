@@ -21,33 +21,45 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import InfoModal from '../info';
 
-const JoinModal = props => {
+const CacheModal = props => {
     const { t } = useTranslation();
     const content = [
         {
-            title: t('join:name.name'),
-            paragraph: t('join:name.value')
+            title: t('cache:description.name'),
+            paragraph1: t('cache:description.value1'),
+            paragraph2: t('cache:description.value2'),
+            paragraph3: t('cache:description.value3'),
+            paragraph4: t('cache:description.value4'),
+            paragraph5: t('cache:description.value5'),
+            paragraph6: t('cache:description.value6'),
+            paragraph7: t('cache:description.value7')
         },
         {
-            title: t('join:joinType.name'),
-            paragraph: t('join:joinType.value'),
-            paragraph2: t('join:joinType.value2'),
-            paragraph3: t('join:joinType.value3'),
-            paragraph4: t('join:joinType.value4'),
-            paragraph5: t('join:joinType.value5'),
-            paragraph6: t('join:joinType.value6'),
-            paragraph7: t('join:joinType.value7')
+            title: t('cache:name.name'),
+            paragraph: t('cache:name.value')
         },
         {
-            title: t('join:linkOrdering.name'),
-            paragraph: t('join:linkOrdering.value')
+            title: t('cache:useDisk.name'),
+            paragraph: t('cache:useDisk.value')
         },
         {
-            title: t('join:key.name'),
-            paragraph: t('join:key.value')
+            title: t('cache:useMemory.name'),
+            paragraph: t('cache:useMemory.value')
+        },
+        {
+            title: t('cache:useOffHeap.name'),
+            paragraph: t('cache:useOffHeap.value')
+        },
+        {
+            title: t('cache:deserialized.name'),
+            paragraph: t('cache:deserialized.value')
+        },
+        {
+            title: t('cache:replication.name'),
+            paragraph: t('cache:replication.value')
         }
     ];
     return <InfoModal content={content} {...props} />;
 };
 
-export default JoinModal;
+export default CacheModal;

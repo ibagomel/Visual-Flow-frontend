@@ -27,7 +27,8 @@ import {
     JOIN,
     CDC,
     TRANSFORM,
-    FILTER
+    FILTER,
+    CACHE
 } from './constants';
 
 const jobStages = [
@@ -129,6 +130,17 @@ const jobStages = [
             maxIncomingConnections: 1,
             minOutgoingConnections: 1,
             maxOutgoingConnections: 1
+        }
+    },
+    {
+        operation: CACHE,
+        name: palette.CACHE,
+        color: '#E6E6FA',
+        validation: {
+            minIncomingConnections: 1,
+            maxIncomingConnections: 1,
+            minOutgoingConnections: 1,
+            maxOutgoingConnections: 15
         }
     }
 ];

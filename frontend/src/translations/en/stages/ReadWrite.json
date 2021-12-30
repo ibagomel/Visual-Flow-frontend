@@ -94,6 +94,12 @@
             "name": "File format",
             "value": "Spark DataFrame format.",
             "value1": "For CSV, please, specify Header and Delimiter."
+        },
+        "partitionBy": {
+            "name": "Partition By (optional)",
+            "value": "Partitions the output by the given columns on the file system. If specified, the output is laid out on the file system similar to Hive's partitioning scheme. As an example, when we partition a dataset by year and then month, the directory layout would look like:",
+            "value1":  "- year=2016/month=01/",
+            "value2":  "- year=2016/month=02/"
         }
     },
     "AWS": {
@@ -125,6 +131,12 @@
             "name": "File format",
             "value": "Spark DataFrame format.",
             "value1": "For CSV, please, specify Header and Delimiter."
+        },
+        "partitionBy": {
+            "name": "Partition By (optional)",
+            "value": "Partitions the output by the given columns on the file system. If specified, the output is laid out on the file system similar to Hive's partitioning scheme. As an example, when we partition a dataset by year and then month, the directory layout would look like:",
+            "value1":  "- year=2016/month=01/",
+            "value2":  "- year=2016/month=02/"
         }
     },
     "ELASTIC": {

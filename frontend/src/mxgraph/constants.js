@@ -31,6 +31,7 @@ export const JOB = 'JOB';
 export const NOTIFICATION = 'NOTIFICATION';
 export const CONTAINER = 'CONTAINER';
 export const PIPELINE = 'PIPELINE';
+export const CACHE = 'CACHE';
 
 export const PENDING = 'Pending';
 export const RUNNING = 'Running';

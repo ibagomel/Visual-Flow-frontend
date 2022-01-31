@@ -60,9 +60,9 @@ const jobStages = [
         name: palette.GROUP,
         color: '#EDF7ED',
         validation: {
-            minIncomingConnections: 2,
+            minIncomingConnections: 1,
             maxIncomingConnections: 1,
-            minOutgoingConnections: 2,
+            minOutgoingConnections: 1,
             maxOutgoingConnections: 1
         }
     },
@@ -72,9 +72,9 @@ const jobStages = [
         color: '#EDF7ED',
         validation: {
             minIncomingConnections: 1,
-            maxIncomingConnections: 2,
+            maxIncomingConnections: 1,
             minOutgoingConnections: 1,
-            maxOutgoingConnections: 2
+            maxOutgoingConnections: 1
         }
     },
     {
@@ -82,10 +82,10 @@ const jobStages = [
         name: palette.FILTER,
         color: '#EDF7ED',
         validation: {
-            minIncomingConnections: 3,
-            maxIncomingConnections: 3,
-            minOutgoingConnections: 3,
-            maxOutgoingConnections: 3
+            minIncomingConnections: 1,
+            maxIncomingConnections: 1,
+            minOutgoingConnections: 1,
+            maxOutgoingConnections: 1
         }
     },
     {
@@ -93,10 +93,10 @@ const jobStages = [
         name: palette.TRANSFORM,
         color: '#EDF7ED',
         validation: {
-            minIncomingConnections: 5,
-            maxIncomingConnections: 2,
+            minIncomingConnections: 1,
+            maxIncomingConnections: 1,
             minOutgoingConnections: 1,
-            maxOutgoingConnections: 3
+            maxOutgoingConnections: 1
         }
     },
     {
@@ -104,10 +104,10 @@ const jobStages = [
         name: palette.JOIN,
         color: '#FFF5E5',
         validation: {
-            minIncomingConnections: 2,
+            minIncomingConnections: 1,
             maxIncomingConnections: 2,
             minOutgoingConnections: 1,
-            maxOutgoingConnections: 3
+            maxOutgoingConnections: 1
         }
     },
     {
@@ -116,7 +116,7 @@ const jobStages = [
         color: '#FFF5E5',
         validation: {
             minIncomingConnections: 1,
-            maxIncomingConnections: 1,
+            maxIncomingConnections: 2,
             minOutgoingConnections: 1,
             maxOutgoingConnections: 1
         }
@@ -127,7 +127,7 @@ const jobStages = [
         color: '#FFF5E5',
         validation: {
             minIncomingConnections: 1,
-            maxIncomingConnections: 1,
+            maxIncomingConnections: 2,
             minOutgoingConnections: 1,
             maxOutgoingConnections: 1
         }

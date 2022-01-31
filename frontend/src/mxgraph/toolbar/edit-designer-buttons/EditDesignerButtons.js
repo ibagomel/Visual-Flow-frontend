@@ -32,13 +32,15 @@ const EditDesignerButtons = ({
     setSidePanel,
     sidePanelIsOpen,
     setDirty,
-    t
+    t,
+    undoButtonsDisabling
 }) => (
     <>
         {editable && (
             <>
                 <IconButton
                     aria-label="undoIcon"
+                    disabled={undoButtonsDisabling.undo}
                     onClick={() => {
                         reversible.undo();
                     }}
@@ -49,6 +51,7 @@ const EditDesignerButtons = ({
                 </IconButton>
                 <IconButton
                     aria-label="redoIcon"
+                    disabled={undoButtonsDisabling.redo}
                     onClick={() => {
                         reversible.redo();
                     }}
@@ -95,7 +98,8 @@ EditDesignerButtons.propTypes = {
     reversible: PropTypes.object,
     refresh: PropTypes.func,
     editable: PropTypes.bool,
-    t: PropTypes.func
+    t: PropTypes.func,
+    undoButtonsDisabling: PropTypes.object
 };
 
 export default EditDesignerButtons;

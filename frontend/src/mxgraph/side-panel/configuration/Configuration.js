@@ -40,7 +40,8 @@ const Configuration = ({
     classes,
     swapEdges,
     graph,
-    sidePanelIsOpen
+    sidePanelIsOpen,
+    selectedStorage
 }) => {
     const { t } = useTranslation();
     const [state, setState] = useState({ ...configuration });
@@ -60,6 +61,9 @@ const Configuration = ({
 
     useEffect(() => {
         setPanelDirty(!isEqual(configuration, state));
+        if (state.operation === 'READ' || state.operation === 'WRITE') {
+            selectedStorage(state.storage);
+        }
     }, [state]);
 
     const handleChange = (key, value) =>
@@ -193,7 +197,8 @@ Configuration.propTypes = {
     classes: PropTypes.object,
     swapEdges: PropTypes.func,
     graph: PropTypes.object,
-    sidePanelIsOpen: PropTypes.bool
+    sidePanelIsOpen: PropTypes.bool,
+    selectedStorage: PropTypes.func
 };
 
 const mapStateToProps = state => ({

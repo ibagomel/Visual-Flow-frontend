@@ -25,6 +25,19 @@ const CdcModal = props => {
     const { t } = useTranslation();
     const content = [
         {
+            title: t('cdc:description.name'),
+            paragraph1: t('cdc:description.value1'),
+            paragraph2: t('cdc:description.value2'),
+            paragraph3: t('cdc:description.value3'),
+            paragraph4: t('cdc:description.value4'),
+            paragraph5: t('cdc:description.value5'),
+            paragraph6: t('cdc:description.value6'),
+            paragraph7: t('cdc:description.value7'),
+            paragraph8: t('cdc:description.value8'),
+            paragraph9: t('cdc:description.value9'),
+            paragraph10: t('cdc:description.value10')
+        },
+        {
             title: t('cdc:name.name'),
             paragraph: t('cdc:name.value')
         },

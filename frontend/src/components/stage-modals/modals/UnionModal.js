@@ -25,6 +25,10 @@ const UnionModal = props => {
     const { t } = useTranslation();
     const content = [
         {
+            title: t('union:description.name'),
+            paragraph: t('union:description.value')
+        },
+        {
             title: t('union:name.name'),
             paragraph: t('union:name.value')
         },

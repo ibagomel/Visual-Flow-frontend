@@ -88,8 +88,6 @@ import RenderJobConfiguration from './side-panel/RenderJobConfiguration';
 import PipelinesToolbar from './toolbar/pipelines-toolbar';
 import RenderPipelineConfiguration from './side-panel/RenderPipelineConfiguration';
 import {
-    READ,
-    WRITE,
     JOIN,
     CDC,
     EDGE,
@@ -103,6 +101,7 @@ import {
     SKIPPED
 } from './constants';
 import LogsModal from '../pages/logs-modal';
+import { jobStagesByType } from './jobStages';
 
 const {
     mxGraph,
@@ -131,7 +130,8 @@ class GraphDesigner extends Component {
         this.state = {
             graph: {},
             jobId: '',
-            nodeId: ''
+            nodeId: '',
+            configChanged: false
         };
 
         this.createPopupMenu = this.popupMenu.bind(this);
@@ -156,11 +156,15 @@ class GraphDesigner extends Component {
         document.removeEventListener('keydown', this.handleKeyDown);
     }
 
+    setConfigChanged = configuration => {
+        this.setState({ configChanged: configuration });
+    };
+
     popupMenu = (graph, menu, cell, event) => {
         const { data, sidePanelIsOpen, setDirtyGraph, setPanel } = this.props;
         if (
-            (cell && !has(data, 'editable')) ||
-            this.graphIsDisabled(data.editable)
+            cell &&
+            (!has(data, 'editable') || this.graphIsDisabled(data.editable))
         ) {
             if (cell.edge) {
                 menu.addItem('Delete connection', null, () => {
@@ -169,8 +173,8 @@ class GraphDesigner extends Component {
                 });
             } else {
                 menu.addItem('Edit child node', null, () => {
-                    // mxUtils.alert('Edit child node: ');
-                    // selectionChanged(graph)
+                    this.props.setCurrentCell(cell.id);
+                    setPanel(true);
                 });
                 menu.addItem('Delete child node', null, () => {
                     sidePanelIsOpen && setPanel(false);
@@ -376,8 +380,15 @@ class GraphDesigner extends Component {
             });
             // NEED REFACTOR
             if (targetNodeType === CDC || targetNodeType === JOIN) {
+                const inputLabel = graph.model
+                    .getValue(inputEdges[0])
+                    .getAttribute('text');
+                const labelExists =
+                    inputLabel === 'Right' || inputLabel === 'Before';
+                const firstEdge = labelExists ? 1 : 0;
+                const secondEdge = labelExists ? 0 : 1;
                 graph.model.setValue(
-                    inputEdges[0],
+                    inputEdges[firstEdge],
                     stageLabels({
                         operation: EDGE,
                         text: this.setLabel(
@@ -389,7 +400,7 @@ class GraphDesigner extends Component {
                 );
 
                 graph.model.setValue(
-                    inputEdges[1],
+                    inputEdges[secondEdge],
                     stageLabels({
                         operation: EDGE,
                         text: this.setLabel(
@@ -428,10 +439,24 @@ class GraphDesigner extends Component {
                 'cell.value.attributes.operation.value',
                 ''
             );
+            const terminalGraph = get(terminal, 'view.graph', '');
+            const targetOutgoingEdges = terminalGraph.getOutgoingEdges(
+                terminal.cell
+            );
+            const targetIncomingEdges = terminalGraph.getIncomingEdges(
+                terminal.cell
+            );
+            const targetValid = get(
+                jobStagesByType[targetNodeType],
+                'validation',
+                ''
+            );
 
             if (
-                (targetNodeType === WRITE && source) ||
-                (targetNodeType === READ && !source)
+                (targetOutgoingEdges.length >= targetValid.maxOutgoingConnections &&
+                    source) ||
+                (targetIncomingEdges.length >= targetValid.maxIncomingConnections &&
+                    !source)
             ) {
                 return null;
             }
@@ -520,16 +545,7 @@ class GraphDesigner extends Component {
             content?.graph?.forEach(node => {
                 if (node.value) {
                     const xmlNode = jsonEncoder.encode(node.value);
-                    if (xmlNode.getAttribute('operation') === EDGE) {
-                        graph.insertEdge(
-                            parent,
-                            null,
-                            xmlNode,
-                            vertices[node.source],
-                            vertices[node.target],
-                            node.style
-                        );
-                    } else {
+                    if (xmlNode.getAttribute('operation') !== EDGE) {
                         vertices[node.id] = graph.insertVertex(
                             parent,
                             null,
@@ -538,6 +554,22 @@ class GraphDesigner extends Component {
                             node.geometry.y,
                             node.geometry.width,
                             node.geometry.height,
+                            node.style
+                        );
+                    }
+                }
+            });
+
+            content?.graph?.forEach(node => {
+                if (node.value) {
+                    const xmlNode = jsonEncoder.encode(node.value);
+                    if (xmlNode.getAttribute('operation') === EDGE) {
+                        graph.insertEdge(
+                            parent,
+                            null,
+                            xmlNode,
+                            vertices[node.source],
+                            vertices[node.target],
                             node.style
                         );
                     }
@@ -660,7 +692,7 @@ class GraphDesigner extends Component {
             setDirtyGraph,
             setLogs
         } = this.props;
-        const { graph, jobId, nodeId } = this.state;
+        const { graph, jobId, nodeId, configChanged } = this.state;
         const currentPath = history.location.pathname.split('/');
         const currentProject = currentPath.slice(-2, -1)[0];
         const currentJob = type === PIPELINE ? jobId : currentPath.slice(-1)[0];
@@ -680,22 +712,24 @@ class GraphDesigner extends Component {
                     ableToEdit={this.graphIsDisabled(param)}
                 />
                 <div className={classes.content}>
-                    <DesignerToolbar zoom={this.zoom} graph={graph}>
+                    <DesignerToolbar
+                        zoom={this.zoom}
+                        graph={graph}
+                        data={data}
+                        setDirty={setDirtyGraph}
+                        setConfigChanged={this.setConfigChanged}
+                    >
                         {type === JOB && (
                             <JobsToolbar
                                 setShowModal={setLogs}
-                                data={data}
                                 setSidePanel={setPanel}
                                 sidePanelIsOpen={sidePanelIsOpen}
-                                setDirty={setDirtyGraph}
                             />
                         )}
                         {type === PIPELINE && (
                             <PipelinesToolbar
-                                data={data}
                                 setSidePanel={setPanel}
                                 sidePanelIsOpen={sidePanelIsOpen}
-                                setDirty={setDirtyGraph}
                             />
                         )}
                     </DesignerToolbar>
@@ -715,7 +749,12 @@ class GraphDesigner extends Component {
                         ref={this.refGraph}
                     />
                 </div>
-                <SidePanel graph={graph} type={type}>
+                <SidePanel
+                    graph={graph}
+                    type={type}
+                    setConfigChanged={this.setConfigChanged}
+                    configChanged={configChanged}
+                >
                     {type === JOB && (
                         <RenderJobConfiguration
                             ableToEdit={

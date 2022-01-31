@@ -27,7 +27,7 @@ export const resetFillColor = (graph, data) => {
             const currentStage = data?.definition.graph.find(
                 item => item.id === key
             );
-            if (currentStage) {
+            if (currentStage && currentStage.edge !== true) {
                 graph.setCellStyles(
                     'fillColor',
                     selectFillColor(currentStage.style),

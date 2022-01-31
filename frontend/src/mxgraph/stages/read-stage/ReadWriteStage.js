@@ -59,6 +59,7 @@ const ReadWriteStage = ({ stage }) => {
             case STORAGES.ORACLE.value:
             case STORAGES.MYSQL.value:
             case STORAGES.MSSQL.value:
+            case STORAGES.REDSHIFTJDBC.value:
                 return (
                     <>
                         <Typography

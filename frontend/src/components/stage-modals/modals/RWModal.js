@@ -38,6 +38,11 @@ const getWriteMode = t => ({
 
 const getContent = t => [
     {
+        title: t('ReadWrite:note.name'),
+        paragraph: t('ReadWrite:note.value'),
+        hide: WRITE
+    },
+    {
         title: t('ReadWrite:name.name'),
         paragraph: t('ReadWrite:name.value')
     },

@@ -56,9 +56,9 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
         }
     ];
 
-    const [projectParameters, setProjectParameters] = React.useState(
-        params.map(p => ({ ...p, id: uniqueId() }))
-    );
+    const parameterData = params.map(p => ({ ...p, id: uniqueId() }));
+
+    const [projectParameters, setProjectParameters] = React.useState(parameterData);
     const [editMode, setEditMode] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState('');
 
@@ -67,7 +67,7 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
     }, [projectId, editMode]);
 
     React.useEffect(() => {
-        setProjectParameters(params.map(p => ({ ...p, id: uniqueId() })));
+        setProjectParameters(parameterData);
     }, [parameters]);
 
     const onSubmit = () => {
@@ -80,7 +80,7 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
 
     const onCancel = () => {
         setEditMode(false);
-        setProjectParameters(params);
+        setProjectParameters(parameterData);
     };
 
     const handleChangeParameter = (event, changedId, field) => {

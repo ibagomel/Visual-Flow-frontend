@@ -19,11 +19,24 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import ReadTextFields from '../rw-text-fields';
 import WriteMode from '../helpers/WriteMode';
 import { WRITE } from '../../../constants';
+
+import getMenuItems from '../../helpers/getMenuItems';
+
+const sslDropdown = [
+    {
+        value: 'true',
+        label: 'True'
+    },
+    {
+        value: 'false',
+        label: 'False'
+    }
+];
 
 const fields = [
     { field: 'Database' },
@@ -33,7 +46,7 @@ const fields = [
     { field: 'User' },
     { field: 'Password' }
 ];
-const required = ['true', 'false'];
+
 const MongoStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => {
     const { t } = useTranslation();
     return (
@@ -57,11 +70,7 @@ const MongoStorage = ({ inputValues, handleInputChange, openModal, ableToEdit })
                 value={inputValues.ssl || ''}
                 onChange={handleInputChange}
             >
-                {required.map(option => (
-                    <MenuItem key={option} value={option}>
-                        {option}
-                    </MenuItem>
-                ))}
+                {getMenuItems(sslDropdown)}
             </TextField>
             {inputValues.operation === WRITE && (
                 <WriteMode

@@ -19,8 +19,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField, MenuItem } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import getMenuItems from '../../helpers/getMenuItems';
 
 const writeModes = [
     {
@@ -33,7 +34,7 @@ const writeModes = [
     },
     {
         value: 'ErrorIfExists',
-        label: 'Error if exists'
+        label: 'Error if table exists'
     }
 ];
 
@@ -52,11 +53,7 @@ const WriteMode = ({ disabled, value, onChange }) => {
             value={value || ''}
             onChange={onChange}
         >
-            {writeModes.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                </MenuItem>
-            ))}
+            {getMenuItems(writeModes)}
         </TextField>
     );
 };

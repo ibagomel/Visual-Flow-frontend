@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 import styles from './Action.Styles';
 
 const Action = ({ title, Icon, onClick, classes, disable }) => (
-    <Tooltip title={title} arrow>
+    <Tooltip title={disable ? '' : title} arrow>
         <IconButton
             disabled={disable || false}
             onClick={onClick}

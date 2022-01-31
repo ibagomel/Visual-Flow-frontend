@@ -104,20 +104,21 @@ const JobConfiguration = ({
         const outEdges = graph.getOutgoingEdges(current);
 
         outEdges.forEach(edge => {
-            graph.model.setValue(
-                edge,
-                stageLabels({
-                    operation: 'EDGE',
-                    successPath: outputPaths.find(item => item.id === edge.id)
-                        .successPath,
-                    text: get(edge, 'value.attributes.text.value', '')
-                })
-            );
-            const edgeColor =
-                get(edge, 'value.attributes.successPath.value', '') === 'false'
-                    ? '#F44336'
-                    : '#4CAF50';
-            graph.setCellStyles('strokeColor', edgeColor, [edge]);
+            const currentOutputPath = outputPaths.find(item => item.id === edge.id);
+            const outEdge = get(edge, 'value.attributes.successPath.value', '');
+            if (currentOutputPath.successPath !== outEdge) {
+                graph.model.setValue(
+                    edge,
+                    stageLabels({
+                        operation: 'EDGE',
+                        successPath: outputPaths.find(item => item.id === edge.id)
+                            .successPath,
+                        text: get(edge, 'value.attributes.text.value', '')
+                    })
+                );
+                const edgeColor = outEdge === 'false' ? '#F44336' : '#4CAF50';
+                graph.setCellStyles('strokeColor', edgeColor, [edge]);
+            }
         });
         return saveCell(inputValues);
     };

@@ -44,6 +44,7 @@ const ReadWriteConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
             case STORAGES.ORACLE.value:
             case STORAGES.MYSQL.value:
             case STORAGES.MSSQL.value:
+            case STORAGES.REDSHIFTJDBC.value:
                 return Db2Storage;
             case STORAGES.MONGO.value:
                 return MongoStorage;

@@ -41,7 +41,8 @@ const RenderJobConfiguration = ({
     graph,
     ableToEdit,
     saveCell,
-    swapEdges
+    swapEdges,
+    selectedStorage
 }) => {
     const jobsConfigurationComponents = {
         EDGE: {
@@ -63,7 +64,8 @@ const RenderJobConfiguration = ({
                 setPanelDirty,
                 configuration,
                 saveCell,
-                graph
+                graph,
+                selectedStorage
             }
         },
         WRITE: {
@@ -75,7 +77,8 @@ const RenderJobConfiguration = ({
                 setPanelDirty,
                 configuration,
                 saveCell,
-                graph
+                graph,
+                selectedStorage
             }
         },
         GROUP: {
@@ -197,7 +200,8 @@ RenderJobConfiguration.propTypes = {
     graph: PropTypes.object,
     ableToEdit: PropTypes.bool,
     saveCell: PropTypes.func,
-    swapEdges: PropTypes.func
+    swapEdges: PropTypes.func,
+    selectedStorage: PropTypes.func
 };
 
 export default RenderJobConfiguration;

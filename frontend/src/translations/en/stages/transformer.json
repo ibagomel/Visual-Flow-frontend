@@ -19,5 +19,14 @@
         "value12": "3) a, b, row_number() OVER (PARTITION BY a ORDER BY b)",
         "value13": "4) col, exists(col, x -> x % 2 == 0)",
         "value14": "5) col, collect_list(col)"
+    },
+    "note": {
+        "name": "Note",
+        "boldText": "\uD835\uDC1B\uD835\uDC1A\uD835\uDC1C\uD835\uDC24\uD835\uDC2D\uD835\uDC22\uD835\uDC1C\uD835\uDC24(`)",
+        "firstText": "if the whole object's name is not guarded by ",
+        "lastText": " symbols.",
+        "value1": "An identifier is a string used to identify a database object such as a table, view, schema, column, etc. Spark SQL has regular",
+        "value2": "identifiers and delimited identifiers, which are enclosed within backticks. Therefore be vigilant when you reference certain ",
+        "value3": "database objects in your query since some might have symbols that might be misinterpreted (e.g. spark function invocation)"
     }
 }

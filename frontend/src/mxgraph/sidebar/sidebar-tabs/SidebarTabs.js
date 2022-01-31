@@ -46,7 +46,7 @@ const SidebarTabs = ({ name, graph = {}, setDirty, ableToEdit }) => {
         <div className={classes.root}>
             <AppBar position="static" color="transparent">
                 <Tabs
-                    value={value}
+                    value={ableToEdit ? value : 0}
                     onChange={(e, newValue) => setValue(ableToEdit ? newValue : 1)}
                     variant="fullWidth"
                     textColor="primary"

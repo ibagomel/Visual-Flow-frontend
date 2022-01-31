@@ -104,6 +104,10 @@ export const STORAGES = {
         value: 'redis',
         label: 'Redis'
     },
+    REDSHIFTJDBC: {
+        value: 'redshift-jdbc',
+        label: 'Redshift-jdbc'
+    },
     STDOUT: {
         value: 'stdout',
         label: 'STDOUT',

@@ -57,7 +57,8 @@ const JobsToolbar = ({
     setDirty,
     setShowModal,
     sidePanelIsDirty,
-    dirty
+    dirty,
+    undoButtonsDisabling
 }) => {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -140,6 +141,7 @@ const JobsToolbar = ({
                 sidePanelIsOpen={sidePanelIsOpen}
                 setDirty={setDirty}
                 refresh={() => getStatus(currentProject, currentJob)}
+                undoButtonsDisabling={undoButtonsDisabling}
             />
         </>
     );
@@ -161,7 +163,8 @@ JobsToolbar.propTypes = {
     reversible: PropTypes.object,
     getActualJob: PropTypes.func,
     sidePanelIsDirty: PropTypes.bool,
-    dirty: PropTypes.bool
+    dirty: PropTypes.bool,
+    undoButtonsDisabling: PropTypes.object
 };
 
 const mapStateToProps = state => ({

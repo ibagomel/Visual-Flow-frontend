@@ -55,8 +55,9 @@ class SidePanel extends React.Component {
         super(props);
         this.state = {
             configuration: {},
-            changedConfiguration: {},
-            showModal: false
+            jobSuccessPath: {},
+            showModal: false,
+            storageValue: ''
         };
     }
 
@@ -66,8 +67,17 @@ class SidePanel extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { graph, currentCell, type } = this.props;
-        if (prevProps.currentCell !== currentCell) {
+        const {
+            graph,
+            currentCell,
+            type,
+            configChanged,
+            setConfigChanged
+        } = this.props;
+        if (
+            prevProps.currentCell !== currentCell ||
+            (configChanged && currentCell && graph.getSelectionCell())
+        ) {
             const selectedCell = graph.getSelectionCell();
             const results = {};
             Object.keys(selectedCell.value.attributes).forEach(attrKey => {
@@ -76,8 +86,9 @@ class SidePanel extends React.Component {
             });
             this.setState({
                 configuration: { ...results },
-                changedConfiguration: this.configurationResults()
+                jobSuccessPath: this.jobSuccessPathResults()
             });
+            configChanged && setConfigChanged(false);
         }
         if (graph.getSelectionCell() && type === PIPELINE) {
             this.changeFillColor(graph.getSelectionCell());
@@ -115,28 +126,13 @@ class SidePanel extends React.Component {
         return result;
     };
 
-    configurationResults = () => {
+    jobSuccessPathResults = () => {
         const { graph } = this.props;
-        const { edges, value: { attributes } = {} } = graph.getSelectionCell() || {};
-        let results = {};
-        if (attributes) {
-            results = Object.keys(attributes).reduce(
-                (acc, attrKey) => ({
-                    ...acc,
-                    [attributes[attrKey].nodeName]: attributes[attrKey].nodeValue
-                }),
-                {}
-            );
-            if (edges && attributes.operation.value === 'JOB') {
-                results = {
-                    ...results,
-                    jobSuccessPath: edges.map(
-                        obj => obj.value.attributes.successPath.value
-                    )
-                };
-            }
+        const { edges, value } = graph.getSelectionCell() || {};
+        if (edges && value.attributes.operation.value === 'JOB') {
+            return edges.map(obj => obj.value.attributes.successPath.value);
         }
-        return results;
+        return {};
     };
 
     saveCell = configuration => {
@@ -147,13 +143,18 @@ class SidePanel extends React.Component {
             ...schema
         ]);
 
-        const { graph, currentCell, setDirty, setPanelDirty } = this.props;
-        const { changedConfiguration } = this.state;
+        const { graph, currentCell, setDirty, setPanelDirty, data } = this.props;
+        const { jobSuccessPath, configuration: stateConfiguration } = this.state;
+
+        const currentCellData =
+            data.definition.graph?.find(dataObj => dataObj.id === currentCell) || {};
 
         const cell = graph.model.getCell(currentCell);
         // update the cell
-        const obj = stageLabels(cleanConfiguration);
-        graph.model.setValue(cell, obj);
+        if (!isEqual(cleanConfiguration, stateConfiguration)) {
+            const obj = stageLabels(cleanConfiguration);
+            graph.model.setValue(cell, obj);
+        }
 
         if (cleanConfiguration.operation === EDGE) {
             graph.setCellStyles(
@@ -170,7 +171,10 @@ class SidePanel extends React.Component {
             );
             graph.resizeCell(cell, newCellSize);
         }
-        setDirty(!isEqual(changedConfiguration, this.configurationResults()));
+        setDirty(
+            !isEqual(cleanConfiguration, currentCellData.value) ||
+                !isEqual(jobSuccessPath, this.jobSuccessPathResults())
+        );
         this.setState({
             configuration: cleanConfiguration
         });
@@ -193,7 +197,7 @@ class SidePanel extends React.Component {
                 const currentStage = data?.definition.graph.find(
                     item => item.id === key
                 );
-                if (currentStage) {
+                if (currentStage && currentStage.edge !== true) {
                     graph.setCellStyles(
                         'fillColor',
                         selectFillColor(currentStage.style),
@@ -217,6 +221,14 @@ class SidePanel extends React.Component {
         }
     };
 
+    storageValueHandler = currentState => {
+        if (this.state.storageValue !== currentState) {
+            this.setState({
+                storageValue: currentState
+            });
+        }
+    };
+
     renderChildren = () => {
         const { setPanelDirty, graph, children } = this.props;
         const { configuration } = this.state;
@@ -225,7 +237,8 @@ class SidePanel extends React.Component {
             graph,
             configuration,
             setPanelDirty,
-            saveCell: this.saveCell
+            saveCell: this.saveCell,
+            selectedStorage: this.storageValueHandler
         });
     };
 
@@ -238,7 +251,7 @@ class SidePanel extends React.Component {
             confirmationWindow,
             setSidePanel: toggleSidePanel
         } = this.props;
-        const { configuration, showModal } = this.state;
+        const { configuration, showModal, storageValue } = this.state;
 
         return (
             <div className={classes.root}>
@@ -261,6 +274,7 @@ class SidePanel extends React.Component {
                         stageName={configuration.operation}
                         title={t(`jobDesigner:palette.${configuration.operation}`)}
                         onClose={() => this.setState({ showModal: false })}
+                        currentStorage={storageValue}
                     />
                     <Toolbar />
                     <div
@@ -321,7 +335,9 @@ SidePanel.propTypes = {
     children: PropTypes.array,
     type: PropTypes.string,
     sidePanelIsDirty: PropTypes.bool,
-    confirmationWindow: PropTypes.func.isRequired
+    confirmationWindow: PropTypes.func.isRequired,
+    configChanged: PropTypes.bool,
+    setConfigChanged: PropTypes.func
 };
 
 const mapStateToProps = state => ({

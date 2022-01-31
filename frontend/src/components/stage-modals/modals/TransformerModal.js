@@ -25,6 +25,16 @@ const TransformerModal = props => {
     const { t } = useTranslation();
     const content = [
         {
+            title: t('transformer:note.name'),
+            paragraph1: t('transformer:note.value1'),
+            paragraph2: t('transformer:note.value2'),
+            paragraph3: t('transformer:note.value3'),
+            paragraph4: `${t('transformer:note.firstText')} 
+                         ${t('transformer:note.boldText')} 
+                         ${t('transformer:note.lastText')}   
+            `
+        },
+        {
             title: t('transformer:name.name'),
             paragraph: t('transformer:name.value')
         },

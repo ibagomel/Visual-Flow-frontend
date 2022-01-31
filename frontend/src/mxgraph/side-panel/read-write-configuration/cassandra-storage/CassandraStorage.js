@@ -19,12 +19,25 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import ReadTextFields from '../rw-text-fields';
 import { WRITE } from '../../../constants';
 import WriteMode from '../helpers/WriteMode';
+
+import getMenuItems from '../../helpers/getMenuItems';
+
+const dropdownOptions = [
+    {
+        value: 'true',
+        label: 'True'
+    },
+    {
+        value: 'false',
+        label: 'False'
+    }
+];
 
 const fields = [
     { field: 'Keyspace' },
@@ -34,7 +47,6 @@ const fields = [
     { field: 'Port' }
 ];
 const userFields = [{ field: 'Username' }, { field: 'Password' }];
-const required = ['true', 'false'];
 
 const CassandraStorage = ({
     inputValues,
@@ -43,11 +55,7 @@ const CassandraStorage = ({
     ableToEdit
 }) => {
     const { t } = useTranslation();
-    const generateMap = required.map(option => (
-        <MenuItem key={option} value={option}>
-            {option}
-        </MenuItem>
-    ));
+
     return (
         <>
             <ReadTextFields
@@ -69,7 +77,7 @@ const CassandraStorage = ({
                 value={inputValues.ssl || ''}
                 onChange={handleInputChange}
             >
-                {generateMap}
+                {getMenuItems(dropdownOptions)}
             </TextField>
             <ReadTextFields
                 ableToEdit={ableToEdit}
@@ -90,7 +98,7 @@ const CassandraStorage = ({
                 value={inputValues.pushdownEnabled || ''}
                 onChange={handleInputChange}
             >
-                {generateMap}
+                {getMenuItems(dropdownOptions)}
             </TextField>
             <ReadTextFields
                 ableToEdit={ableToEdit}

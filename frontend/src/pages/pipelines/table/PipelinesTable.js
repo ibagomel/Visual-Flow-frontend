@@ -80,7 +80,9 @@ const PipelinesTable = ({
     setLastRun,
     status,
     setStatus,
-    setCurrentPage
+    setCurrentPage,
+    currentPage,
+    rowsPerPage
 }) => {
     const { t } = useTranslation();
     const classes = withStyles();
@@ -123,7 +125,14 @@ const PipelinesTable = ({
             onClick: () =>
                 confirmationWindow({
                     body: t('pipelines:confirm.delete', { name: item.name }),
-                    callback: () => remove(projectId, [item.id])
+                    callback: () => {
+                        remove(projectId, [item.id]);
+                        const pipelinesLastPageAfterRemove =
+                            Math.ceil((data.length - 1) / rowsPerPage) - 1;
+                        if (currentPage > pipelinesLastPageAfterRemove) {
+                            setCurrentPage(pipelinesLastPageAfterRemove);
+                        }
+                    }
                 })
         }
     ];
@@ -137,7 +146,16 @@ const PipelinesTable = ({
                     body: t('pipelines:confirm.delete', {
                         name: selected?.map(id => byId(id)?.name).join(', ')
                     }),
-                    callback: () => remove(projectId, selected)
+                    callback: () => {
+                        remove(projectId, selected);
+                        const pipelinesLastPageAfterRemove =
+                            Math.ceil(
+                                (data.length - selected.length) / rowsPerPage
+                            ) - 1;
+                        if (currentPage > pipelinesLastPageAfterRemove) {
+                            setCurrentPage(pipelinesLastPageAfterRemove);
+                        }
+                    }
                 })
         },
         {
@@ -256,12 +274,16 @@ PipelinesTable.propTypes = {
     status: PropTypes.string,
     setStatus: PropTypes.func,
     confirmationWindow: PropTypes.func,
-    setCurrentPage: PropTypes.func
+    setCurrentPage: PropTypes.func,
+    currentPage: PropTypes.number,
+    rowsPerPage: PropTypes.number
 };
 
 const mapStateToProps = state => ({
     lastRun: state.pages.pipelines.lastRun,
-    status: state.pages.pipelines.status
+    status: state.pages.pipelines.status,
+    currentPage: state.enhancedTable.page,
+    rowsPerPage: state.enhancedTable.rowsPerPage
 });
 
 const mapDispatchToProps = {

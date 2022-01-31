@@ -35,6 +35,9 @@
         },
         {
           "storage": "mongo"
+        },
+        {
+          "storage": "redshift-jdbc"
         }
       ]
     },
@@ -55,6 +58,9 @@
         },
         {
           "storage": "mssql"
+        },
+        {
+          "storage": "redshift-jdbc"
         }
       ]
     },
@@ -81,6 +87,9 @@
         },
         {
           "storage": "redis"
+        },
+        {
+          "storage": "redshift-jdbc"
         }
       ]
     },

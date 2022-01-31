@@ -20,11 +20,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { MenuItem, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 import ReadTextFields from '../rw-text-fields';
 import WriteMode from '../helpers/WriteMode';
 import { WRITE } from '../../../constants';
+
+import getMenuItems from '../../helpers/getMenuItems';
+
+const sslDropdown = [
+    {
+        value: 'true',
+        label: 'True'
+    },
+    {
+        value: 'false',
+        label: 'False'
+    }
+];
 
 const fields = [
     { field: 'Nodes' },
@@ -33,8 +46,6 @@ const fields = [
     { field: 'Password' },
     { field: 'Index' }
 ];
-
-const ssl = ['true', 'false'];
 
 const ElasticStorage = ({
     inputValues,
@@ -71,11 +82,7 @@ const ElasticStorage = ({
                 value={inputValues.ssl || ''}
                 onChange={handleInputChange}
             >
-                {ssl.map(option => (
-                    <MenuItem key={option} value={option}>
-                        {option}
-                    </MenuItem>
-                ))}
+                {getMenuItems(sslDropdown)}
             </TextField>
             <ReadTextFields
                 ableToEdit={ableToEdit}

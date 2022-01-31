@@ -44,14 +44,14 @@ const SelectProject = ({ projects, getProjects, loading, projectId }) => {
         setValueSelected(selectedProject);
     }, [selectedProject]);
 
-    const defaultText = loading ? t('main:Loading') : '';
+    const defaultText = loading ? { name: t('main:Loading') } : null;
 
     return (
         <Autocomplete
             id="combo-box"
+            value={valueSelected || defaultText}
             options={projects?.projects || []}
             getOptionLabel={option => option.name}
-            value={valueSelected || { name: defaultText }}
             loading={loading}
             disableClearable
             onChange={(event, newValue) => {

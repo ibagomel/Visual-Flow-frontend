@@ -83,7 +83,9 @@ const JobsTable = ({
     setLastRun,
     status,
     setStatus,
-    setCurrentPage
+    setCurrentPage,
+    currentPage,
+    rowsPerPage
 }) => {
     const { t } = useTranslation();
     const classes = withStyles();
@@ -108,7 +110,16 @@ const JobsTable = ({
                     body: t('jobs:confirm.delete', {
                         name: selected?.map(id => byId(id)?.name).join(', ')
                     }),
-                    callback: () => remove(projectId, selected)
+                    callback: () => {
+                        remove(projectId, selected);
+                        const jobsLastPageAfterRemove =
+                            Math.ceil(
+                                (data.length - selected.length) / rowsPerPage
+                            ) - 1;
+                        if (currentPage > jobsLastPageAfterRemove) {
+                            setCurrentPage(jobsLastPageAfterRemove);
+                        }
+                    }
                 })
         },
         {
@@ -172,7 +183,14 @@ const JobsTable = ({
             onClick: () =>
                 confirmationWindow({
                     body: t('jobs:confirm.delete', { name: item.name }),
-                    callback: () => remove(projectId, [item.id])
+                    callback: () => {
+                        remove(projectId, [item.id]);
+                        const jobsLastPageAfterRemove =
+                            Math.ceil((data.length - 1) / rowsPerPage) - 1;
+                        if (currentPage > jobsLastPageAfterRemove) {
+                            setCurrentPage(jobsLastPageAfterRemove);
+                        }
+                    }
                 })
         }
     ];
@@ -278,12 +296,16 @@ JobsTable.propTypes = {
     setStatus: PropTypes.func,
     confirmationWindow: PropTypes.func,
     ableToEdit: PropTypes.bool,
-    setCurrentPage: PropTypes.func
+    setCurrentPage: PropTypes.func,
+    currentPage: PropTypes.number,
+    rowsPerPage: PropTypes.number
 };
 
 const mapStateToProps = state => ({
     lastRun: state.pages.jobs.lastRun,
-    status: state.pages.jobs.status
+    status: state.pages.jobs.status,
+    currentPage: state.enhancedTable.page,
+    rowsPerPage: state.enhancedTable.rowsPerPage
 });
 
 const mapDispatchToProps = {

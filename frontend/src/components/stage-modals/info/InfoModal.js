@@ -18,7 +18,8 @@
  */
 
 import { Box, FormControl, InputLabel, Select, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { find } from 'lodash';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -40,12 +41,23 @@ const InfoModal = ({
     stdout,
     display,
     title,
-    onClose
+    onClose,
+    currentStorage
 }) => {
     const classes = useStyles();
     const { t } = useTranslation();
 
+    const storageValue = find(STORAGES, { value: currentStorage });
     const [storage, setStorage] = React.useState('');
+
+    useEffect(() => {
+        if (currentStorage && !display) {
+            setStorage(storageValue.label);
+        }
+        if (currentStorage === undefined) {
+            setStorage('');
+        }
+    }, [currentStorage, display]);
 
     // eslint-disable-next-line complexity
     const chosenStorage = () => {
@@ -55,6 +67,7 @@ const InfoModal = ({
             case STORAGES.ORACLE.label:
             case STORAGES.MYSQL.label:
             case STORAGES.MSSQL.label:
+            case STORAGES.REDSHIFTJDBC.label:
                 return db2;
             case STORAGES.COS.label:
                 return cos;
@@ -75,8 +88,8 @@ const InfoModal = ({
         }
     };
 
-    const clearStorage = () =>
-        chosenStorage()
+    const clearData = data =>
+        data
             ?.filter(key => !key.hide || key.hide !== title)
             .map(({ hide, ...cleanValue }) => cleanValue);
 
@@ -95,7 +108,7 @@ const InfoModal = ({
 
     return (
         <PopupForm display={display} title={title} onClose={onClose}>
-            {content.map(section => {
+            {clearData(content)?.map(section => {
                 const other = Object.keys(section).slice(1);
                 return (
                     <Box className={classes.root} key={section.title}>
@@ -173,7 +186,7 @@ const InfoModal = ({
             {(title === 'Read' || title === 'Write') && (
                 <Box className={classNames(classes.name, classes.wrapper)}>
                     {storage &&
-                        clearStorage()?.map(section => {
+                        clearData(chosenStorage())?.map(section => {
                             const other = Object.keys(section).slice(1);
                             return (
                                 <Box className={classes.root} key={section.title}>
@@ -216,7 +229,8 @@ InfoModal.propTypes = {
     stdout: PropTypes.array,
     display: PropTypes.bool,
     title: PropTypes.string,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    currentStorage: PropTypes.string
 };
 
 export default InfoModal;

@@ -19,8 +19,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { Divider, TextField, MenuItem } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
+import SelectField from '../select-field';
+import { OTHER } from '../../constants';
 
 const types = [
     {
@@ -33,36 +34,22 @@ const types = [
     }
 ];
 
-const UnionConfiguration = ({ state, ableToEdit, onChange }) => {
-    const { t } = useTranslation();
-    return (
-        <>
-            <Divider />
-            {state.name && (
-                <TextField
-                    disabled={!ableToEdit}
-                    label={t('jobDesigner:unionConfiguration.Mode')}
-                    placeholder={t('jobDesigner:unionConfiguration.Mode')}
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    select
-                    name="type"
-                    value={state.type || ''}
-                    onChange={event =>
-                        onChange(event.target.name, event.target.value)
-                    }
-                >
-                    {types.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-            )}
-        </>
-    );
-};
+const UnionConfiguration = ({ state, ableToEdit, onChange }) => (
+    <>
+        <Divider />
+        {state.name && (
+            <SelectField
+                ableToEdit={ableToEdit}
+                label="jobDesigner:unionConfiguration.Mode"
+                name="type"
+                value={state.type}
+                handleInputChange={onChange}
+                menuItems={types}
+                type={OTHER}
+            />
+        )}
+    </>
+);
 
 UnionConfiguration.propTypes = {
     state: PropTypes.object,

@@ -17,10 +17,13 @@
     "value2": "1. Click on the Plus button.",
     "value3": "2. In the drop-down lists that appear, specify the function and column name.",
     "value4": "Available functions: Count, Avg, Min, Max, Sum, Mean.",
-    "link": "For more examples click here.",
     "value5": "Notes:",
     "value6": "1. Use the Plus button to add as many columns as you need.",
     "value7": "2. Use the Minus button to remove the filter.",
-    "value8": "3. Use the Upp Arrow and Down Arrow to change the order of columns."
+    "value8": "3. Use the Upp Arrow and Down Arrow to change the order of columns.",
+    "value9": {
+      "title": "For more examples click here.",
+      "link": "https://sparkbyexamples.com/spark/using-groupby-on-dataframe/"
+    }
   }
 }

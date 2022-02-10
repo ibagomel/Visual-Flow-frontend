@@ -41,7 +41,9 @@ const RemoveDuplicatesModal = props => {
             paragraph5: t('removeDuplicates:orderBy.value5'),
             paragraph6: t('removeDuplicates:orderBy.value6'),
             paragraph7: t('removeDuplicates:orderBy.value7'),
-            paragraph8: t('removeDuplicates:orderBy.value8')
+            paragraph8: t('removeDuplicates:orderBy.value8'),
+            paragraph9: t('removeDuplicates:orderBy.value9.name'),
+            paragraph10: t('removeDuplicates:orderBy.value9.value')
         }
     ];
     return <InfoModal content={content} {...props} />;

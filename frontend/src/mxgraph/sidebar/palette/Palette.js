@@ -106,6 +106,23 @@ class Palette extends React.Component {
         });
     };
 
+    doubleClickAdder = stageName => {
+        const { graph } = this.props;
+        const getRandomPoint = () => {
+            const crypto = window.crypto || window.msCrypto;
+            const array = new Uint8Array(1);
+            crypto.getRandomValues(array); // Compliant for security-sensitive use cases
+            const point = array[0];
+            if (point >= 150) {
+                return point / 2;
+            }
+            return point;
+        };
+        const xPoint = getRandomPoint();
+        const yPoint = getRandomPoint();
+        this.addCell(graph, null, null, xPoint, yPoint, stageName);
+    };
+
     render() {
         const { classes, t } = this.props;
         const { refSidebar, stages } = this.state;
@@ -119,6 +136,9 @@ class Palette extends React.Component {
                                 className={`${classes.stages} stages`}
                                 data-type={stage.operation}
                                 style={{ background: stage.color || '' }}
+                                onDoubleClick={() =>
+                                    this.doubleClickAdder(stage.operation)
+                                }
                             >
                                 <StageWithIcon
                                     operation={stage.operation}

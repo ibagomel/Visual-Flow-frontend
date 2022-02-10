@@ -32,7 +32,11 @@ const TransformerModal = props => {
             paragraph4: `${t('transformer:note.firstText')} 
                          ${t('transformer:note.boldText')} 
                          ${t('transformer:note.lastText')}   
-            `
+            `,
+            link1: {
+                title: t('transformer:note.value4.title'),
+                link: t('transformer:note.value4.link')
+            }
         },
         {
             title: t('transformer:name.name'),
@@ -45,7 +49,10 @@ const TransformerModal = props => {
             paragraph3: t('transformer:output.value3'),
             paragraph4: t('transformer:output.value4'),
             paragraph5: t('transformer:output.value5'),
-            link: t('transformer:output.value6'),
+            link2: {
+                title: t('transformer:output.value6.title'),
+                link: t('transformer:output.value6.link')
+            },
             paragraph6: t('transformer:output.value7'),
             example1: t('transformer:output.value8'),
             paragraph7: t('transformer:output.value9'),

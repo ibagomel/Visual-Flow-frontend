@@ -19,135 +19,170 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconButton, TextField } from '@material-ui/core';
+import { IconButton, TextField, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { TuneOutlined } from '@material-ui/icons';
 import useStyles from './ContainerConfiguration.Styles';
-import getMenuItems from '../helpers/getMenuItems';
 import { IMAGE_PULL_SECRET_TYPE } from '../constants/container';
+import SelectField from '../select-field';
+import { OTHER } from '../../constants';
+import ClearButton from '../helpers/ClearButton';
 
 const ImagePullSecretType = ({ ableToEdit, state, onChange, openModal }) => {
     const { t } = useTranslation();
     const classes = useStyles();
     return (
         <>
-            <TextField
-                disabled={!ableToEdit}
-                label={t(
-                    'pipelineDesigner:containerConfiguration.ImagePullSecretType'
-                )}
-                placeholder={t(
-                    'pipelineDesigner:containerConfiguration.ImagePullSecretType'
-                )}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
+            <SelectField
+                ableToEdit={ableToEdit}
+                label="pipelineDesigner:containerConfiguration.ImagePullSecretType"
                 name="imagePullSecretType"
-                value={state.imagePullSecretType || ''}
-                onChange={event => onChange(event.target.name, event.target.value)}
-            >
-                {getMenuItems(Object.values(IMAGE_PULL_SECRET_TYPE))}
-            </TextField>
+                value={state.imagePullSecretType}
+                handleInputChange={onChange}
+                menuItems={Object.values(IMAGE_PULL_SECRET_TYPE)}
+                type={OTHER}
+            />
             {state.imagePullSecretType === IMAGE_PULL_SECRET_TYPE.NEW.value && (
                 <>
-                    <TextField
-                        disabled={!ableToEdit}
-                        label={t('pipelineDesigner:containerConfiguration.Username')}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        multiline
-                        name="username"
-                        value={state.username || ''}
-                        onChange={event =>
-                            onChange(event.target.name, event.target.value)
-                        }
-                        InputProps={{
-                            endAdornment: (
-                                <IconButton
-                                    className={classes.button}
-                                    onClick={() => openModal('username')}
-                                >
-                                    <TuneOutlined />
-                                </IconButton>
-                            )
-                        }}
-                    />
-                    <TextField
-                        disabled={!ableToEdit}
-                        label={t('pipelineDesigner:containerConfiguration.Password')}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        multiline
-                        name="password"
-                        value={state.password || ''}
-                        onChange={event =>
-                            onChange(event.target.name, event.target.value)
-                        }
-                        InputProps={{
-                            endAdornment: (
-                                <IconButton
-                                    className={classes.button}
-                                    onClick={() => openModal('password')}
-                                >
-                                    <TuneOutlined />
-                                </IconButton>
-                            )
-                        }}
-                    />
-                    <TextField
-                        disabled={!ableToEdit}
-                        label={t('pipelineDesigner:containerConfiguration.Registry')}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        multiline
-                        name="registry"
-                        value={state.registry || ''}
-                        onChange={event =>
-                            onChange(event.target.name, event.target.value)
-                        }
-                        InputProps={{
-                            endAdornment: (
-                                <IconButton
-                                    className={classes.button}
-                                    onClick={() => openModal('registry')}
-                                >
-                                    <TuneOutlined />
-                                </IconButton>
-                            )
-                        }}
-                    />
+                    <Box className={classes.wrapper}>
+                        <TextField
+                            disabled={!ableToEdit}
+                            label={t(
+                                'pipelineDesigner:containerConfiguration.Username'
+                            )}
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            multiline
+                            name="username"
+                            value={state.username || ''}
+                            onChange={event =>
+                                onChange(event.target.name, event.target.value)
+                            }
+                            InputProps={{
+                                endAdornment: (
+                                    <IconButton
+                                        className={classes.button}
+                                        onClick={() => openModal('username')}
+                                    >
+                                        <TuneOutlined />
+                                    </IconButton>
+                                )
+                            }}
+                        />
+                        <ClearButton
+                            name="username"
+                            value={state.username}
+                            ableToEdit={ableToEdit}
+                            handleInputChange={onChange}
+                            type={OTHER}
+                        />
+                    </Box>
+                    <Box className={classes.wrapper}>
+                        <TextField
+                            disabled={!ableToEdit}
+                            label={t(
+                                'pipelineDesigner:containerConfiguration.Password'
+                            )}
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            multiline
+                            name="password"
+                            value={state.password || ''}
+                            onChange={event =>
+                                onChange(event.target.name, event.target.value)
+                            }
+                            InputProps={{
+                                endAdornment: (
+                                    <IconButton
+                                        className={classes.button}
+                                        onClick={() => openModal('password')}
+                                    >
+                                        <TuneOutlined />
+                                    </IconButton>
+                                )
+                            }}
+                        />
+                        <ClearButton
+                            name="password"
+                            value={state.password}
+                            ableToEdit={ableToEdit}
+                            handleInputChange={onChange}
+                            type={OTHER}
+                        />
+                    </Box>
+                    <Box className={classes.wrapper}>
+                        <TextField
+                            disabled={!ableToEdit}
+                            label={t(
+                                'pipelineDesigner:containerConfiguration.Registry'
+                            )}
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            multiline
+                            name="registry"
+                            value={state.registry || ''}
+                            onChange={event =>
+                                onChange(event.target.name, event.target.value)
+                            }
+                            InputProps={{
+                                endAdornment: (
+                                    <IconButton
+                                        className={classes.button}
+                                        onClick={() => openModal('registry')}
+                                    >
+                                        <TuneOutlined />
+                                    </IconButton>
+                                )
+                            }}
+                        />
+                        <ClearButton
+                            name="registry"
+                            value={state.registry}
+                            ableToEdit={ableToEdit}
+                            handleInputChange={onChange}
+                            type={OTHER}
+                        />
+                    </Box>
                 </>
             )}
             {state.imagePullSecretType === IMAGE_PULL_SECRET_TYPE.PROVIDED.value && (
-                <TextField
-                    disabled={!ableToEdit}
-                    label={t(
-                        'pipelineDesigner:containerConfiguration.ImagePullSecretName'
-                    )}
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    multiline
-                    name="imagePullSecretName"
-                    value={state.imagePullSecretName || ''}
-                    onChange={event =>
-                        onChange(event.target.name, event.target.value)
-                    }
-                    InputProps={{
-                        endAdornment: (
-                            <IconButton
-                                className={classes.button}
-                                onClick={() => openModal('imagePullSecretName')}
-                            >
-                                <TuneOutlined />
-                            </IconButton>
-                        )
-                    }}
-                />
+                <Box className={classes.wrapper}>
+                    <TextField
+                        disabled={!ableToEdit}
+                        label={t(
+                            'pipelineDesigner:containerConfiguration.ImagePullSecretName'
+                        )}
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        multiline
+                        name="imagePullSecretName"
+                        value={state.imagePullSecretName || ''}
+                        onChange={event =>
+                            onChange(event.target.name, event.target.value)
+                        }
+                        InputProps={{
+                            endAdornment: (
+                                <IconButton
+                                    className={classes.button}
+                                    onClick={() => openModal('imagePullSecretName')}
+                                >
+                                    <TuneOutlined />
+                                </IconButton>
+                            )
+                        }}
+                    />
+                    <ClearButton
+                        name="imagePullSecretName"
+                        value={state.imagePullSecretName}
+                        ableToEdit={ableToEdit}
+                        handleInputChange={onChange}
+                        type={OTHER}
+                    />
+                </Box>
             )}
         </>
     );

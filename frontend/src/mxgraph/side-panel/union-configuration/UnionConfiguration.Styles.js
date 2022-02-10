@@ -25,5 +25,9 @@ export default makeStyles(() => ({
         justifyContent: 'space-between',
         flexDirection: 'column',
         height: '90%'
+    },
+    wrapper: {
+        display: 'flex',
+        alignItems: 'center'
     }
 }));

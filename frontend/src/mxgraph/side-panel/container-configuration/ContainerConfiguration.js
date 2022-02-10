@@ -24,15 +24,18 @@ import {
     Divider,
     FormControlLabel,
     IconButton,
-    TextField
+    TextField,
+    Box
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { TuneOutlined } from '@material-ui/icons';
 import useStyles from './ContainerConfiguration.Styles';
-import getMenuItems from '../helpers/getMenuItems';
 import CustomTextField from '../../../components/custom-text-field';
 import { CPU, IMAGE_PULL_POLICY, LIMITS, MEMORY } from '../constants/container';
 import ImagePullSecretType from './ImagePullSecretType';
+import SelectField from '../select-field';
+import ClearButton from '../helpers/ClearButton';
+import { OTHER } from '../../constants';
 
 const ContainerConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
     const { t } = useTranslation();
@@ -42,49 +45,49 @@ const ContainerConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
             <Divider />
             {state.name && (
                 <>
-                    <TextField
-                        disabled={!ableToEdit}
-                        label={t('pipelineDesigner:containerConfiguration.Image')}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        multiline
-                        name="image"
-                        value={state.image || ''}
-                        onChange={event =>
-                            onChange(event.target.name, event.target.value)
-                        }
-                        InputProps={{
-                            endAdornment: (
-                                <IconButton
-                                    className={classes.button}
-                                    onClick={() => openModal('image')}
-                                >
-                                    <TuneOutlined />
-                                </IconButton>
-                            )
-                        }}
-                    />
-                    <TextField
-                        disabled={!ableToEdit}
-                        label={t(
-                            'pipelineDesigner:containerConfiguration.ImagePullPolicy'
-                        )}
-                        placeholder={t(
-                            'pipelineDesigner:containerConfiguration.ImagePullPolicy'
-                        )}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        select
+                    <Box className={classes.wrapper}>
+                        <TextField
+                            disabled={!ableToEdit}
+                            label={t(
+                                'pipelineDesigner:containerConfiguration.Image'
+                            )}
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            multiline
+                            name="image"
+                            value={state.image || ''}
+                            onChange={event =>
+                                onChange(event.target.name, event.target.value)
+                            }
+                            InputProps={{
+                                endAdornment: (
+                                    <IconButton
+                                        className={classes.button}
+                                        onClick={() => openModal('image')}
+                                    >
+                                        <TuneOutlined />
+                                    </IconButton>
+                                )
+                            }}
+                        />
+                        <ClearButton
+                            name="image"
+                            value={state.image}
+                            ableToEdit={ableToEdit}
+                            handleInputChange={onChange}
+                            type={OTHER}
+                        />
+                    </Box>
+                    <SelectField
+                        ableToEdit={ableToEdit}
+                        label="pipelineDesigner:containerConfiguration.ImagePullPolicy"
                         name="imagePullPolicy"
-                        value={state.imagePullPolicy || ''}
-                        onChange={event =>
-                            onChange(event.target.name, event.target.value)
-                        }
-                    >
-                        {getMenuItems(IMAGE_PULL_POLICY)}
-                    </TextField>
+                        value={state.imagePullPolicy}
+                        handleInputChange={onChange}
+                        menuItems={IMAGE_PULL_POLICY}
+                        type={OTHER}
+                    />
                     {LIMITS.map(item => (
                         <CustomTextField
                             disabled={!ableToEdit}

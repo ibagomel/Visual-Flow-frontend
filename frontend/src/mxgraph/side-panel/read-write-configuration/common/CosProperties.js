@@ -66,10 +66,12 @@ const CosProperties = ({
                     <CsvHeader
                         value={inputValues['option.header'] || ''}
                         onChange={handleInputChange}
+                        ableToEdit={ableToEdit}
                     />
                     <Delimiter
                         value={inputValues['option.delimiter'] || ''}
                         onChange={handleInputChange}
+                        ableToEdit={ableToEdit}
                     />
                 </>
             )}

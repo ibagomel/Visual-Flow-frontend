@@ -53,14 +53,22 @@ class DesignerToolbar extends React.Component {
                         let skipEdit = false;
                         skipEdit =
                             Object.getPrototypeOf(obj).constructor.name ===
-                            'mxStyleChange';
+                                'mxStyleChange' && !obj.cell.edge;
                         if (
                             Object.getPrototypeOf(obj).constructor.name ===
                             'mxValueChange'
                         ) {
                             skipEdit =
-                                get(obj, 'value.attributes.text.value', '').length >
-                                    0 &&
+                                get(
+                                    obj,
+                                    'value.attributes.successPath.value',
+                                    ''
+                                ) ===
+                                    get(
+                                        obj,
+                                        'previous.attributes.successPath.value',
+                                        ''
+                                    ) &&
                                 get(
                                     obj,
                                     'value.attributes.operation.value',
@@ -91,6 +99,21 @@ class DesignerToolbar extends React.Component {
         }
     }
 
+    undoManagerChangedStage = history => {
+        if (history) {
+            return history.changes.find(
+                obj =>
+                    (Object.getPrototypeOf(obj).constructor.name ===
+                        'mxGeometryChange' &&
+                        obj.previous.width !== obj.geometry.width) ||
+                    (Object.getPrototypeOf(obj).constructor.name ===
+                        'mxStyleChange' &&
+                        obj.cell.edge)
+            );
+        }
+        return false;
+    };
+
     undoManagerUndo() {
         const { setConfigChanged, setDirty, data } = this.props;
         const that = this;
@@ -98,15 +121,16 @@ class DesignerToolbar extends React.Component {
             const undoStartIndex = isEmpty(data.definition.graph) ? 0 : 1;
             while (this.indexOfNextAdd > undoStartIndex) {
                 this.indexOfNextAdd -= 1;
-                const changedStage =
-                    this.history[this.indexOfNextAdd].changes.find(
-                        obj =>
-                            (Object.getPrototypeOf(obj).constructor.name ===
-                                'mxGeometryChange' &&
-                                obj.previous.width !== obj.geometry.width) ||
-                            Object.getPrototypeOf(obj).constructor.name ===
-                                'mxValueChange'
-                    ) || {};
+                const changedConfiguration = this.history[
+                    this.indexOfNextAdd
+                ].changes.find(
+                    obj =>
+                        Object.getPrototypeOf(obj).constructor.name ===
+                        'mxValueChange'
+                );
+                const changedStage = that.undoManagerChangedStage(
+                    this.history[this.indexOfNextAdd]
+                );
                 const edit = this.history[this.indexOfNextAdd];
                 edit.undo();
 
@@ -121,10 +145,8 @@ class DesignerToolbar extends React.Component {
                         undoButtonsDisabling: { undo: false, redo: false }
                     });
                 }
-                Object.getPrototypeOf(changedStage).constructor.name ===
-                    'mxValueChange' && setConfigChanged(true);
-                Object.getPrototypeOf(changedStage).constructor.name ===
-                    'mxGeometryChange' && that.state.undoManager.undo();
+                changedConfiguration && setConfigChanged(true);
+                changedStage && that.state.undoManager.undo();
 
                 if (edit.isSignificant()) {
                     this.fireEvent(new mxEventObject(mxEvent.UNDO, 'edit', edit));
@@ -147,13 +169,8 @@ class DesignerToolbar extends React.Component {
                         Object.getPrototypeOf(obj).constructor.name ===
                         'mxValueChange'
                 );
-                const resizedNewStage = this.history[
-                    this.indexOfNextAdd + 1
-                ]?.changes.find(
-                    obj =>
-                        Object.getPrototypeOf(obj).constructor.name ===
-                            'mxGeometryChange' &&
-                        obj.previous.width !== obj.geometry.width
+                const changedStage = that.undoManagerChangedStage(
+                    this.history[this.indexOfNextAdd + 1]
                 );
 
                 const edit = this.history[this.indexOfNextAdd];
@@ -177,7 +194,7 @@ class DesignerToolbar extends React.Component {
                         }
                     });
                 changedConfiguration && setConfigChanged(true);
-                resizedNewStage && that.state.undoManager.redo();
+                changedStage && that.state.undoManager.redo();
 
                 if (edit.isSignificant()) {
                     this.fireEvent(new mxEventObject(mxEvent.REDO, 'edit', edit));

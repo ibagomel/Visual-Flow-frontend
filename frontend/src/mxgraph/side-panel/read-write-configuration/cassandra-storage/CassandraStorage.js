@@ -19,14 +19,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 
 import ReadTextFields from '../rw-text-fields';
-import { WRITE } from '../../../constants';
+import { WRITE, READWRITE } from '../../../constants';
 import WriteMode from '../helpers/WriteMode';
-
-import getMenuItems from '../../helpers/getMenuItems';
+import SelectField from '../../select-field';
+import Ssl from '../helpers/Ssl';
 
 const dropdownOptions = [
     {
@@ -53,70 +51,52 @@ const CassandraStorage = ({
     handleInputChange,
     openModal,
     ableToEdit
-}) => {
-    const { t } = useTranslation();
-
-    return (
-        <>
-            <ReadTextFields
-                ableToEdit={ableToEdit}
-                fields={fields}
-                inputValues={inputValues}
-                handleInputChange={handleInputChange}
-                openModal={openModal}
-            />
-            <TextField
+}) => (
+    <>
+        <ReadTextFields
+            ableToEdit={ableToEdit}
+            fields={fields}
+            inputValues={inputValues}
+            handleInputChange={handleInputChange}
+            openModal={openModal}
+        />
+        <Ssl
+            ableToEdit={ableToEdit}
+            value={inputValues.ssl}
+            handleInputChange={handleInputChange}
+        />
+        <ReadTextFields
+            ableToEdit={ableToEdit}
+            fields={userFields}
+            inputValues={inputValues}
+            handleInputChange={handleInputChange}
+            openModal={openModal}
+        />
+        <SelectField
+            ableToEdit={ableToEdit}
+            label="jobDesigner:readConfiguration.PushdownEnabled"
+            name="pushdownEnabled"
+            value={inputValues.pushdownEnabled}
+            handleInputChange={handleInputChange}
+            menuItems={dropdownOptions}
+            type={READWRITE}
+        />
+        <ReadTextFields
+            ableToEdit={ableToEdit}
+            fields={[{ field: 'Cert Data', rows: 6 }]}
+            inputValues={inputValues}
+            handleInputChange={handleInputChange}
+            openModal={openModal}
+        />
+        {inputValues.operation === WRITE && (
+            <WriteMode
                 disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.SSL')}
-                placeholder={t('jobDesigner:readConfiguration.SSL')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
-                name="ssl"
-                value={inputValues.ssl || ''}
+                value={inputValues.writeMode}
                 onChange={handleInputChange}
-            >
-                {getMenuItems(dropdownOptions)}
-            </TextField>
-            <ReadTextFields
-                ableToEdit={ableToEdit}
-                fields={userFields}
-                inputValues={inputValues}
-                handleInputChange={handleInputChange}
-                openModal={openModal}
             />
-            <TextField
-                disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.PushdownEnabled')}
-                placeholder={t('jobDesigner:readConfiguration.PushdownEnabled')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
-                name="pushdownEnabled"
-                value={inputValues.pushdownEnabled || ''}
-                onChange={handleInputChange}
-            >
-                {getMenuItems(dropdownOptions)}
-            </TextField>
-            <ReadTextFields
-                ableToEdit={ableToEdit}
-                fields={[{ field: 'Cert Data', rows: 6 }]}
-                inputValues={inputValues}
-                handleInputChange={handleInputChange}
-                openModal={openModal}
-            />
-            {inputValues.operation === WRITE && (
-                <WriteMode
-                    disabled={!ableToEdit}
-                    value={inputValues.writeMode}
-                    onChange={handleInputChange}
-                />
-            )}
-        </>
-    );
-};
+        )}
+    </>
+);
 
 CassandraStorage.propTypes = {
     inputValues: PropTypes.object,

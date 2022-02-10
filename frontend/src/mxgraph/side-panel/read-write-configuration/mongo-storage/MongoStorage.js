@@ -19,24 +19,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 import ReadTextFields from '../rw-text-fields';
 import WriteMode from '../helpers/WriteMode';
 import { WRITE } from '../../../constants';
-
-import getMenuItems from '../../helpers/getMenuItems';
-
-const sslDropdown = [
-    {
-        value: 'true',
-        label: 'True'
-    },
-    {
-        value: 'false',
-        label: 'False'
-    }
-];
+import Ssl from '../helpers/Ssl';
 
 const fields = [
     { field: 'Database' },
@@ -47,41 +33,29 @@ const fields = [
     { field: 'Password' }
 ];
 
-const MongoStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => {
-    const { t } = useTranslation();
-    return (
-        <>
-            <ReadTextFields
-                ableToEdit={ableToEdit}
-                fields={fields}
-                inputValues={inputValues}
-                handleInputChange={handleInputChange}
-                openModal={openModal}
-            />
-            <TextField
+const MongoStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => (
+    <>
+        <ReadTextFields
+            ableToEdit={ableToEdit}
+            fields={fields}
+            inputValues={inputValues}
+            handleInputChange={handleInputChange}
+            openModal={openModal}
+        />
+        <Ssl
+            ableToEdit={ableToEdit}
+            value={inputValues.ssl}
+            handleInputChange={handleInputChange}
+        />
+        {inputValues.operation === WRITE && (
+            <WriteMode
                 disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.SSL')}
-                placeholder={t('jobDesigner:readConfiguration.SSL')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
-                name="ssl"
-                value={inputValues.ssl || ''}
+                value={inputValues.writeMode}
                 onChange={handleInputChange}
-            >
-                {getMenuItems(sslDropdown)}
-            </TextField>
-            {inputValues.operation === WRITE && (
-                <WriteMode
-                    disabled={!ableToEdit}
-                    value={inputValues.writeMode}
-                    onChange={handleInputChange}
-                />
-            )}
-        </>
-    );
-};
+            />
+        )}
+    </>
+);
 
 MongoStorage.propTypes = {
     inputValues: PropTypes.object,

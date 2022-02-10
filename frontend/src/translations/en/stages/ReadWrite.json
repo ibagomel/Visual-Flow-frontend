@@ -19,7 +19,7 @@
         "value2": "2. Overwrite. It means that when saving a DataFrame to a data source, if data/table already",
         "value3": "exists, existing data is expected to be overwritten by the contents of the DataFrame.",
         "value4": "3. Error if table exists. This mode means that when saving a DataFrame to a data source, if data",
-        "value5": "already exists, an exception is expected to be thrown." 
+        "value5": "already exists, an exception is expected to be thrown."
     },
 
     "DB2": {
@@ -291,5 +291,18 @@
             "value": "Data time to live in seconds. Data doesn't expire if TTL is less than 1. By default, it's 0."
         }
     },
-    "noAdditionalFields": "There are no additional fields."
+    "noAdditionalFields": "There are no additional fields.",
+    "STDOUT": {
+        "description": {
+            "name": "Description",
+            "value": "The results can be seen in the logs."
+        },
+        "quantity": {
+            "name": "Quantity",
+            "value": "Number of rows that will be displayed in the logs.",
+            "value1": "The default value is 10.",
+            "value2": "The minimum value is 1.",
+            "value3": "The maximum value is 2147483631."
+        }
+    }
 }

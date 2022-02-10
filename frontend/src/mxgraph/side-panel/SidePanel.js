@@ -28,7 +28,7 @@ import { withStyles } from '@material-ui/styles';
 import { Box, Drawer, Toolbar, Typography, IconButton } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CloseIcon from '@material-ui/icons/Close';
-import { get, isEqual } from 'lodash';
+import { forEach, get, isEqual } from 'lodash';
 import {
     setCurrentCell,
     setGraphDirty,
@@ -55,7 +55,6 @@ class SidePanel extends React.Component {
         super(props);
         this.state = {
             configuration: {},
-            jobSuccessPath: {},
             showModal: false,
             storageValue: ''
         };
@@ -85,8 +84,7 @@ class SidePanel extends React.Component {
                 results[attribute.nodeName] = attribute.nodeValue;
             });
             this.setState({
-                configuration: { ...results },
-                jobSuccessPath: this.jobSuccessPathResults()
+                configuration: { ...results }
             });
             configChanged && setConfigChanged(false);
         }
@@ -126,13 +124,41 @@ class SidePanel extends React.Component {
         return result;
     };
 
-    jobSuccessPathResults = () => {
-        const { graph } = this.props;
-        const { edges, value } = graph.getSelectionCell() || {};
-        if (edges && value.attributes.operation.value === 'JOB') {
-            return edges.map(obj => obj.value.attributes.successPath.value);
-        }
-        return {};
+    graphChanged = () => {
+        const {
+            graph,
+            data: {
+                definition: { graph: dataGraph = {} }
+            }
+        } = this.props;
+        let currentGraphCells = {};
+        let initialGraphCells = {};
+
+        forEach(dataGraph, dataCell => {
+            initialGraphCells = {
+                ...initialGraphCells,
+                [dataCell.id]: dataCell.value
+            };
+        });
+
+        forEach(graph.getModel().cells, modelCell => {
+            const { value, value: { attributes } = {} } = modelCell;
+            if (value) {
+                const values = Object.keys(attributes).reduce(
+                    (acc, attrKey) => ({
+                        ...acc,
+                        [attributes[attrKey].nodeName]: attributes[attrKey].nodeValue
+                    }),
+                    {}
+                );
+                currentGraphCells = {
+                    ...currentGraphCells,
+                    [modelCell.id]: values
+                };
+            }
+        });
+
+        return !isEqual(initialGraphCells, currentGraphCells);
     };
 
     saveCell = configuration => {
@@ -143,11 +169,8 @@ class SidePanel extends React.Component {
             ...schema
         ]);
 
-        const { graph, currentCell, setDirty, setPanelDirty, data } = this.props;
-        const { jobSuccessPath, configuration: stateConfiguration } = this.state;
-
-        const currentCellData =
-            data.definition.graph?.find(dataObj => dataObj.id === currentCell) || {};
+        const { graph, currentCell, setDirty, setPanelDirty } = this.props;
+        const { configuration: stateConfiguration } = this.state;
 
         const cell = graph.model.getCell(currentCell);
         // update the cell
@@ -171,10 +194,7 @@ class SidePanel extends React.Component {
             );
             graph.resizeCell(cell, newCellSize);
         }
-        setDirty(
-            !isEqual(cleanConfiguration, currentCellData.value) ||
-                !isEqual(jobSuccessPath, this.jobSuccessPathResults())
-        );
+        setDirty(this.graphChanged());
         this.setState({
             configuration: cleanConfiguration
         });

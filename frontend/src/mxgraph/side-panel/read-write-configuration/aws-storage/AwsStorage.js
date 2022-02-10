@@ -19,12 +19,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 
+import { READWRITE } from '../../../constants';
 import ReadTextFields from '../rw-text-fields';
-import getMenuItems from '../../helpers/getMenuItems';
 import CosProperties from '../common/CosProperties';
+import SelectField from '../../select-field';
 
 const anonymousAccess = [
     {
@@ -43,51 +42,42 @@ const fields = [{ field: 'Bucket' }, { field: 'Path' }];
 
 const keyField = [{ field: 'Access key' }, { field: 'Secret key' }];
 
-const AwsStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => {
-    const { t } = useTranslation();
-    return (
-        <>
+const AwsStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => (
+    <>
+        <ReadTextFields
+            fields={endpointField}
+            openModal={openModal}
+            inputValues={inputValues}
+            ableToEdit={ableToEdit}
+            handleInputChange={handleInputChange}
+        />
+        <SelectField
+            ableToEdit={ableToEdit}
+            label="jobDesigner:readConfiguration.AnonymousAccess"
+            name="anonymousAccess"
+            value={inputValues.anonymousAccess}
+            handleInputChange={handleInputChange}
+            menuItems={anonymousAccess}
+            type={READWRITE}
+        />
+        {inputValues.anonymousAccess === 'false' && (
             <ReadTextFields
-                fields={endpointField}
-                openModal={openModal}
-                inputValues={inputValues}
                 ableToEdit={ableToEdit}
-                handleInputChange={handleInputChange}
-            />
-            <TextField
-                disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.AnonymousAccess')}
-                placeholder={t('jobDesigner:readConfiguration.AnonymousAccess')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
-                name="anonymousAccess"
-                value={inputValues.anonymousAccess || ''}
-                onChange={handleInputChange}
-            >
-                {getMenuItems(anonymousAccess)}
-            </TextField>
-
-            {inputValues.anonymousAccess === 'false' && (
-                <ReadTextFields
-                    ableToEdit={ableToEdit}
-                    fields={keyField}
-                    inputValues={inputValues}
-                    handleInputChange={handleInputChange}
-                    openModal={openModal}
-                />
-            )}
-            <CosProperties
-                fields={fields}
-                openModal={openModal}
+                fields={keyField}
                 inputValues={inputValues}
-                ableToEdit={ableToEdit}
                 handleInputChange={handleInputChange}
+                openModal={openModal}
             />
-        </>
-    );
-};
+        )}
+        <CosProperties
+            fields={fields}
+            openModal={openModal}
+            inputValues={inputValues}
+            ableToEdit={ableToEdit}
+            handleInputChange={handleInputChange}
+        />
+    </>
+);
 
 AwsStorage.propTypes = {
     inputValues: PropTypes.object,

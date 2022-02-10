@@ -25,14 +25,15 @@ import {
     Chip,
     Divider,
     IconButton,
-    MenuItem,
     TextField,
     Typography
 } from '@material-ui/core';
-
 import { SwapVert } from '@material-ui/icons';
+
 import { Autocomplete } from '@material-ui/lab';
 import useStyles from './JoinConfiguration.Styles';
+import SelectField from '../select-field';
+import { OTHER } from '../../constants';
 
 const joinTypes = [
     {
@@ -77,24 +78,15 @@ const JoinConfiguration = ({
 
     return (
         <>
-            <TextField
-                disabled={!ableToEdit}
-                label={t('jobDesigner:joinConfiguration.JoinType')}
-                placeholder={t('jobDesigner:joinConfiguration.JoinType')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
+            <SelectField
+                ableToEdit={ableToEdit}
+                label="jobDesigner:joinConfiguration.JoinType"
                 name="joinType"
-                value={state.joinType || ''}
-                onChange={event => onChange(event.target.name, event.target.value)}
-            >
-                {joinTypes.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                    </MenuItem>
-                ))}
-            </TextField>
+                value={state.joinType}
+                handleInputChange={onChange}
+                menuItems={joinTypes}
+                type={OTHER}
+            />
             <Divider className={classes.divider} />
             {state.joinType && (
                 <>

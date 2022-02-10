@@ -35,6 +35,13 @@ export const login = () => {
     window.location = getLocation(pathname, window.BASE_URL);
 };
 
+const chooseNotification = data => {
+    const { message, error: err, errors } = data;
+    errors && errors.length
+        ? errors.forEach(el => showNotification(el.defaultMessage, 'error', true))
+        : showNotification(message || err || data, 'error', true);
+};
+
 axiosInstance.interceptors.response.use(
     response => {
         if (response.config.method !== 'get') {
@@ -48,13 +55,8 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     error => {
-        error.response?.status === 401
-            ? login()
-            : showNotification(
-                  error.response.data.error || error.response.data,
-                  'error',
-                  true
-              );
+        const { data, status } = error.response;
+        status === 401 ? login() : chooseNotification(data);
         return Promise.reject(error);
     }
 );

@@ -32,8 +32,25 @@ import TransformConfiguration from './transform-configuration';
 import FilterConfiguration from './filter-configuration';
 import CacheConfiguration from './cache-configuration';
 
-const checkReadWriteFields = ({ name, storage, anonymousAccess }) =>
-    !name || !storage || (storage === 's3' && !anonymousAccess);
+const MIN_QUANTITY = 1;
+const MAX_QUANTITY = 2147483631;
+
+const checkReadWriteFields = ({ name, storage, anonymousAccess, quantity }) => {
+    if (!name || !storage) {
+        return true;
+    }
+    if (storage === 's3' && !anonymousAccess) {
+        return true;
+    }
+    if (
+        storage === 'stdout' &&
+        (!quantity || quantity < MIN_QUANTITY || quantity > MAX_QUANTITY)
+    ) {
+        return true;
+    }
+
+    return false;
+};
 
 const RenderJobConfiguration = ({
     configuration,

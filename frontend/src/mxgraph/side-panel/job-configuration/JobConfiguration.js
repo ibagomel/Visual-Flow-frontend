@@ -116,7 +116,10 @@ const JobConfiguration = ({
                         text: get(edge, 'value.attributes.text.value', '')
                     })
                 );
-                const edgeColor = outEdge === 'false' ? '#F44336' : '#4CAF50';
+                const edgeColor =
+                    currentOutputPath.successPath === 'false'
+                        ? '#F44336'
+                        : '#4CAF50';
                 graph.setCellStyles('strokeColor', edgeColor, [edge]);
             }
         });

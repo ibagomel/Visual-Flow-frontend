@@ -26,7 +26,10 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useTranslation } from 'react-i18next';
 import { createJob, updateJob } from '../../../redux/actions/jobsActions';
-import { setParamsDirty } from '../../../redux/actions/mxGraphActions';
+import {
+    setParamsDirty,
+    setSidePanelDirty
+} from '../../../redux/actions/mxGraphActions';
 import {
     createPipeline,
     updatePipeline
@@ -49,7 +52,8 @@ const SidebarHeader = ({
     paramsIsDirty,
     setDirty,
     ableToEdit,
-    confirmationWindow
+    confirmationWindow,
+    setPanelDirty
 }) => {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -112,6 +116,7 @@ const SidebarHeader = ({
 
     const goToLastPage = () => {
         setDirty(false);
+        setPanelDirty(false);
         history.push(
             `/${history.location.pathname.split('/')[2]}/${
                 history.location.pathname.split('/')[1]
@@ -188,7 +193,8 @@ SidebarHeader.propTypes = {
     data: PropTypes.object,
     ableToEdit: PropTypes.bool,
     setDirty: PropTypes.func,
-    confirmationWindow: PropTypes.func.isRequired
+    confirmationWindow: PropTypes.func.isRequired,
+    setPanelDirty: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -205,7 +211,8 @@ const mapDispatchToProps = {
     createNewPipeline: createPipeline,
     updateCurrentPipeline: updatePipeline,
     setDirty: setParamsDirty,
-    confirmationWindow: toggleConfirmationWindow
+    confirmationWindow: toggleConfirmationWindow,
+    setPanelDirty: setSidePanelDirty
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarHeader);

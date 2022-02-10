@@ -19,25 +19,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { TextField } from '@material-ui/core';
 
 import ReadTextFields from '../rw-text-fields';
 import WriteMode from '../helpers/WriteMode';
 import { WRITE } from '../../../constants';
-
-import getMenuItems from '../../helpers/getMenuItems';
-
-const sslDropdown = [
-    {
-        value: 'true',
-        label: 'True'
-    },
-    {
-        value: 'false',
-        label: 'False'
-    }
-];
+import Ssl from '../helpers/Ssl';
 
 const fields = [
     { field: 'Nodes' },
@@ -52,50 +38,36 @@ const ElasticStorage = ({
     handleInputChange,
     openModal,
     ableToEdit
-}) => {
-    const { t } = useTranslation();
-    return (
-        <>
-            <ReadTextFields
-                ableToEdit={ableToEdit}
-                fields={fields}
-                inputValues={inputValues}
-                handleInputChange={handleInputChange}
-                openModal={openModal}
-            />
-            {inputValues.operation === WRITE && (
-                <WriteMode
-                    disabled={!ableToEdit}
-                    value={inputValues.writeMode}
-                    onChange={handleInputChange}
-                />
-            )}
-            <TextField
+}) => (
+    <>
+        <ReadTextFields
+            ableToEdit={ableToEdit}
+            fields={fields}
+            inputValues={inputValues}
+            handleInputChange={handleInputChange}
+            openModal={openModal}
+        />
+        {inputValues.operation === WRITE && (
+            <WriteMode
                 disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.SSL')}
-                placeholder={t('jobDesigner:readConfiguration.SSL')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
-                name="ssl"
-                value={inputValues.ssl || ''}
+                value={inputValues.writeMode}
                 onChange={handleInputChange}
-            >
-                {getMenuItems(sslDropdown)}
-            </TextField>
-            <ReadTextFields
-                ableToEdit={ableToEdit}
-                fields={[
-                    { field: 'Cert Data', disabled: inputValues.ssl !== 'true' }
-                ]}
-                inputValues={inputValues}
-                handleInputChange={handleInputChange}
-                openModal={openModal}
             />
-        </>
-    );
-};
+        )}
+        <Ssl
+            ableToEdit={ableToEdit}
+            value={inputValues.ssl}
+            handleInputChange={handleInputChange}
+        />
+        <ReadTextFields
+            ableToEdit={ableToEdit}
+            fields={[{ field: 'Cert Data', disabled: inputValues.ssl !== 'true' }]}
+            inputValues={inputValues}
+            handleInputChange={handleInputChange}
+            openModal={openModal}
+        />
+    </>
+);
 
 ElasticStorage.propTypes = {
     inputValues: PropTypes.object,

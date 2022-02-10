@@ -20,7 +20,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import InfoModal from '../info';
-import { STORAGES } from '../../../mxgraph/constants';
+import { STORAGES, SHOW_DESCRIPTION } from '../../../mxgraph/constants';
 
 const READ = 'Read';
 const WRITE = 'Write';
@@ -41,6 +41,11 @@ const getContent = t => [
         title: t('ReadWrite:note.name'),
         paragraph: t('ReadWrite:note.value'),
         hide: WRITE
+    },
+    {
+        title: t('ReadWrite:STDOUT.description.name'),
+        paragraph: t('ReadWrite:STDOUT.description.value'),
+        hide: SHOW_DESCRIPTION
     },
     {
         title: t('ReadWrite:name.name'),
@@ -319,7 +324,11 @@ const getRedis = t => [
 
 const getStdout = t => [
     {
-        title: t('ReadWrite:noAdditionalFields')
+        title: t('ReadWrite:STDOUT.quantity.name'),
+        paragraph: t('ReadWrite:STDOUT.quantity.value'),
+        paragraph1: t('ReadWrite:STDOUT.quantity.value1'),
+        paragraph2: t('ReadWrite:STDOUT.quantity.value2'),
+        paragraph3: t('ReadWrite:STDOUT.quantity.value3')
     }
 ];
 

@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import PopupForm from '../../popup-form';
-import { STORAGES } from '../../../mxgraph/constants';
+import { STORAGES, SHOW_DESCRIPTION } from '../../../mxgraph/constants';
 
 import useStyles from './InfoModal.Style';
 
@@ -46,7 +46,6 @@ const InfoModal = ({
 }) => {
     const classes = useStyles();
     const { t } = useTranslation();
-
     const storageValue = find(STORAGES, { value: currentStorage });
     const [storage, setStorage] = React.useState('');
 
@@ -87,24 +86,18 @@ const InfoModal = ({
                 return null;
         }
     };
-
     const clearData = data =>
         data
-            ?.filter(key => !key.hide || key.hide !== title)
+            ?.filter(key => {
+                if (storage === STORAGES.STDOUT.label) {
+                    return !key.hide || key.hide !== title;
+                }
+                return (
+                    !key.hide ||
+                    (key.hide !== title && key.hide !== SHOW_DESCRIPTION)
+                );
+            })
             .map(({ hide, ...cleanValue }) => cleanValue);
-
-    const linkFilter = () => {
-        switch (title) {
-            case 'Filter':
-                return 'https://sparkbyexamples.com/spark/spark-dataframe-where-filter/';
-            case 'Group By':
-                return 'https://sparkbyexamples.com/spark/using-groupby-on-dataframe/';
-            case 'Transformer':
-                return 'https://spark.apache.org/docs/latest/api/sql/index.html';
-            default:
-                return null;
-        }
-    };
 
     return (
         <PopupForm display={display} title={title} onClose={onClose}>
@@ -120,7 +113,7 @@ const InfoModal = ({
                             {section.title}
                         </Typography>
                         {other.map(paragraph =>
-                            paragraph === 'link' ? (
+                            paragraph.includes('link') ? (
                                 <Typography
                                     key={paragraph.slice(7)}
                                     variant="body2"
@@ -130,9 +123,9 @@ const InfoModal = ({
                                         className={classes.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        href={linkFilter()}
+                                        href={section[paragraph].link}
                                     >
-                                        {section[paragraph]}
+                                        {section[paragraph].title}
                                     </a>
                                 </Typography>
                             ) : (

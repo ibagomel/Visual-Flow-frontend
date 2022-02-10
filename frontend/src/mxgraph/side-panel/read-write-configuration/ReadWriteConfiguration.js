@@ -32,6 +32,7 @@ import MongoStorage from './mongo-storage';
 import { STORAGES } from '../../constants';
 import CassandraStorage from './cassandra-storage';
 import RedisStorage from './redis-storage';
+import StdoutStorage from './stdout-storage';
 
 const ReadWriteConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
     const { t } = useTranslation();
@@ -59,7 +60,7 @@ const ReadWriteConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
             case STORAGES.REDIS.value:
                 return RedisStorage;
             case STORAGES.STDOUT.value:
-                return () => null;
+                return StdoutStorage;
             default:
                 throw new Error(`Unsupported storage: ${name}`);
         }

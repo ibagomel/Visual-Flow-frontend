@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import SelectField from '../../select-field';
 import { READWRITE } from '../../../constants';
 
-const csvModes = [
+const sslDropdown = [
     {
         value: 'true',
         label: 'True'
@@ -33,22 +33,22 @@ const csvModes = [
     }
 ];
 
-const CsvHeader = ({ value, onChange, ableToEdit }) => (
+const Ssl = ({ ableToEdit, value, handleInputChange }) => (
     <SelectField
         ableToEdit={ableToEdit}
-        label="jobDesigner:writeConfiguration.Header"
-        name="option.header"
+        label="jobDesigner:readConfiguration.SSL"
+        name="ssl"
         value={value}
-        handleInputChange={onChange}
-        menuItems={csvModes}
+        handleInputChange={handleInputChange}
+        menuItems={sslDropdown}
         type={READWRITE}
     />
 );
 
-CsvHeader.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    ableToEdit: PropTypes.bool
+Ssl.propTypes = {
+    ableToEdit: PropTypes.bool,
+    value: PropTypes.any,
+    handleInputChange: PropTypes.func
 };
 
-export default CsvHeader;
+export default Ssl;

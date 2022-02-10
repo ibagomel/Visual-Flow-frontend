@@ -20,29 +20,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { TextField, Box } from '@material-ui/core';
+import useStyles from '../ReadWriteConfiguration.Styles';
 
-import { TextField } from '@material-ui/core';
 import ReadTextFields from '../rw-text-fields';
-import { READ, WRITE } from '../../../constants';
+import { READ, WRITE, READWRITE } from '../../../constants';
 import WriteMode from '../helpers/WriteMode';
-import getMenuItems from '../../helpers/getMenuItems';
+import ClearButton from '../../helpers/ClearButton';
+import SelectField from '../../select-field';
+import Ssl from '../helpers/Ssl';
 
 const fields = [
     { field: 'Host' },
     { field: 'Port' },
     { field: 'Password' },
     { field: 'KeyColumn' }
-];
-
-const required = [
-    {
-        value: 'true',
-        label: 'True'
-    },
-    {
-        value: 'false',
-        label: 'False'
-    }
 ];
 
 const model = [
@@ -67,6 +59,7 @@ const readMode = [
     }
 ];
 const RedisStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => {
+    const classes = useStyles();
     const { t } = useTranslation();
 
     return (
@@ -78,50 +71,31 @@ const RedisStorage = ({ inputValues, handleInputChange, openModal, ableToEdit })
                 ableToEdit={ableToEdit}
                 handleInputChange={handleInputChange}
             />
-            <TextField
-                disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.SSL')}
-                placeholder={t('jobDesigner:readConfiguration.SSL')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
-                name="ssl"
-                value={inputValues.ssl || ''}
-                onChange={handleInputChange}
-            >
-                {getMenuItems(required)}
-            </TextField>
-            <TextField
-                disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.Model')}
-                placeholder={t('jobDesigner:readConfiguration.Model')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
+            <Ssl
+                ableToEdit={ableToEdit}
+                value={inputValues.ssl}
+                handleInputChange={handleInputChange}
+            />
+            <SelectField
+                ableToEdit={ableToEdit}
+                label="jobDesigner:readConfiguration.Model"
                 name="model"
-                value={inputValues.model || ''}
-                onChange={handleInputChange}
-            >
-                {getMenuItems(model)}
-            </TextField>
+                value={inputValues.model}
+                handleInputChange={handleInputChange}
+                menuItems={model}
+                type={READWRITE}
+            />
             {inputValues.operation === READ && (
                 <>
-                    <TextField
-                        disabled={!ableToEdit}
-                        label={t('jobDesigner:readConfiguration.ReadMode')}
-                        placeholder={t('jobDesigner:readConfiguration.ReadMode')}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        select
+                    <SelectField
+                        ableToEdit={ableToEdit}
+                        label="jobDesigner:readConfiguration.ReadMode"
                         name="readMode"
-                        value={inputValues.readMode || ''}
-                        onChange={handleInputChange}
-                    >
-                        {getMenuItems(readMode)}
-                    </TextField>
+                        value={inputValues.readMode}
+                        handleInputChange={handleInputChange}
+                        menuItems={readMode}
+                        type={READWRITE}
+                    />
                     {inputValues.readMode === 'pattern' && (
                         <ReadTextFields
                             fields={[{ field: 'KeysPattern' }]}
@@ -144,18 +118,27 @@ const RedisStorage = ({ inputValues, handleInputChange, openModal, ableToEdit })
             )}
             {inputValues.operation === WRITE && (
                 <>
-                    <TextField
-                        disabled={!ableToEdit}
-                        label={t('jobDesigner:readConfiguration.ttl')}
-                        placeholder={t('jobDesigner:readConfiguration.ttl')}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        name="ttl"
-                        value={inputValues.ttl || ''}
-                        type="number"
-                        onChange={handleInputChange}
-                    />
+                    <Box className={classes.wrapper}>
+                        <TextField
+                            disabled={!ableToEdit}
+                            label={t('jobDesigner:readConfiguration.ttl')}
+                            placeholder={t('jobDesigner:readConfiguration.ttl')}
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            name="ttl"
+                            value={inputValues.ttl || ''}
+                            type="number"
+                            onChange={handleInputChange}
+                        />
+                        <ClearButton
+                            name="ttl"
+                            value={inputValues.ttl}
+                            ableToEdit={ableToEdit}
+                            handleInputChange={handleInputChange}
+                            type={READWRITE}
+                        />
+                    </Box>
                     <WriteMode
                         disabled={!ableToEdit}
                         value={inputValues.writeMode}

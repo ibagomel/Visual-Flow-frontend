@@ -19,9 +19,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
-import getMenuItems from '../../helpers/getMenuItems';
+import SelectField from '../../select-field';
+import { READWRITE } from '../../../constants';
 
 const fileFormat = [
     {
@@ -46,25 +45,17 @@ const fileFormat = [
     }
 ];
 
-const FileFormat = ({ disabled, value, onChange }) => {
-    const { t } = useTranslation();
-    return (
-        <TextField
-            disabled={disabled}
-            label={t('jobDesigner:readConfiguration.Fileformat')}
-            placeholder={t('jobDesigner:readConfiguration.Fileformat')}
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            select
-            name="format"
-            value={value || ''}
-            onChange={onChange}
-        >
-            {getMenuItems(fileFormat)}
-        </TextField>
-    );
-};
+const FileFormat = ({ disabled, value, onChange }) => (
+    <SelectField
+        ableToEdit={!disabled}
+        label="jobDesigner:readConfiguration.Fileformat"
+        name="format"
+        value={value}
+        handleInputChange={onChange}
+        menuItems={fileFormat}
+        type={READWRITE}
+    />
+);
 
 FileFormat.propTypes = {
     disabled: PropTypes.bool,

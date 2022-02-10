@@ -71,7 +71,6 @@ import {
     setGraphDirty,
     setLogsModal,
     setSidePanel,
-    setSidePanelDirty,
     setZoomValue
 } from '../redux/actions/mxGraphActions';
 import styles from './GraphDesigner.Styles';
@@ -169,6 +168,7 @@ class GraphDesigner extends Component {
             if (cell.edge) {
                 menu.addItem('Delete connection', null, () => {
                     graph.removeCells([cell]);
+                    setDirtyGraph(true);
                     mxEvent.consume(event);
                 });
             } else {
@@ -189,7 +189,7 @@ class GraphDesigner extends Component {
     handleKeyDown = event => {
         const { data, sidePanelIsOpen, setDirtyGraph } = this.props;
         const { graph } = this.state;
-        if (event.keyCode === 46 && !sidePanelIsOpen) {
+        if (event.keyCode === 46 && !sidePanelIsOpen && graph.getSelectionCell()) {
             if (!has(data, 'editable') || this.graphIsDisabled(data.editable)) {
                 setDirtyGraph(true);
                 const currentNodes = graph.getSelectionCells();
@@ -303,7 +303,6 @@ class GraphDesigner extends Component {
             if (cell?.vertex) {
                 this.props.setCurrentCell(graph.getSelectionCell().id);
                 setPanel(true);
-                this.props.setSidePanelDirty(false);
             }
             graph.cellEditor.stopEditing(true);
         });
@@ -370,6 +369,9 @@ class GraphDesigner extends Component {
             const inputEdges = targetNode?.edges?.filter(
                 edge => edge.target.id === targetId
             );
+            const currentSuccessPath = graph.model
+                .getValue(inputEdges[0])
+                .getAttribute('successPath');
             graph.addListener(mxEvent.CELL_CONNECTED, () => {
                 if (
                     current.target.id !== targetId ||
@@ -385,12 +387,13 @@ class GraphDesigner extends Component {
                     .getAttribute('text');
                 const labelExists =
                     inputLabel === 'Right' || inputLabel === 'Before';
-                const firstEdge = labelExists ? 1 : 0;
-                const secondEdge = labelExists ? 0 : 1;
+                const firstEdge = Number(labelExists);
+                const secondEdge = Number(!labelExists);
                 graph.model.setValue(
                     inputEdges[firstEdge],
                     stageLabels({
                         operation: EDGE,
+                        successPath: currentSuccessPath || 'true',
                         text: this.setLabel(
                             targetNodeType,
                             t('jobDesigner:CDCConfiguration.After'),
@@ -403,11 +406,21 @@ class GraphDesigner extends Component {
                     inputEdges[secondEdge],
                     stageLabels({
                         operation: EDGE,
+                        successPath: currentSuccessPath || 'true',
                         text: this.setLabel(
                             targetNodeType,
                             t('jobDesigner:CDCConfiguration.Before'),
                             t('jobDesigner:joinConfiguration.Right')
                         )
+                    })
+                );
+            } else {
+                graph.model.setValue(
+                    inputEdges[0],
+                    stageLabels({
+                        operation: EDGE,
+                        successPath: currentSuccessPath || 'true',
+                        text: ''
                     })
                 );
             }
@@ -417,6 +430,7 @@ class GraphDesigner extends Component {
     // connecting between vertices
     settingConnection = () => {
         const { graph } = this.state;
+        const { setDirtyGraph } = this.props;
         mxConstraintHandler.prototype.intersects = (
             icon,
             point,
@@ -498,6 +512,9 @@ class GraphDesigner extends Component {
                 null,
                 'edgeStyle=orthogonalEdgeStyle'
             );
+            graph.addListener(mxEvent.CELL_CONNECTED, () => {
+                setDirtyGraph(true);
+            });
             return new mxCellState(
                 this.graph.view,
                 edge,
@@ -530,6 +547,7 @@ class GraphDesigner extends Component {
             graph
                 .getSelectionModel()
                 .addListener(mxEvent.CHANGE, this.selectionChange);
+            graph.addListener(mxEvent.CELL_CONNECTED, this.selectionChange);
         }
     };
 
@@ -548,7 +566,7 @@ class GraphDesigner extends Component {
                     if (xmlNode.getAttribute('operation') !== EDGE) {
                         vertices[node.id] = graph.insertVertex(
                             parent,
-                            null,
+                            node.id,
                             xmlNode,
                             node.geometry.x,
                             node.geometry.y,
@@ -566,7 +584,7 @@ class GraphDesigner extends Component {
                     if (xmlNode.getAttribute('operation') === EDGE) {
                         graph.insertEdge(
                             parent,
-                            null,
+                            node.id,
                             xmlNode,
                             vertices[node.source],
                             vertices[node.target],
@@ -783,7 +801,6 @@ GraphDesigner.propTypes = {
     setDirtyGraph: PropTypes.func,
     setPanel: PropTypes.func,
     setCurrentCell: PropTypes.func,
-    setSidePanelDirty: PropTypes.func,
     setZoomValue: PropTypes.func,
     classes: PropTypes.object,
     data: PropTypes.object,
@@ -815,7 +832,6 @@ const mapDispatchToProps = {
     setLogs: setLogsModal,
     setDirtyGraph: setGraphDirty,
     setPanel: setSidePanel,
-    setSidePanelDirty,
     setCurrentCell,
     setZoomValue
 };

@@ -45,6 +45,9 @@ const SUSPENDED = 'Suspended';
 const STOPPED = 'Stopped';
 const UNKNOWN = 'Unknown';
 
+export const READWRITE = 'ReadWrite';
+export const OTHER = 'Other';
+
 export const JOB_STATUSES = [DRAFT, FAILED, PENDING, RUNNING, SUCCEEDED, UNKNOWN];
 
 export const PIPELINE_STATUSES = [
@@ -114,3 +117,5 @@ export const STORAGES = {
         hide: [READ]
     }
 };
+
+export const SHOW_DESCRIPTION = 'notSTDOUT';

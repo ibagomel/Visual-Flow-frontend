@@ -111,6 +111,14 @@
           "storage": "s3"
         }
       ]
+    },
+    {
+      "field": "quantity",
+      "conditions": [
+        {
+          "storage": "stdout"
+        }
+      ]
     }
   ]
 }

@@ -49,6 +49,30 @@ describe('axiosInstance', () => {
                 expect(actual).rejects.toEqual(error);
             });
         });
+
+        it('should reject error', () => {
+            [axiosMockInstance, axiosInstance].forEach(value => {
+                const error = {
+                    response: { status: 400, data: { error: 'errorMessage' } }
+                };
+                const actual = value.interceptors.response.handlers[0].rejected(
+                    error
+                );
+                expect(actual).rejects.toEqual(error);
+            });
+        });
+
+        it('should reject error', () => {
+            [axiosMockInstance, axiosInstance].forEach(value => {
+                const error = {
+                    response: { status: 400, data: 'errorMessage' }
+                };
+                const actual = value.interceptors.response.handlers[0].rejected(
+                    error
+                );
+                expect(actual).rejects.toEqual(error);
+            });
+        });
     });
 
     it('getLocation should return a correct url', () => {

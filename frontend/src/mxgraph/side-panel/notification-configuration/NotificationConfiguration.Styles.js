@@ -22,5 +22,9 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles(() => ({
     button: {
         padding: 0
+    },
+    wrapper: {
+        display: 'flex',
+        alignItems: 'center'
     }
 }));

@@ -19,36 +19,34 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import SelectField from '../../select-field';
-import { READWRITE } from '../../../constants';
+import { IconButton } from '@material-ui/core';
+import { Cancel } from '@material-ui/icons';
+import { READWRITE } from '../../constants';
 
-const csvModes = [
-    {
-        value: 'true',
-        label: 'True'
-    },
-    {
-        value: 'false',
-        label: 'False'
-    }
-];
-
-const CsvHeader = ({ value, onChange, ableToEdit }) => (
-    <SelectField
-        ableToEdit={ableToEdit}
-        label="jobDesigner:writeConfiguration.Header"
-        name="option.header"
-        value={value}
-        handleInputChange={onChange}
-        menuItems={csvModes}
-        type={READWRITE}
-    />
+const ClearButton = ({ name, value, ableToEdit, handleInputChange, type }) => (
+    <IconButton
+        disabled={!(ableToEdit && Boolean(value))}
+        onClick={() =>
+            type === READWRITE
+                ? handleInputChange({
+                      target: {
+                          name,
+                          value: ''
+                      }
+                  })
+                : handleInputChange(name, '')
+        }
+    >
+        <Cancel />
+    </IconButton>
 );
 
-CsvHeader.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    ableToEdit: PropTypes.bool
+ClearButton.propTypes = {
+    name: PropTypes.string,
+    value: PropTypes.any,
+    ableToEdit: PropTypes.bool,
+    handleInputChange: PropTypes.func,
+    type: PropTypes.string
 };
 
-export default CsvHeader;
+export default ClearButton;

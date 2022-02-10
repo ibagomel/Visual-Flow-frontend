@@ -23,7 +23,6 @@ import { useTranslation } from 'react-i18next';
 import {
     Divider,
     TextField,
-    MenuItem,
     Box,
     Typography,
     IconButton,
@@ -33,6 +32,8 @@ import {
 import { SwapVert } from '@material-ui/icons';
 import { Autocomplete } from '@material-ui/lab';
 import useStyles from './CDCConfiguration.Styles';
+import SelectField from '../select-field';
+import { OTHER } from '../../constants';
 
 const modes = [
     {
@@ -124,26 +125,15 @@ const CDCConfiguration = ({
                             />
                         )}
                     />
-                    <TextField
-                        disabled={!ableToEdit}
-                        label={t('jobDesigner:CDCConfiguration.Mode')}
-                        placeholder={t('jobDesigner:CDCConfiguration.Mode')}
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        select
+                    <SelectField
+                        ableToEdit={ableToEdit}
+                        label="jobDesigner:CDCConfiguration.Mode"
                         name="mode"
-                        value={state.mode || ''}
-                        onChange={event =>
-                            onChange(event.target.name, event.target.value)
-                        }
-                    >
-                        {modes.map(option => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
+                        value={state.mode}
+                        handleInputChange={onChange}
+                        menuItems={modes}
+                        type={OTHER}
+                    />
                 </>
             )}
         </>

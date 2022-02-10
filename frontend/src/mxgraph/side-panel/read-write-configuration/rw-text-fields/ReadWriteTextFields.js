@@ -22,9 +22,11 @@ import { camelCase } from 'lodash';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { TextField, IconButton, Box } from '@material-ui/core';
-import { Cancel, TuneOutlined } from '@material-ui/icons';
+import { TuneOutlined } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import useStyles from './ReadWriteTextFields.Styles';
+import ClearButton from '../../helpers/ClearButton';
+import { READWRITE } from '../../../constants';
 
 const valueIsLink = value =>
     Boolean(value) &&
@@ -87,22 +89,13 @@ const ReadWriteTextFields = ({
                         )
                     }}
                 />
-                <IconButton
-                    color={
-                        valueIsLink(inputValues[fieldName]) ? 'primary' : 'inherit'
-                    }
-                    onClick={() =>
-                        handleInputChange({
-                            target: {
-                                name: fieldName,
-                                value: ''
-                            }
-                        })
-                    }
-                    disabled={!ableToEdit || !valueIsLink(inputValues[fieldName])}
-                >
-                    <Cancel />
-                </IconButton>
+                <ClearButton
+                    name={fieldName}
+                    value={inputValues[fieldName]}
+                    ableToEdit={ableToEdit}
+                    handleInputChange={handleInputChange}
+                    type={READWRITE}
+                />
             </Box>
         );
     });

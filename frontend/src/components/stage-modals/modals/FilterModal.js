@@ -33,7 +33,10 @@ const FilterModal = props => {
             paragraph1: t('filter:filter.value1'),
             paragraph2: t('filter:filter.value2'),
             paragraph3: t('filter:filter.value3'),
-            link: t('filter:filter.value4')
+            link1: {
+                title: t('filter:filter.value4.title'),
+                link: t('filter:filter.value4.link')
+            }
         }
     ];
     return <InfoModal content={content} {...props} />;

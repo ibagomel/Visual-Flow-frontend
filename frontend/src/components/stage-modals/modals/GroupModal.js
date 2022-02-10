@@ -42,7 +42,10 @@ const GroupModal = props => {
             paragraph2: t('groupBy:aggregateFunctions.value2'),
             paragraph3: t('groupBy:aggregateFunctions.value3'),
             paragraph4: t('groupBy:aggregateFunctions.value4'),
-            link: t('groupBy:aggregateFunctions.link'),
+            link1: {
+                title: t('groupBy:aggregateFunctions.value9.title'),
+                link: t('groupBy:aggregateFunctions.value9.link')
+            },
             paragraph5: t('groupBy:aggregateFunctions.value5'),
             paragraph6: t('groupBy:aggregateFunctions.value6'),
             paragraph7: t('groupBy:aggregateFunctions.value7'),

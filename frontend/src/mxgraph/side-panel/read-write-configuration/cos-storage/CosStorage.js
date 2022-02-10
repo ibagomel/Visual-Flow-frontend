@@ -20,10 +20,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { TextField } from '@material-ui/core';
 import ReadTextFields from '../rw-text-fields';
-import getMenuItems from '../../helpers/getMenuItems';
 import CosProperties from '../common';
+import SelectField from '../../select-field';
+import { READWRITE } from '../../../constants';
 
 const authType = [
     {
@@ -55,21 +55,15 @@ const CosStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) =
                 ableToEdit={ableToEdit}
                 handleInputChange={handleInputChange}
             />
-            <TextField
-                disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.authType')}
-                placeholder={t('jobDesigner:readConfiguration.authType')}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                select
+            <SelectField
+                ableToEdit={ableToEdit}
+                label="jobDesigner:readConfiguration.authType"
                 name="authType"
-                value={inputValues.authType || ''}
-                onChange={handleInputChange}
-            >
-                {getMenuItems(authType)}
-            </TextField>
-
+                value={inputValues.authType}
+                handleInputChange={handleInputChange}
+                menuItems={authType}
+                type={READWRITE}
+            />
             {inputValues.authType === 'HMAC' && (
                 <ReadTextFields
                     ableToEdit={ableToEdit}

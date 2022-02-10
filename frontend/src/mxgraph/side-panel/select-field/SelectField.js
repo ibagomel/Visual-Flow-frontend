@@ -21,39 +21,66 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import ClearButton from '../../helpers/ClearButton';
-import useStyles from '../ReadWriteConfiguration.Styles';
-import { READWRITE } from '../../../constants';
+import ClearButton from '../helpers/ClearButton';
+import useStyles from './SelectField.Styles';
+import getMenuItems from '../helpers/getMenuItems';
+import { READWRITE } from '../../constants';
 
-const Delimiter = ({ value, onChange, ableToEdit }) => {
+const SelectField = ({
+    ableToEdit,
+    label,
+    name,
+    value,
+    handleInputChange,
+    menuItems,
+    type
+}) => {
     const classes = useStyles();
     const { t } = useTranslation();
+
     return (
         <Box className={classes.wrapper}>
             <TextField
-                label={t('jobDesigner:writeConfiguration.Delimiter')}
-                placeholder={t('jobDesigner:writeConfiguration.Delimiter')}
+                disabled={!ableToEdit}
+                label={t(label)}
+                placeholder={t(label)}
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                name="option.delimiter"
+                select
+                name={name}
                 value={value || ''}
-                onChange={onChange}
-            />
+                onChange={
+                    type === READWRITE
+                        ? handleInputChange
+                        : event =>
+                              handleInputChange(
+                                  event.target.name,
+                                  event.target.value
+                              )
+                }
+            >
+                {getMenuItems(menuItems)}
+            </TextField>
             <ClearButton
-                name="option.delimiter"
+                name={name}
                 value={value}
                 ableToEdit={ableToEdit}
-                handleInputChange={onChange}
-                type={READWRITE}
+                handleInputChange={handleInputChange}
+                type={type}
             />
         </Box>
     );
 };
-Delimiter.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    ableToEdit: PropTypes.bool
+
+SelectField.propTypes = {
+    ableToEdit: PropTypes.bool,
+    label: PropTypes.string,
+    name: PropTypes.string,
+    value: PropTypes.any,
+    handleInputChange: PropTypes.func,
+    menuItems: PropTypes.array,
+    type: PropTypes.string
 };
 
-export default Delimiter;
+export default SelectField;

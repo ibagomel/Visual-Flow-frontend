@@ -17,38 +17,11 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import SelectField from '../../select-field';
-import { READWRITE } from '../../../constants';
+import { makeStyles } from '@material-ui/core/styles';
 
-const csvModes = [
-    {
-        value: 'true',
-        label: 'True'
-    },
-    {
-        value: 'false',
-        label: 'False'
+export default makeStyles(() => ({
+    wrapper: {
+        display: 'flex',
+        alignItems: 'center'
     }
-];
-
-const CsvHeader = ({ value, onChange, ableToEdit }) => (
-    <SelectField
-        ableToEdit={ableToEdit}
-        label="jobDesigner:writeConfiguration.Header"
-        name="option.header"
-        value={value}
-        handleInputChange={onChange}
-        menuItems={csvModes}
-        type={READWRITE}
-    />
-);
-
-CsvHeader.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    ableToEdit: PropTypes.bool
-};
-
-export default CsvHeader;
+}));

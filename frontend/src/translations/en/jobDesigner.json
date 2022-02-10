@@ -60,7 +60,10 @@
         "KeysPattern": "Keys pattern",
         "Binary": "Binary",
         "Hash": "Hash",
-        "ttl": "TTL"
+        "ttl": "TTL",
+        "ExtraCopyOptions": "Extra copy options",
+        "Query": "Query",
+        "quantity": "Quantity"
     },
     "writeConfiguration": {
         "Header": "Header",

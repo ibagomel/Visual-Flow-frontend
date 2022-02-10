@@ -19,9 +19,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
-import getMenuItems from '../../helpers/getMenuItems';
+import SelectField from '../../select-field';
+import { READWRITE } from '../../../constants';
 
 const writeModes = [
     {
@@ -38,25 +37,17 @@ const writeModes = [
     }
 ];
 
-const WriteMode = ({ disabled, value, onChange }) => {
-    const { t } = useTranslation();
-    return (
-        <TextField
-            disabled={disabled}
-            label={t('jobDesigner:readConfiguration.writeMode')}
-            placeholder={t('jobDesigner:readConfiguration.writeMode')}
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            select
-            name="writeMode"
-            value={value || ''}
-            onChange={onChange}
-        >
-            {getMenuItems(writeModes)}
-        </TextField>
-    );
-};
+const WriteMode = ({ disabled, value, onChange }) => (
+    <SelectField
+        ableToEdit={!disabled}
+        label="jobDesigner:readConfiguration.writeMode"
+        name="writeMode"
+        value={value}
+        handleInputChange={onChange}
+        menuItems={writeModes}
+        type={READWRITE}
+    />
+);
 
 WriteMode.propTypes = {
     disabled: PropTypes.bool,

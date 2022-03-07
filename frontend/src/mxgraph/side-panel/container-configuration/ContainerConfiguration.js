@@ -33,7 +33,7 @@ import useStyles from './ContainerConfiguration.Styles';
 import CustomTextField from '../../../components/custom-text-field';
 import { CPU, IMAGE_PULL_POLICY, LIMITS, MEMORY } from '../constants/container';
 import ImagePullSecretType from './ImagePullSecretType';
-import SelectField from '../select-field';
+import SelectField from '../../../components/select-field';
 import ClearButton from '../helpers/ClearButton';
 import { OTHER } from '../../constants';
 
@@ -70,6 +70,7 @@ const ContainerConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
                                     </IconButton>
                                 )
                             }}
+                            required
                         />
                         <ClearButton
                             name="image"
@@ -87,6 +88,8 @@ const ContainerConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
                         handleInputChange={onChange}
                         menuItems={IMAGE_PULL_POLICY}
                         type={OTHER}
+                        defaultValue={IMAGE_PULL_POLICY[0].value}
+                        required
                     />
                     {LIMITS.map(item => (
                         <CustomTextField
@@ -113,6 +116,9 @@ const ContainerConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
                             onChange={event =>
                                 onChange(event.target.name, event.target.value)
                             }
+                            inputProps={{ min: 0 }}
+                            required
+                            defaultTextValue="1"
                         />
                     ))}
                     <FormControlLabel
@@ -143,6 +149,7 @@ const ContainerConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
                         openModal={openModal}
                         ableToEdit={ableToEdit}
                         t={t}
+                        required
                     />
                     <TextField
                         disabled={!ableToEdit}

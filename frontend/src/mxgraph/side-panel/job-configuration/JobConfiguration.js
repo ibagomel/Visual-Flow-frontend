@@ -178,6 +178,7 @@ const JobConfiguration = ({
                     onChange={event =>
                         handleInputChange(event.target.name, event.target.value)
                     }
+                    required
                 />
                 <Divider />
                 {loading ? (
@@ -206,6 +207,7 @@ const JobConfiguration = ({
                                     </IconButton>
                                 )
                             }}
+                            required
                         />
                         <Divider />
                     </>

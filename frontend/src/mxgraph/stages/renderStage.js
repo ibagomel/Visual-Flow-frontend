@@ -33,6 +33,7 @@ import JobStage from './job-stage';
 import NotificationStage from './notification-stage';
 import ContainerStage from './container-stage';
 import CacheStage from './cache-stage';
+import StageWarning from '../../components/stage-warning';
 import {
     READ,
     WRITE,
@@ -47,18 +48,27 @@ import {
     JOB,
     NOTIFICATION,
     CONTAINER,
-    CACHE
+    CACHE,
+    PIPELINE
 } from '../constants';
 
+const root = {
+    position: 'relative',
+    width: 130
+};
+
 // eslint-disable-next-line complexity
-const renderStage = (stage, t) => {
+const renderStage = (stage, t, type, jobs) => {
     // if have only stage.type (on first drag-and-drop)
     if (Object.keys(stage).length === 1) {
         return (
-            <div>
-                {stageIcon(stage.operation)}
-                &nbsp;
-                {t(`jobDesigner:palette.${stage.operation}`)}
+            <div style={root}>
+                <div>
+                    {stageIcon(stage.operation)}
+                    &nbsp;
+                    {t(`jobDesigner:palette.${stage.operation}`)}
+                </div>
+                {type === PIPELINE && <StageWarning stage={stage} />}
             </div>
         );
     }
@@ -84,7 +94,7 @@ const renderStage = (stage, t) => {
         case FILTER:
             return <FilterStage stage={stage} />;
         case JOB:
-            return <JobStage stage={stage} />;
+            return <JobStage stage={stage} jobs={jobs} />;
         case NOTIFICATION:
             return <NotificationStage stage={stage} />;
         case CONTAINER:

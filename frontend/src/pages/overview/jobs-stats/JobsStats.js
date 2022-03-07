@@ -28,7 +28,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import JobsPipelines from '../jobs-pipelines';
 
-const JobsStats = ({ data, loading }) => {
+const JobsStats = ({ data, loading, setStatus, setCurrentPage }) => {
     const { t } = useTranslation();
     const theme = useTheme();
     const items = [
@@ -69,13 +69,17 @@ const JobsStats = ({ data, loading }) => {
             items={items}
             loading={loading}
             title={t('main:overview.Jobs')}
+            setStatus={setStatus}
+            setCurrentPage={setCurrentPage}
         />
     );
 };
 
 JobsStats.propTypes = {
     data: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    setStatus: PropTypes.func,
+    setCurrentPage: PropTypes.func
 };
 
 export default JobsStats;

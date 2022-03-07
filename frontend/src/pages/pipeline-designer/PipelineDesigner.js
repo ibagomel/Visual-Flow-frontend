@@ -40,15 +40,26 @@ const PipelineDesigner = ({
     t,
     jobs
 }) => {
-    const isNotBlank = value =>
-        value.trim() ? null : t('main:validation.notBlank');
+    const isValidName = value => {
+        const reg = /^[a-z0-9]([\w\\.-]*[a-z0-9])?$/i;
+        if (!value.trim()) {
+            return t('main:validation.notBlank');
+        }
+        if (value.length < 3 || value.length > 40) {
+            return t('main:validation.incorrectPipelineLength');
+        }
+        if (!reg.test(value)) {
+            return t('main:validation.incorrectCharacters');
+        }
+        return null;
+    };
 
     React.useEffect(() => {
         createFields({
             NAME: {
                 label: t('pipelines:params.Name'),
                 type: 'text',
-                validate: isNotBlank
+                validate: isValidName
             }
         });
 

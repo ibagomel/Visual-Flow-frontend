@@ -29,18 +29,39 @@ export default makeStyles(theme => ({
         top: -64,
         display: 'flex',
         'white-space': 'normal',
-        width: 215,
-        'text-align': 'left'
+        width: 200,
+        'text-align': 'left',
+        '& span': {
+            overflow: 'hidden',
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap'
+        }
     },
-    keyCaption: { position: 'absolute', left: -100, top: -15, maxWidth: 200 },
+    keyCaption: {
+        position: 'absolute',
+        left: -100,
+        top: -36,
+        maxHeight: 72,
+        minWidth: 207,
+        display: 'flex',
+        flexWrap: 'wrap',
+        overflow: 'hidden',
+        padding: 2
+    },
+    dots: {
+        color: '#000',
+        alignSelf: 'flex-end',
+        'white-space': 'pre'
+    },
     key: {
-        position: 'relative',
         backgroundColor: theme.palette.warning.dark,
         color: 'white',
         'border-radius': 4,
-        float: 'right',
-        margin: '0 2px',
-        padding: '0 2px'
+        margin: '2px',
+        padding: '0 2px',
+        maxWidth: 90,
+        'text-overflow': 'ellipsis',
+        overflow: 'hidden'
     },
     mode: {
         position: 'absolute',

@@ -24,7 +24,7 @@ describe('users', () => {
     const expected = { data: {} };
 
     it('should get users', () => {
-        const requestURL = `/users`;
+        const requestURL = '/users';
         const spy = jest.spyOn(axiosInstance, 'get').mockResolvedValue(expected);
         return users.getUsers().then(result => {
             expect(result).toEqual(expected);
@@ -33,7 +33,7 @@ describe('users', () => {
     });
 
     it('should get roles', () => {
-        const requestURL = `/roles`;
+        const requestURL = '/roles';
         const spy = jest.spyOn(axiosInstance, 'get').mockResolvedValue(expected);
         return users.getRoles().then(result => {
             expect(result).toEqual(expected);

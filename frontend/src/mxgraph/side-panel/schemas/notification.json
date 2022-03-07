@@ -1,16 +1,10 @@
 {
-  "NOTIFICATION": [
-    {
-      "field": "name"
-    },
-    {
-      "field": "operation"
-    },
-    {
-      "field": "addressees"
-    },
-    {
-      "field": "message"
-    }
-  ]
+    "NOTIFICATION": [
+        {
+            "field": "addressees"
+        },
+        {
+            "field": "message"
+        }
+    ]
 }

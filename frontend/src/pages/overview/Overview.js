@@ -26,11 +26,17 @@ import JobsStats from './jobs-stats';
 import PipelinesStats from './pipeline-stats';
 import Utilization from './utilization';
 import { fetchResourceUtilization } from '../../redux/actions/overviewActions';
+import { setPipelinesStatus } from '../../redux/actions/pipelinesActions';
+import { setJobsStatus } from '../../redux/actions/jobsActions';
+import { setCurrentTablePage } from '../../redux/actions/enhancedTableActions';
 
 const Overview = ({
     projectId,
     overview: { data, loading },
-    getResourceUtilization
+    getResourceUtilization,
+    setStatusPiplines,
+    setStatusJobs,
+    setCurrentPage
 }) => {
     const { name, description } = data;
     React.useEffect(() => {
@@ -50,8 +56,18 @@ const Overview = ({
                         </Typography>
                     </Box>
                 </Grid>
-                <JobsStats loading={loading} data={data} />
-                <PipelinesStats loading={loading} data={data} />
+                <JobsStats
+                    loading={loading}
+                    data={data}
+                    setStatus={setStatusJobs}
+                    setCurrentPage={setCurrentPage}
+                />
+                <PipelinesStats
+                    loading={loading}
+                    data={data}
+                    setStatus={setStatusPiplines}
+                    setCurrentPage={setCurrentPage}
+                />
                 <Utilization loading={loading} data={data} />
             </Grid>
         </Box>
@@ -63,13 +79,19 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    getResourceUtilization: fetchResourceUtilization
+    getResourceUtilization: fetchResourceUtilization,
+    setStatusPiplines: setPipelinesStatus,
+    setStatusJobs: setJobsStatus,
+    setCurrentPage: setCurrentTablePage
 };
 
 Overview.propTypes = {
     projectId: PropTypes.string,
     overview: PropTypes.object,
-    getResourceUtilization: PropTypes.func
+    getResourceUtilization: PropTypes.func,
+    setStatusPiplines: PropTypes.func,
+    setStatusJobs: PropTypes.func,
+    setCurrentPage: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Overview);

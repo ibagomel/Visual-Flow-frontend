@@ -24,11 +24,17 @@ import PropTypes from 'prop-types';
 import { TuneOutlined } from '@material-ui/icons';
 import useStyles from './ContainerConfiguration.Styles';
 import { IMAGE_PULL_SECRET_TYPE } from '../constants/container';
-import SelectField from '../select-field';
+import SelectField from '../../../components/select-field';
 import { OTHER } from '../../constants';
 import ClearButton from '../helpers/ClearButton';
 
-const ImagePullSecretType = ({ ableToEdit, state, onChange, openModal }) => {
+const ImagePullSecretType = ({
+    ableToEdit,
+    state,
+    onChange,
+    openModal,
+    required
+}) => {
     const { t } = useTranslation();
     const classes = useStyles();
     return (
@@ -41,6 +47,8 @@ const ImagePullSecretType = ({ ableToEdit, state, onChange, openModal }) => {
                 handleInputChange={onChange}
                 menuItems={Object.values(IMAGE_PULL_SECRET_TYPE)}
                 type={OTHER}
+                defaultValue={IMAGE_PULL_SECRET_TYPE.NOT_APPLICABLE.value}
+                required={required}
             />
             {state.imagePullSecretType === IMAGE_PULL_SECRET_TYPE.NEW.value && (
                 <>
@@ -69,6 +77,7 @@ const ImagePullSecretType = ({ ableToEdit, state, onChange, openModal }) => {
                                     </IconButton>
                                 )
                             }}
+                            required={required}
                         />
                         <ClearButton
                             name="username"
@@ -103,6 +112,7 @@ const ImagePullSecretType = ({ ableToEdit, state, onChange, openModal }) => {
                                     </IconButton>
                                 )
                             }}
+                            required={required}
                         />
                         <ClearButton
                             name="password"
@@ -137,6 +147,7 @@ const ImagePullSecretType = ({ ableToEdit, state, onChange, openModal }) => {
                                     </IconButton>
                                 )
                             }}
+                            required={required}
                         />
                         <ClearButton
                             name="registry"
@@ -174,6 +185,7 @@ const ImagePullSecretType = ({ ableToEdit, state, onChange, openModal }) => {
                                 </IconButton>
                             )
                         }}
+                        required={required}
                     />
                     <ClearButton
                         name="imagePullSecretName"
@@ -192,7 +204,8 @@ ImagePullSecretType.propTypes = {
     state: PropTypes.object,
     ableToEdit: PropTypes.bool,
     onChange: PropTypes.func,
-    openModal: PropTypes.func
+    openModal: PropTypes.func,
+    required: PropTypes.bool
 };
 
 export default ImagePullSecretType;

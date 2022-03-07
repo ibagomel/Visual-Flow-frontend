@@ -25,8 +25,8 @@ import { TextField, IconButton, Box } from '@material-ui/core';
 import { TuneOutlined } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import useStyles from './ReadWriteTextFields.Styles';
-import ClearButton from '../../helpers/ClearButton';
-import { READWRITE } from '../../../constants';
+import ClearButton from '../../mxgraph/side-panel/helpers/ClearButton';
+import { READWRITE } from '../../mxgraph/constants';
 
 const valueIsLink = value =>
     Boolean(value) &&

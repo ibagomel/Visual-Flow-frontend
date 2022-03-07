@@ -20,14 +20,23 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
+
 import IconCard from '../../../components/icon-card';
 import JobsPipelinesItem from './JobsPipelinesItem';
 import useStyles from './JobsPipelines.Styles';
 import OverviewContainer from '../container';
 import { TextSkeleton } from '../../../components/skeleton';
+import history from '../../../utils/history';
 
-const JobsPipelines = ({ items, loading, title }) => {
+const JobsPipelines = ({ items, loading, title, setStatus, setCurrentPage }) => {
     const classes = useStyles();
+
+    const handleGridClick = status => {
+        setStatus(status);
+        setCurrentPage(0);
+        history.push(`${title.toLowerCase()}`);
+    };
+
     return (
         <OverviewContainer title={title}>
             {items.map(item => (
@@ -41,13 +50,18 @@ const JobsPipelines = ({ items, loading, title }) => {
                     xl={2}
                     className={classes.item}
                 >
-                    <IconCard {...item}>
-                        {loading ? (
-                            <TextSkeleton />
-                        ) : (
-                            <JobsPipelinesItem value={item.data} />
-                        )}
-                    </IconCard>
+                    <div
+                        className={classes.subItem}
+                        onClick={() => handleGridClick(item.title)}
+                    >
+                        <IconCard {...item}>
+                            {loading ? (
+                                <TextSkeleton />
+                            ) : (
+                                <JobsPipelinesItem value={item.data} />
+                            )}
+                        </IconCard>
+                    </div>
                 </Grid>
             ))}
         </OverviewContainer>
@@ -57,7 +71,9 @@ const JobsPipelines = ({ items, loading, title }) => {
 JobsPipelines.propTypes = {
     items: PropTypes.array,
     loading: PropTypes.bool,
-    title: PropTypes.string
+    title: PropTypes.string,
+    setStatus: PropTypes.func,
+    setCurrentPage: PropTypes.func
 };
 
 export default JobsPipelines;

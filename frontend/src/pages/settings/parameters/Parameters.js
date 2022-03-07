@@ -61,6 +61,7 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
     const [projectParameters, setProjectParameters] = React.useState(parameterData);
     const [editMode, setEditMode] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState('');
+    const [errorParameters, setErrorParameters] = React.useState([]);
 
     React.useEffect(() => {
         projectId && getParameters(projectId);
@@ -94,10 +95,17 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
         );
     };
 
-    const removeParameter = removedId =>
+    const removeParameter = removedId => {
+        setErrorParameters(prevParams => {
+            const index = prevParams.indexOf(removedId);
+            const tempParams = [...prevParams];
+            tempParams.splice(index, 1);
+            return tempParams;
+        });
         setProjectParameters(prevState =>
             prevState.filter(parameter => parameter.id !== removedId)
         );
+    };
 
     const handleClickNewFieldType = event =>
         setProjectParameters(prevState => [
@@ -127,16 +135,9 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
 
     const saveButtonIsDisabled = () => {
         useEffect(() => {
-            if (
-                isEqual(
-                    projectParameters.map(({ id, ...p }) => p).sort(),
-                    params.sort()
-                )
-            ) {
-                setPristine();
-            } else {
-                setDirty();
-            }
+            isEqual(projectParameters.map(({ id, ...p }) => p).sort(), params.sort())
+                ? setPristine()
+                : setDirty();
         });
 
         return (
@@ -145,7 +146,7 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
                 projectParameters.map(({ id, ...p }) => p).sort(),
                 params.sort()
             ) ||
-            projectParameters.some(({ key, value }) => key === '' || value === '')
+            Boolean(errorParameters.length)
         );
     };
 
@@ -162,6 +163,20 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
     };
 
     const cardTitle = editMode ? 'editProjectParameters' : 'viewProjectParameters';
+
+    const errorParameterHandler = (err, id) => {
+        err &&
+            !errorParameters.includes(id) &&
+            setErrorParameters(prevParams => [...prevParams, id]);
+        !err &&
+            errorParameters.includes(id) &&
+            setErrorParameters(prevParams => {
+                const index = prevParams.indexOf(id);
+                const tempParams = [...prevParams];
+                tempParams.splice(index, 1);
+                return tempParams;
+            });
+    };
 
     return loading ? (
         <PageSkeleton />
@@ -208,6 +223,8 @@ const Parameters = ({ projectId, parameters, loading, getParameters, update }) =
                                         editMode={editMode}
                                         handleChangeParameter={handleChangeParameter}
                                         handleRemoveParameter={removeParameter}
+                                        isErrorParameter={errorParameterHandler}
+                                        parameters={projectParameters}
                                     />
                                 ))}
                             </TableBody>

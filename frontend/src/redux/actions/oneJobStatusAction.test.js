@@ -29,7 +29,9 @@ describe('One Job Status action', () => {
     let dispatch;
 
     describe('getJobById', () => {
-        let data, projectId, jobId;
+        let data;
+        let projectId;
+        let jobId;
         beforeEach(() => {
             data = { status: '' };
             projectId = 'vf-test';

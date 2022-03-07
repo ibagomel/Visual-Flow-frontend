@@ -29,7 +29,12 @@ export default makeStyles(() => ({
         top: -64,
         display: 'flex',
         'white-space': 'normal',
-        width: 215,
-        'text-align': 'left'
+        width: 200,
+        'text-align': 'left',
+        '& span': {
+            overflow: 'hidden',
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap'
+        }
     }
 }));

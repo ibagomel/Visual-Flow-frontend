@@ -84,7 +84,7 @@ const TableToolbar = ({
                         component="div"
                         count={rowCount}
                         rowsPerPage={rowsPerPage}
-                        page={page}
+                        page={rowCount === 0 ? 0 : page}
                         onChangePage={onChangePage}
                         onChangeRowsPerPage={onChangeRowsPerPage}
                     />

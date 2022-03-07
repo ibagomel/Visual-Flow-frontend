@@ -139,6 +139,7 @@ const GroupByConfiguration = ({ ableToEdit, state, onChange }) => {
                         fullWidth
                         variant="outlined"
                         label={t('jobDesigner:groupByConfiguration.GroupBy')}
+                        required
                     />
                 )}
             />

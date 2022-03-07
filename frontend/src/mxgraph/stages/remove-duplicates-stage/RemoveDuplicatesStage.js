@@ -25,15 +25,18 @@ import { useTranslation } from 'react-i18next';
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './RemoveDuplicatesStage.Styles';
 
+import makeTooltip from '../helpers/makeTooltip';
+
 const RemoveDuplicatesStage = ({ stage }) => {
     const classes = useStyles();
     const { t } = useTranslation();
+    const keyColumns = stage.keyColumns?.split(',').map(el => el.trim());
 
     return (
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.name}>
-                <span className={classes.icon}>{stageIcon(stage.operation)}</span>
-                {stage.name}
+                {stageIcon(stage.operation)}
+                {makeTooltip(stage.name, stage.name)}
             </Typography>
             <Typography
                 variant="caption"
@@ -42,8 +45,9 @@ const RemoveDuplicatesStage = ({ stage }) => {
                 color="textSecondary"
             >
                 {t('jobDesigner:RemoveDuplConfiguration.Key')}:
-                {stage.keyColumns.split(',').map(value => (
+                {keyColumns.slice(0, 5).map(value => (
                     <Typography
+                        title={value}
                         key={value}
                         variant="caption"
                         component="span"
@@ -52,6 +56,10 @@ const RemoveDuplicatesStage = ({ stage }) => {
                         {value}
                     </Typography>
                 ))}
+                <span className={classes.dots}>
+                    {keyColumns.length > 5 &&
+                        makeTooltip(keyColumns.join(', '), ' ...')}
+                </span>
             </Typography>
         </div>
     );

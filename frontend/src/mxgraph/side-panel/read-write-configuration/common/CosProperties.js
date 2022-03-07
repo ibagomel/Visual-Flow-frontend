@@ -27,7 +27,7 @@ import FileFormat from '../helpers/FileFormat';
 import CsvHeader from '../helpers/CsvHeader';
 import Delimiter from '../helpers/Delimiter';
 import WriteMode from '../helpers/WriteMode';
-import ReadTextFields from '../rw-text-fields';
+import ReadTextFields from '../../../../components/rw-text-fields';
 import useStyles from '../../groupby-configuration/GroupByConfiguration.Styles';
 
 const CosProperties = ({

@@ -24,6 +24,8 @@ import { Typography } from '@material-ui/core';
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './FilterStage.Styles';
 
+import makeTooltip from '../helpers/makeTooltip';
+
 const FilterStage = ({ stage }) => {
     const classes = useStyles();
 
@@ -31,7 +33,7 @@ const FilterStage = ({ stage }) => {
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.name}>
                 {stageIcon(stage.operation)}
-                {stage.name}
+                {makeTooltip(stage.name, stage.name)}
             </Typography>
         </div>
     );

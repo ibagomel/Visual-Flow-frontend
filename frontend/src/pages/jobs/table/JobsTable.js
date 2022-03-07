@@ -55,6 +55,11 @@ import DropdownFilter from '../../../components/table/dropdown-filter';
 import history from '../../../utils/history';
 import ExportModalWindow from '../../../components/export-modal-window';
 import { DATE_FORMAT } from '../../../globalConstants';
+import {
+    removeHandler,
+    jobDesignerHendler,
+    joinDataNames
+} from '../../../components/helpers/JobsPipelinesTable';
 
 const withRunAction = (act, getActions) =>
     act.runnable ? getActions(act).slice(0, 3) : getActions(act).slice(1, 3);
@@ -92,7 +97,6 @@ const JobsTable = ({
     const [showModal, setShowModal] = React.useState(false);
     const [selectedJobs, setSelectedJobs] = React.useState([]);
 
-    const byId = id => data.find(item => item.id === id);
     const projId = projectId;
     const resolveStatus = value => ({
         value,
@@ -108,17 +112,17 @@ const JobsTable = ({
             onClick: selected =>
                 confirmationWindow({
                     body: t('jobs:confirm.delete', {
-                        name: selected?.map(id => byId(id)?.name).join(', ')
+                        name: joinDataNames(selected, data)
                     }),
                     callback: () => {
-                        remove(projectId, selected);
-                        const jobsLastPageAfterRemove =
-                            Math.ceil(
-                                (data.length - selected.length) / rowsPerPage
-                            ) - 1;
-                        if (currentPage > jobsLastPageAfterRemove) {
-                            setCurrentPage(jobsLastPageAfterRemove);
-                        }
+                        removeHandler(
+                            projectId,
+                            selected,
+                            data.length,
+                            { rowsPerPage, currentPage },
+                            remove,
+                            setCurrentPage
+                        );
                     }
                 })
         },
@@ -149,17 +153,9 @@ const JobsTable = ({
         {
             title: t('jobs:tooltip.jobDesigner'),
             Icon: PaletteOutlinedIcon,
-            onClick: () =>
-                history.push(
-                    `/jobs/${projectId}/${
-                        item.pipelineInstances === null
-                            ? data.find(
-                                  dataItem =>
-                                      dataItem.name === item.name && !item.runnable
-                              ).id
-                            : item.id
-                    }`
-                )
+            onClick: () => {
+                jobDesignerHendler(projectId, item, data, history);
+            }
         },
         {
             title: t('jobs:tooltip.Logs'),
@@ -184,12 +180,14 @@ const JobsTable = ({
                 confirmationWindow({
                     body: t('jobs:confirm.delete', { name: item.name }),
                     callback: () => {
-                        remove(projectId, [item.id]);
-                        const jobsLastPageAfterRemove =
-                            Math.ceil((data.length - 1) / rowsPerPage) - 1;
-                        if (currentPage > jobsLastPageAfterRemove) {
-                            setCurrentPage(jobsLastPageAfterRemove);
-                        }
+                        removeHandler(
+                            projectId,
+                            [item.id],
+                            data.length,
+                            { rowsPerPage, currentPage },
+                            remove,
+                            setCurrentPage
+                        );
                     }
                 })
         }
@@ -207,6 +205,8 @@ const JobsTable = ({
             filter={
                 <>
                     <ExportModalWindow
+                        showModal={showModal}
+                        tableData={data}
                         display={showModal}
                         projectId={projectId}
                         selectedJobs={selectedJobs}

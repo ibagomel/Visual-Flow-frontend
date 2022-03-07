@@ -209,7 +209,7 @@ class GraphDesigner extends Component {
 
     // main setting
     setGraphSetting = () => {
-        const { data, jobs, type, setPanel } = this.props;
+        const { data, jobs, type, t, setPanel } = this.props;
         const { graph } = this.state;
         const that = this;
         graph.gridSize = 10;
@@ -291,7 +291,7 @@ class GraphDesigner extends Component {
                 }
                 // Returns a DOM for the label
                 return ReactDOMServer.renderToString(
-                    renderStage(results, this.props.t)
+                    renderStage(results, t, type, jobs)
                 );
             }
 

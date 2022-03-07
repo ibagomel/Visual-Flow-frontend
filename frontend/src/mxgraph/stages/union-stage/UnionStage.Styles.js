@@ -29,11 +29,13 @@ export default makeStyles(() => ({
         top: -64,
         display: 'flex',
         'white-space': 'normal',
-        width: 215,
-        'text-align': 'left'
-    },
-    name: {
-        'padding-left': 3
+        width: 200,
+        'text-align': 'left',
+        '& span': {
+            overflow: 'hidden',
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap'
+        }
     },
     type: {
         position: 'absolute',

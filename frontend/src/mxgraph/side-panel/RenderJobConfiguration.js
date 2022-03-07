@@ -31,11 +31,30 @@ import Configuration from './configuration';
 import TransformConfiguration from './transform-configuration';
 import FilterConfiguration from './filter-configuration';
 import CacheConfiguration from './cache-configuration';
+import { STORAGES } from '../constants';
 
 const MIN_QUANTITY = 1;
 const MAX_QUANTITY = 2147483631;
 
-const checkReadWriteFields = ({ name, storage, anonymousAccess, quantity }) => {
+const isTruncateStorageDB2 = storage =>
+    [
+        STORAGES.DB2.value,
+        STORAGES.POSTGRE.value,
+        STORAGES.ORACLE.value,
+        STORAGES.MYSQL.value,
+        STORAGES.MSSQL.value,
+        STORAGES.REDSHIFTJDBC.value
+    ].includes(storage);
+
+// eslint-disable-next-line complexity
+const checkReadWriteFields = ({
+    name,
+    storage,
+    anonymousAccess,
+    quantity,
+    writeMode,
+    truncateMode
+}) => {
     if (!name || !storage) {
         return true;
     }
@@ -48,8 +67,11 @@ const checkReadWriteFields = ({ name, storage, anonymousAccess, quantity }) => {
     ) {
         return true;
     }
-
-    return false;
+    return !!(
+        isTruncateStorageDB2(storage) &&
+        writeMode === 'Overwrite' &&
+        !truncateMode
+    );
 };
 
 const RenderJobConfiguration = ({
@@ -126,7 +148,8 @@ const RenderJobConfiguration = ({
             component: Configuration,
             props: {
                 Component: JoinConfiguration,
-                isDisabled: state => !state.name || !state.joinType,
+                isDisabled: state =>
+                    !state.name || !state.joinType || !state.columns,
                 ableToEdit,
                 setPanelDirty,
                 configuration,
@@ -139,7 +162,7 @@ const RenderJobConfiguration = ({
             component: Configuration,
             props: {
                 Component: CDCConfiguration,
-                isDisabled: state => !state.name,
+                isDisabled: state => !state.name || !state.keyColumns,
                 ableToEdit,
                 setPanelDirty,
                 configuration,

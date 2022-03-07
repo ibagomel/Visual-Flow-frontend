@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './UnionStage.Styles';
+import makeTooltip from '../helpers/makeTooltip';
 
 const UnionStage = ({ stage }) => {
     const { t } = useTranslation();
@@ -33,7 +34,7 @@ const UnionStage = ({ stage }) => {
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.title}>
                 {stageIcon(stage.operation)}
-                <span className={classes.name}>{stage.name}</span>
+                {makeTooltip(stage.name, stage.name)}
             </Typography>
             <Typography variant="caption" component="div" className={classes.type}>
                 {t(`jobDesigner:unionConfiguration.${stage.type}`)}

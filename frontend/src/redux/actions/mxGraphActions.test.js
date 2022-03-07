@@ -35,12 +35,14 @@ import {
     setCurrentCell,
     setParams,
     setSidePanel,
-    setZoomValue
+    setZoomValue,
+    fetchJob,
+    fetchPipelineById
 } from './mxGraphActions';
 import api from '../../api/jobs';
-import { fetchJob } from './mxGraphActions';
+
 import apiPipelines from '../../api/pipelines';
-import { fetchPipelineById } from './mxGraphActions';
+
 import { DRAFT } from '../../mxgraph/constants';
 
 describe('mxGraph actions', () => {

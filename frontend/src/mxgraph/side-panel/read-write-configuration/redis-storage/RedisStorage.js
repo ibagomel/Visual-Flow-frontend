@@ -19,16 +19,15 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { TextField, Box } from '@material-ui/core';
-import useStyles from '../ReadWriteConfiguration.Styles';
 
-import ReadTextFields from '../rw-text-fields';
+import ReadTextFields from '../../../../components/rw-text-fields';
 import { READ, WRITE, READWRITE } from '../../../constants';
 import WriteMode from '../helpers/WriteMode';
-import ClearButton from '../../helpers/ClearButton';
-import SelectField from '../../select-field';
+import SelectField from '../../../../components/select-field';
+import NumberField from '../../../../components/number-field';
 import Ssl from '../helpers/Ssl';
+
+const DEFAULT_TTL = 0;
 
 const fields = [
     { field: 'Host' },
@@ -59,9 +58,6 @@ const readMode = [
     }
 ];
 const RedisStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => {
-    const classes = useStyles();
-    const { t } = useTranslation();
-
     return (
         <>
             <ReadTextFields
@@ -118,27 +114,15 @@ const RedisStorage = ({ inputValues, handleInputChange, openModal, ableToEdit })
             )}
             {inputValues.operation === WRITE && (
                 <>
-                    <Box className={classes.wrapper}>
-                        <TextField
-                            disabled={!ableToEdit}
-                            label={t('jobDesigner:readConfiguration.ttl')}
-                            placeholder={t('jobDesigner:readConfiguration.ttl')}
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                            name="ttl"
-                            value={inputValues.ttl || ''}
-                            type="number"
-                            onChange={handleInputChange}
-                        />
-                        <ClearButton
-                            name="ttl"
-                            value={inputValues.ttl}
-                            ableToEdit={ableToEdit}
-                            handleInputChange={handleInputChange}
-                            type={READWRITE}
-                        />
-                    </Box>
+                    <NumberField
+                        ableToEdit={ableToEdit}
+                        label="jobDesigner:readConfiguration.ttl"
+                        name="ttl"
+                        value={inputValues.ttl}
+                        handleInputChange={handleInputChange}
+                        type={READWRITE}
+                        defaultValue={DEFAULT_TTL}
+                    />
                     <WriteMode
                         disabled={!ableToEdit}
                         value={inputValues.writeMode}

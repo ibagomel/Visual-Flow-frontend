@@ -30,7 +30,11 @@ const PasswordInput = ({
     value,
     label,
     disabled,
-    fullWidth
+    fullWidth,
+    error,
+    isTouched,
+    onBlur,
+    helperText
 }) => {
     const [visible, setVisibility] = React.useState(false);
 
@@ -58,6 +62,9 @@ const PasswordInput = ({
                 )
             }}
             placeholder={placeholder}
+            error={isTouched && error}
+            helperText={isTouched && helperText}
+            onBlur={onBlur}
         />
     );
 };
@@ -69,7 +76,11 @@ PasswordInput.propTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string,
     disabled: PropTypes.bool,
-    fullWidth: PropTypes.bool
+    fullWidth: PropTypes.bool,
+    error: PropTypes.bool,
+    isTouched: PropTypes.bool,
+    onBlur: PropTypes.func,
+    helperText: PropTypes.any
 };
 
 export default PasswordInput;

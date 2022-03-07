@@ -19,10 +19,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReadTextFields from '../rw-text-fields';
+import ReadTextFields from '../../../../components/rw-text-fields';
 import WriteMode from '../helpers/WriteMode';
 import { READ, WRITE, READWRITE } from '../../../constants';
-import SelectField from '../../select-field';
+import SelectField from '../../../../components/select-field';
 
 const customSql = [
     {
@@ -39,47 +39,63 @@ const customFields = [{ field: 'Schema' }, { field: 'Table' }];
 
 const fields = [{ field: 'JDBC URL' }, { field: 'User' }, { field: 'Password' }];
 
-const Db2Storage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => (
-    <>
-        <ReadTextFields
-            ableToEdit={ableToEdit}
-            fields={fields}
-            inputValues={inputValues}
-            handleInputChange={handleInputChange}
-            openModal={openModal}
-        />
-        {inputValues.operation === READ && (
-            <SelectField
-                ableToEdit={ableToEdit}
-                label="jobDesigner:readConfiguration.CustomSql"
-                name="customSql"
-                value={inputValues.customSql}
-                handleInputChange={handleInputChange}
-                menuItems={customSql}
-                type={READWRITE}
-            />
-        )}
-        {inputValues.customSql === 'false' && (
+const truncateMode = [
+    {
+        value: 'None',
+        label: 'None'
+    },
+    {
+        value: 'Simple',
+        label: 'Simple'
+    }
+];
+const truncateModeCascade = [
+    {
+        value: 'None',
+        label: 'None'
+    },
+    {
+        value: 'Simple',
+        label: 'Simple'
+    },
+    {
+        value: 'Cascade',
+        label: 'Cascade'
+    }
+];
+
+const showCascade = storage => !(storage !== 'postgresql' && storage !== 'oracle');
+
+const Db2Storage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => {
+    let value = inputValues.truncateMode;
+    if (!showCascade(inputValues.storage)) {
+        const valueTruncateMode = truncateMode.map(v => v.value);
+        if (!valueTruncateMode.includes(inputValues.truncateMode)) {
+            value = 'None';
+        }
+    }
+
+    return (
+        <>
             <ReadTextFields
                 ableToEdit={ableToEdit}
-                fields={customFields}
+                fields={fields}
                 inputValues={inputValues}
                 handleInputChange={handleInputChange}
                 openModal={openModal}
             />
-        )}
-        {inputValues.customSql === 'true' && (
-            <ReadTextFields
-                ableToEdit={ableToEdit}
-                fields={[{ field: 'option.dbtable', rows: 6 }]}
-                inputValues={inputValues}
-                handleInputChange={handleInputChange}
-                openModal={openModal}
-                nameWIthPoint
-            />
-        )}
-        {inputValues.operation === WRITE && (
-            <>
+            {inputValues.operation === READ && (
+                <SelectField
+                    ableToEdit={ableToEdit}
+                    label="jobDesigner:readConfiguration.CustomSql"
+                    name="customSql"
+                    value={inputValues.customSql}
+                    handleInputChange={handleInputChange}
+                    menuItems={customSql}
+                    type={READWRITE}
+                />
+            )}
+            {inputValues.customSql === 'false' && (
                 <ReadTextFields
                     ableToEdit={ableToEdit}
                     fields={customFields}
@@ -87,28 +103,72 @@ const Db2Storage = ({ inputValues, handleInputChange, openModal, ableToEdit }) =
                     handleInputChange={handleInputChange}
                     openModal={openModal}
                 />
-                <WriteMode
-                    disabled={!ableToEdit}
-                    value={inputValues.writeMode}
-                    onChange={handleInputChange}
+            )}
+            {inputValues.customSql === 'true' && (
+                <ReadTextFields
+                    ableToEdit={ableToEdit}
+                    fields={[{ field: 'option.dbtable', rows: 6 }]}
+                    inputValues={inputValues}
+                    handleInputChange={handleInputChange}
+                    openModal={openModal}
+                    nameWIthPoint
                 />
-            </>
-        )}
-        <ReadTextFields
-            ableToEdit={ableToEdit}
-            fields={[{ field: 'Cert Data', rows: 6 }]}
-            inputValues={inputValues}
-            handleInputChange={handleInputChange}
-            openModal={openModal}
-        />
-    </>
-);
+            )}
+            {inputValues.operation === WRITE && (
+                <>
+                    <ReadTextFields
+                        ableToEdit={ableToEdit}
+                        fields={customFields}
+                        inputValues={inputValues}
+                        handleInputChange={handleInputChange}
+                        openModal={openModal}
+                    />
+                    <WriteMode
+                        disabled={!ableToEdit}
+                        value={inputValues.writeMode}
+                        onChange={handleInputChange}
+                    />
+                    {inputValues.writeMode === 'Overwrite' && (
+                        <SelectField
+                            ableToEdit={ableToEdit}
+                            label="jobDesigner:writeConfiguration.TruncateMode"
+                            name="truncateMode"
+                            value={value || ''}
+                            handleInputChange={handleInputChange}
+                            menuItems={
+                                showCascade(inputValues.storage)
+                                    ? truncateModeCascade
+                                    : truncateMode
+                            }
+                            type={READWRITE}
+                        />
+                    )}
+                </>
+            )}
+            <ReadTextFields
+                ableToEdit={ableToEdit}
+                fields={[{ field: 'Cert Data', rows: 6 }]}
+                inputValues={inputValues}
+                handleInputChange={handleInputChange}
+                openModal={openModal}
+            />
+        </>
+    );
+};
 
 Db2Storage.propTypes = {
-    inputValues: PropTypes.object,
     handleInputChange: PropTypes.func,
     openModal: PropTypes.func,
-    ableToEdit: PropTypes.bool
+    ableToEdit: PropTypes.bool,
+    inputValues: PropTypes.shape({
+        format: PropTypes.string,
+        operation: PropTypes.string,
+        writeMode: PropTypes.string,
+        truncateMode: PropTypes.string,
+        customSql: PropTypes.string,
+        partitionBy: PropTypes.string,
+        storage: PropTypes.string
+    })
 };
 
 export default Db2Storage;

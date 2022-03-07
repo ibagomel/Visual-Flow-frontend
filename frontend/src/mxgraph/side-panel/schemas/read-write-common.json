@@ -136,7 +136,7 @@
         },
         {
             "field": "anonymousAccess",
-            "condition": [
+            "conditions": [
                 {
                     "storage": "s3"
                 }

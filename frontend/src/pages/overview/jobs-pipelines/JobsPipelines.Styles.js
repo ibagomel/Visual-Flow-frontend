@@ -26,5 +26,13 @@ export default makeStyles(theme => ({
             minWidth: theme.spacing(24),
             maxWidth: theme.spacing(44)
         }
+    },
+    subItem: {
+        '&:active': {
+            boxShadow: '0px 0px 10px 3px rgba(0, 0, 0, .2)'
+        },
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
 }));

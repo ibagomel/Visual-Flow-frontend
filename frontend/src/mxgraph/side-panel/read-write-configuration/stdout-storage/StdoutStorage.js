@@ -17,67 +17,30 @@
  * limitations under the License.
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { TextField, Box } from '@material-ui/core';
 
 import { READWRITE } from '../../../constants';
-import ClearButton from '../../helpers/ClearButton';
-import useStyles from '../ReadWriteConfiguration.Styles';
+import NumberField from '../../../../components/number-field';
 
 const DEFAULT_QUANTITY = 10;
 const MIN_QUANTITY = 1;
 const MAX_QUANTITY = 2147483631;
 
 const StdoutStorage = ({ inputValues, handleInputChange, ableToEdit }) => {
-    const classes = useStyles();
-    const { t } = useTranslation();
-
-    useEffect(() => {
-        if (!inputValues.quantity) {
-            const event = {
-                target: {
-                    name: 'quantity',
-                    value: DEFAULT_QUANTITY
-                }
-            };
-            handleInputChange(event);
-        }
-    }, []);
-
     return (
-        <Box className={classes.wrapper}>
-            <TextField
-                disabled={!ableToEdit}
-                label={t('jobDesigner:readConfiguration.quantity')}
-                placeholder={t('jobDesigner:readConfiguration.quantity')}
-                variant="outlined"
-                margin="normal"
-                InputProps={{
-                    inputProps: {
-                        min: MIN_QUANTITY,
-                        max: MAX_QUANTITY
-                    }
-                }}
-                fullWidth
-                name="quantity"
-                value={inputValues.quantity || ''}
-                type="number"
-                onChange={handleInputChange}
-                error={
-                    inputValues.quantity < MIN_QUANTITY ||
-                    inputValues.quantity > MAX_QUANTITY
-                }
-            />
-            <ClearButton
-                name="quantity"
-                value={inputValues.quantity}
-                ableToEdit={ableToEdit}
-                handleInputChange={handleInputChange}
-                type={READWRITE}
-            />
-        </Box>
+        <NumberField
+            ableToEdit={ableToEdit}
+            label="jobDesigner:readConfiguration.quantity"
+            name="quantity"
+            value={inputValues.quantity}
+            handleInputChange={handleInputChange}
+            type={READWRITE}
+            minValue={MIN_QUANTITY}
+            maxValue={MAX_QUANTITY}
+            defaultValue={DEFAULT_QUANTITY}
+            required
+        />
     );
 };
 

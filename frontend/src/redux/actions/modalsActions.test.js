@@ -52,9 +52,7 @@ describe('modals', () => {
 
     it('toggleConfirmationWindow with specific id', () => {
         const params = { id: 'some id', body: 'some body' };
-        toggleConfirmationWindow({ ...params, unknownParam: unknownParam })(
-            dispatch
-        );
+        toggleConfirmationWindow({ ...params, unknownParam })(dispatch);
         expect(dispatch).toHaveBeenCalledWith(
             expect.objectContaining({
                 type: TOGGLE_CONFIRMATION,
@@ -72,9 +70,7 @@ describe('modals', () => {
             ok: 'yes',
             cancel: 'no'
         };
-        toggleConfirmationWindow({ ...params, unknownParam: unknownParam })(
-            dispatch
-        );
+        toggleConfirmationWindow({ ...params, unknownParam })(dispatch);
         expect(dispatch).toHaveBeenCalledWith(
             expect.objectContaining({
                 type: TOGGLE_CONFIRMATION,

@@ -29,20 +29,26 @@ import PipelinesTable from './table';
 import PageHeader from '../../components/page-header';
 import history from '../../utils/history';
 import { PageSkeleton } from '../../components/skeleton';
+import fetchJobs from '../../redux/actions/jobsActions';
 
 const Pipelines = ({
     projectId,
     pipelines: { data, loading },
     getPipelines,
     setCurrentPage,
-    loadingExport
+    loadingExport,
+    getJobs,
+    jobs
 }) => {
     const { t } = useTranslation();
     const [search, setSearch] = React.useState('');
     const [list, setList] = React.useState([]);
 
     React.useEffect(() => {
-        projectId && getPipelines(projectId);
+        if (projectId) {
+            getPipelines(projectId);
+            getJobs(projectId);
+        }
         setList(data?.pipelines);
     }, [projectId]);
 
@@ -78,6 +84,7 @@ const Pipelines = ({
                     data={list}
                     ableToEdit={data.editable}
                     projectId={projectId}
+                    jobs={jobs}
                 />
             </Grid>
         </Box>
@@ -89,17 +96,21 @@ Pipelines.propTypes = {
     pipelines: PropTypes.object,
     getPipelines: PropTypes.func,
     setCurrentPage: PropTypes.func,
-    loadingExport: PropTypes.bool
+    loadingExport: PropTypes.bool,
+    getJobs: PropTypes.func,
+    jobs: PropTypes.array
 };
 
 const mapStateToProps = state => ({
     pipelines: state.pages.pipelines,
-    loadingExport: state.importExport.loading
+    loadingExport: state.importExport.loading,
+    jobs: state.pages.jobs.data.jobs
 });
 
 const mapDispatchToProps = {
     getPipelines: fetchPipelines,
-    setCurrentPage: setCurrentTablePage
+    setCurrentPage: setCurrentTablePage,
+    getJobs: fetchJobs
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pipelines);

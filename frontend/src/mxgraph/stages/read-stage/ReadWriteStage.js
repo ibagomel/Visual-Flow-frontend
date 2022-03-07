@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './ReadWriteStage.Styles';
 import { STORAGES } from '../../constants';
+import makeTooltip from '../helpers/makeTooltip';
 
 const ReadWriteStage = ({ stage }) => {
     const { t } = useTranslation();
@@ -38,7 +39,8 @@ const ReadWriteStage = ({ stage }) => {
                 className={classes.bucket}
                 color="textSecondary"
             >
-                {t('jobDesigner:readConfiguration.Bucket')}: {stage.bucket}
+                {t('jobDesigner:readConfiguration.Bucket')}:{' '}
+                {makeTooltip(stage.bucket, stage.bucket)}
             </Typography>
             <Typography
                 variant="caption"
@@ -46,7 +48,7 @@ const ReadWriteStage = ({ stage }) => {
                 className={classes.pathInBucket}
                 color="textSecondary"
             >
-                {t('jobDesigner:Path')}: {stage.path}
+                {t('jobDesigner:Path')}: {makeTooltip(stage.path, stage.path)}
             </Typography>
         </>
     );
@@ -69,7 +71,7 @@ const ReadWriteStage = ({ stage }) => {
                             color="textSecondary"
                         >
                             {t('jobDesigner:readConfiguration.Schema')}:{' '}
-                            {stage.schema}
+                            {makeTooltip(stage.schema, stage.schema)}
                         </Typography>
                         <Typography
                             variant="caption"
@@ -77,7 +79,8 @@ const ReadWriteStage = ({ stage }) => {
                             className={classes.table}
                             color="textSecondary"
                         >
-                            {t('jobDesigner:readConfiguration.Table')}: {stage.table}
+                            {t('jobDesigner:readConfiguration.Table')}:{' '}
+                            {makeTooltip(stage.table, stage.table)}
                         </Typography>
                     </>
                 );
@@ -89,7 +92,8 @@ const ReadWriteStage = ({ stage }) => {
                         className={classes.bucket}
                         color="textSecondary"
                     >
-                        {t('jobDesigner:readConfiguration.Index')}: {stage.index}
+                        {t('jobDesigner:readConfiguration.Index')}:{' '}
+                        {makeTooltip(stage.index, stage.index)}
                     </Typography>
                 );
             case STORAGES.COS.value:
@@ -105,7 +109,7 @@ const ReadWriteStage = ({ stage }) => {
                             color="textSecondary"
                         >
                             {t('jobDesigner:readConfiguration.Database')}:{' '}
-                            {stage.database}
+                            {makeTooltip(stage.database, stage.database)}
                         </Typography>
                         <Typography
                             variant="caption"
@@ -114,7 +118,7 @@ const ReadWriteStage = ({ stage }) => {
                             color="textSecondary"
                         >
                             {t('jobDesigner:readConfiguration.Collection')}:{' '}
-                            {stage.collection}
+                            {makeTooltip(stage.collection, stage.collection)}
                         </Typography>
                     </>
                 );
@@ -128,7 +132,7 @@ const ReadWriteStage = ({ stage }) => {
                             color="textSecondary"
                         >
                             {t('jobDesigner:readConfiguration.Keyspace')}:{' '}
-                            {stage.keyspace}
+                            {makeTooltip(stage.keyspace, stage.keyspace)}
                         </Typography>
                         <Typography
                             variant="caption"
@@ -136,7 +140,8 @@ const ReadWriteStage = ({ stage }) => {
                             className={classes.table}
                             color="textSecondary"
                         >
-                            {t('jobDesigner:readConfiguration.Table')}: {stage.table}
+                            {t('jobDesigner:readConfiguration.Table')}:{' '}
+                            {makeTooltip(stage.table, stage.table)}
                         </Typography>
                     </>
                 );
@@ -149,7 +154,8 @@ const ReadWriteStage = ({ stage }) => {
                             className={classes.schema}
                             color="textSecondary"
                         >
-                            {t('jobDesigner:readConfiguration.Host')}: {stage.host}
+                            {t('jobDesigner:readConfiguration.Host')}:{' '}
+                            {makeTooltip(stage.host, stage.host)}
                         </Typography>
                         <Typography
                             variant="caption"
@@ -158,7 +164,7 @@ const ReadWriteStage = ({ stage }) => {
                             color="textSecondary"
                         >
                             {t('jobDesigner:readConfiguration.KeyColumn')}:{' '}
-                            {stage.keyColumn}
+                            {makeTooltip(stage.keyColumn, stage.keyColumn)}
                         </Typography>
                     </>
                 );
@@ -168,11 +174,12 @@ const ReadWriteStage = ({ stage }) => {
                 throw new Error(`Unsupported storage: ${stage.storage}`);
         }
     };
+
     return (
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.name}>
                 {stageIcon(stage.operation)}
-                {stage.name}
+                {makeTooltip(stage.name, stage.name)}
             </Typography>
             {stage.storage && renderStorageData()}
             <Typography

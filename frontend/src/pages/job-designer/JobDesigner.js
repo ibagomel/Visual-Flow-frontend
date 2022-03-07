@@ -40,15 +40,26 @@ const JobDesigner = ({
     const isValidPositive = value =>
         value > 0 ? null : t('main:validation.positive');
 
-    const isNotBlank = value =>
-        value.trim() ? null : t('main:validation.notBlank');
+    const isValidName = value => {
+        const reg = /^[a-z0-9]([\w\\.-]*[a-z0-9])?$/i;
+        if (!value.trim()) {
+            return t('main:validation.notBlank');
+        }
+        if (value.length > 63) {
+            return t('main:validation.incorrectJobLength');
+        }
+        if (!reg.test(value)) {
+            return t('main:validation.incorrectCharacters');
+        }
+        return null;
+    };
 
     React.useEffect(() => {
         createFields({
             NAME: {
                 label: t('jobs:params.Name'),
                 type: 'text',
-                validate: isNotBlank
+                validate: isValidName
             },
 
             DRIVER_REQUEST_CORES: {

@@ -42,6 +42,7 @@ import { fetchPipelineById } from '../../../redux/actions/mxGraphActions';
 import { fetchJobs } from '../../../redux/actions/jobsActions';
 import { resetFillColor } from '../../resetFillColor/resetFillColor';
 import { PENDING, RUNNING } from '../../constants';
+import { findByProp } from '../../../components/helpers/JobsPipelinesTable';
 
 const PipelinesToolbar = ({
     graph,
@@ -59,7 +60,8 @@ const PipelinesToolbar = ({
     setDirty,
     sidePanelIsDirty,
     dirty,
-    undoButtonsDisabling
+    undoButtonsDisabling,
+    jobs
 }) => {
     const { t } = useTranslation();
     const classes = useStyles({ name: 'PipelineUtilizationCell' });
@@ -70,6 +72,19 @@ const PipelinesToolbar = ({
 
     const statusValue = currentPipeline === id ? status : data.status;
     const progressValue = currentPipeline === id ? progress : data.progress;
+
+    const validJobStages = () => {
+        let isValid = true;
+        data?.definition.graph.forEach(stage => {
+            if (
+                stage.value.operation === 'JOB' &&
+                !findByProp(jobs, stage.value.jobId, 'id')
+            ) {
+                isValid = false;
+            }
+        });
+        return isValid;
+    };
 
     const createUpdatePipeline = () => {
         resetFillColor(graph, data);
@@ -126,7 +141,9 @@ const PipelinesToolbar = ({
                         isNotRunning={![RUNNING, PENDING].includes(statusValue)}
                         runnable={data.runnable}
                         stopable={![PENDING].includes(statusValue)}
-                        changesNotSaved={sidePanelIsDirty || dirty}
+                        changesNotSaved={
+                            sidePanelIsDirty || dirty || !validJobStages()
+                        }
                         run={() => {
                             runAndUpdate();
                         }}
@@ -177,13 +194,15 @@ PipelinesToolbar.propTypes = {
     getActualJobs: PropTypes.func,
     sidePanelIsDirty: PropTypes.bool,
     dirty: PropTypes.bool,
-    undoButtonsDisabling: PropTypes.object
+    undoButtonsDisabling: PropTypes.object,
+    jobs: PropTypes.array
 };
 
 const mapStateToProps = state => ({
     pipelineStatus: state.pipelineStatus,
     sidePanelIsDirty: state.mxGraph.sidePanelIsDirty,
-    dirty: state.mxGraph.dirty
+    dirty: state.mxGraph.dirty,
+    jobs: state.pages.jobs.data.jobs
 });
 
 const mapDispatchToProps = {

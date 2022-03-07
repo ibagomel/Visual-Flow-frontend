@@ -19,7 +19,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import SelectField from '../../select-field';
+import SelectField from '../../../../components/select-field';
 import { READWRITE } from '../../../constants';
 
 const sslDropdown = [

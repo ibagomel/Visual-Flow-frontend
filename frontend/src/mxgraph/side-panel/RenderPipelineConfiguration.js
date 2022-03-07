@@ -19,25 +19,65 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import NotificationConfiguration from './notification-configuration';
 import JobConfiguration from './job-configuration';
 import Configuration from './configuration';
 import ContainerConfiguration from './container-configuration';
 
+const checkContainerFields = ({
+    name,
+    image,
+    imagePullPolicy,
+    requestsCpu,
+    requestsMemory,
+    limitsCpu,
+    limitsMemory,
+    imagePullSecretType,
+    username,
+    password,
+    registry,
+    imagePullSecretName
+}) => {
+    const fields = [
+        name,
+        image,
+        imagePullPolicy,
+        requestsCpu,
+        requestsMemory,
+        limitsCpu,
+        limitsMemory,
+        imagePullSecretType
+    ];
+
+    if (fields.includes(undefined)) {
+        return true;
+    }
+    if (imagePullSecretType === 'NEW' && (!username || !password || !registry)) {
+        return true;
+    }
+    if (imagePullSecretType === 'PROVIDED' && !imagePullSecretName) {
+        return true;
+    }
+    return false;
+};
+
 const RenderPipelineConfiguration = ({
     configuration,
     setPanelDirty,
     ableToEdit,
     saveCell,
-    graph
+    graph,
+    jobs
 }) => {
     const pipelinesConfigurationComponents = {
         NOTIFICATION: {
             component: Configuration,
             props: {
                 Component: NotificationConfiguration,
-                isDisabled: state => !state.message || !state.addressees,
+                isDisabled: state =>
+                    !state.name || !state.message || !state.addressees,
                 ableToEdit,
                 setPanelDirty,
                 configuration,
@@ -48,7 +88,10 @@ const RenderPipelineConfiguration = ({
         JOB: {
             component: JobConfiguration,
             props: {
-                isDisabled: inputValues => !inputValues.name,
+                isDisabled: inputValues =>
+                    !inputValues.name ||
+                    !inputValues.jobId ||
+                    !jobs.find(job => job.id === inputValues.jobId),
                 ableToEdit,
                 setPanelDirty,
                 configuration,
@@ -60,7 +103,7 @@ const RenderPipelineConfiguration = ({
             component: Configuration,
             props: {
                 Component: ContainerConfiguration,
-                isDisabled: inputValues => !inputValues.name,
+                isDisabled: inputValues => checkContainerFields(inputValues),
                 ableToEdit,
                 setPanelDirty,
                 configuration,
@@ -88,7 +131,12 @@ RenderPipelineConfiguration.propTypes = {
     setPanelDirty: PropTypes.func,
     ableToEdit: PropTypes.bool,
     saveCell: PropTypes.func,
-    graph: PropTypes.object
+    graph: PropTypes.object,
+    jobs: PropTypes.array
 };
 
-export default RenderPipelineConfiguration;
+const mapStateToProps = state => ({
+    jobs: state.pages.jobs.data.jobs
+});
+
+export default connect(mapStateToProps)(RenderPipelineConfiguration);

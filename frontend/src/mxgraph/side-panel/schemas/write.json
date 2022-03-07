@@ -2,7 +2,7 @@
   "WRITE": [
     {
       "field": "writeMode",
-      "condition": [
+      "conditions": [
         {
           "storage": "cos"
         },
@@ -117,6 +117,35 @@
       "conditions": [
         {
           "storage": "stdout"
+        }
+      ]
+    },
+    {
+      "field": "truncateMode",
+      "conditions": [
+        {
+          "storage": "db2",
+          "writeMode": "Overwrite"
+        },
+        {
+          "storage": "postgresql",
+          "writeMode": "Overwrite"
+        },
+        {
+          "storage": "oracle",
+          "writeMode": "Overwrite"
+        },
+        {
+          "storage": "mysql",
+          "writeMode": "Overwrite"
+        },
+        {
+          "storage": "mssql",
+          "writeMode": "Overwrite"
+        },
+        {
+          "storage": "redshift-jdbc",
+          "writeMode": "Overwrite"
         }
       ]
     }

@@ -34,7 +34,8 @@ export default makeStyles(theme => ({
             backgroundColor: theme.palette.background.paper
         },
         backgroundColor: theme.palette.background.default,
-        padding: '8px 4px'
+        padding: '8px 4px',
+        verticalAlign: 'top'
     },
     keyCell: {
         width: 254

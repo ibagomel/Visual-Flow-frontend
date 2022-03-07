@@ -20,10 +20,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ReadTextFields from '../rw-text-fields';
+import ReadTextFields from '../../../../components/rw-text-fields';
 import { WRITE, READWRITE } from '../../../constants';
 import WriteMode from '../helpers/WriteMode';
-import SelectField from '../../select-field';
+import SelectField from '../../../../components/select-field';
 import Ssl from '../helpers/Ssl';
 
 const dropdownOptions = [

@@ -45,7 +45,10 @@ const CustomTextField = ({
     parseFunction,
     onChange,
     name,
-    defaultValue
+    defaultValue,
+    inputProps,
+    required,
+    defaultTextValue
 }) => {
     const classes = useStyles();
 
@@ -56,7 +59,12 @@ const CustomTextField = ({
     const handleOnChange = event => {
         if (event.target.name === NAMES.TEXT) {
             onChange({
-                target: { value: event.target.value + selectValue, name }
+                target: {
+                    value: event.target.value
+                        ? event.target.value + selectValue
+                        : '',
+                    name
+                }
             });
         } else {
             onChange({
@@ -64,6 +72,18 @@ const CustomTextField = ({
             });
         }
     };
+
+    React.useEffect(() => {
+        if (!textValue && defaultTextValue) {
+            const event = {
+                target: {
+                    name: NAMES.TEXT,
+                    value: defaultTextValue
+                }
+            };
+            handleOnChange(event);
+        }
+    });
 
     return (
         <div className={classNames(classes.root, className)}>
@@ -78,6 +98,8 @@ const CustomTextField = ({
                 label={textLabel}
                 placeholder={textPlaceholder || textLabel}
                 type={textType}
+                inputProps={inputProps}
+                required={required}
             />
             <TextField
                 className={classNames(classes.select)}
@@ -123,7 +145,10 @@ CustomTextField.propTypes = {
     parseFunction: PropTypes.func,
     selectValues: PropTypes.arrayOf(PropTypes.object),
     textType: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    inputProps: PropTypes.object,
+    required: PropTypes.bool,
+    defaultTextValue: PropTypes.string
 };
 
 export default CustomTextField;

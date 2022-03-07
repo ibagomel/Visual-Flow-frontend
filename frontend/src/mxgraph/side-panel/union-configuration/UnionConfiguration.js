@@ -20,7 +20,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Divider } from '@material-ui/core';
-import SelectField from '../select-field';
+import SelectField from '../../../components/select-field';
 import { OTHER } from '../../constants';
 
 const types = [
@@ -46,6 +46,7 @@ const UnionConfiguration = ({ state, ableToEdit, onChange }) => (
                 handleInputChange={onChange}
                 menuItems={types}
                 type={OTHER}
+                required
             />
         )}
     </>

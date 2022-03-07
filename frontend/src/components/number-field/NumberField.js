@@ -17,26 +17,39 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import ClearButton from '../helpers/ClearButton';
-import useStyles from './SelectField.Styles';
-import getMenuItems from '../helpers/getMenuItems';
-import { READWRITE } from '../../constants';
+import ClearButton from '../../mxgraph/side-panel/helpers/ClearButton';
+import useStyles from './NumberField.Styles';
 
-const SelectField = ({
+const NumberField = ({
     ableToEdit,
     label,
     name,
     value,
     handleInputChange,
-    menuItems,
-    type
+    type,
+    minValue,
+    maxValue,
+    defaultValue,
+    required
 }) => {
     const classes = useStyles();
     const { t } = useTranslation();
+
+    useEffect(() => {
+        if (!value) {
+            const event = {
+                target: {
+                    name,
+                    value: defaultValue
+                }
+            };
+            handleInputChange(event);
+        }
+    }, []);
 
     return (
         <Box className={classes.wrapper}>
@@ -46,22 +59,20 @@ const SelectField = ({
                 placeholder={t(label)}
                 variant="outlined"
                 margin="normal"
+                InputProps={{
+                    inputProps: {
+                        min: minValue,
+                        max: maxValue
+                    }
+                }}
                 fullWidth
-                select
                 name={name}
                 value={value || ''}
-                onChange={
-                    type === READWRITE
-                        ? handleInputChange
-                        : event =>
-                              handleInputChange(
-                                  event.target.name,
-                                  event.target.value
-                              )
-                }
-            >
-                {getMenuItems(menuItems)}
-            </TextField>
+                type="number"
+                onChange={handleInputChange}
+                error={value < minValue || value > maxValue}
+                required={required}
+            />
             <ClearButton
                 name={name}
                 value={value}
@@ -73,14 +84,17 @@ const SelectField = ({
     );
 };
 
-SelectField.propTypes = {
+NumberField.propTypes = {
     ableToEdit: PropTypes.bool,
     label: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.any,
     handleInputChange: PropTypes.func,
-    menuItems: PropTypes.array,
-    type: PropTypes.string
+    type: PropTypes.string,
+    minValue: PropTypes.number,
+    maxValue: PropTypes.number,
+    defaultValue: PropTypes.number,
+    required: PropTypes.bool
 };
 
-export default SelectField;
+export default NumberField;

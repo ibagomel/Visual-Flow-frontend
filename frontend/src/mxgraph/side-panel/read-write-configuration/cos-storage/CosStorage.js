@@ -20,9 +20,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import ReadTextFields from '../rw-text-fields';
+import ReadTextFields from '../../../../components/rw-text-fields';
 import CosProperties from '../common';
-import SelectField from '../../select-field';
+import SelectField from '../../../../components/select-field';
 import { READWRITE } from '../../../constants';
 
 const authType = [

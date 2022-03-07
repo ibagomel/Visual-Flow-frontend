@@ -20,7 +20,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ReadTextFields from '../rw-text-fields';
+import ReadTextFields from '../../../../components/rw-text-fields';
 import WriteMode from '../helpers/WriteMode';
 import { WRITE } from '../../../constants';
 import Ssl from '../helpers/Ssl';

@@ -17,10 +17,10 @@
  * limitations under the License.
  */
 
-import withParams from './withParams';
 import { mount } from 'enzyme';
 import React from 'react';
 import redux from 'react-redux';
+import withParams from './withParams';
 import { setCurrentProject } from '../redux/actions/projectsActions';
 
 const Test = ({ projectId, data }) => (

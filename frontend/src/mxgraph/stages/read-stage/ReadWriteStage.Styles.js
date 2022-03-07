@@ -29,48 +29,61 @@ export default makeStyles(() => ({
         top: -64,
         display: 'flex',
         'white-space': 'normal',
-        width: 215,
-        'text-align': 'left'
+        width: 200,
+        'text-align': 'left',
+        '& span': {
+            overflow: 'hidden',
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap'
+        }
     },
     schema: {
         position: 'absolute',
         left: -100,
         top: -23,
         width: 200,
-        'white-space': 'normal',
         'line-break': 'anywhere',
         'line-height': 'normal',
-        'text-align': 'left'
+        'text-align': 'left',
+        overflow: 'hidden',
+        'text-overflow': 'ellipsis',
+        'white-space': 'nowrap'
     },
     table: {
         position: 'absolute',
         left: -100,
         top: 5,
         width: 200,
-        'white-space': 'normal',
         'line-break': 'anywhere',
         'line-height': 'normal',
-        'text-align': 'left'
+        'text-align': 'left',
+        overflow: 'hidden',
+        'text-overflow': 'ellipsis',
+        'white-space': 'nowrap'
     },
     bucket: {
         position: 'absolute',
         left: -100,
         top: -16,
         width: 200,
-        'white-space': 'normal',
         'line-break': 'anywhere',
         'line-height': 'normal',
-        'text-align': 'left'
+        'text-align': 'left',
+        overflow: 'hidden',
+        'text-overflow': 'ellipsis',
+        'white-space': 'nowrap'
     },
     pathInBucket: {
         position: 'absolute',
         left: -100,
         top: 5,
         width: 200,
-        'white-space': 'normal',
         'line-break': 'anywhere',
         'line-height': 'normal',
-        'text-align': 'left'
+        'text-align': 'left',
+        overflow: 'hidden',
+        'text-overflow': 'ellipsis',
+        'white-space': 'nowrap'
     },
     storage: {
         position: 'absolute',

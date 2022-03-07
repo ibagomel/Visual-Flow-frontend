@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Divider, TextField } from '@material-ui/core';
@@ -34,8 +34,38 @@ import CassandraStorage from './cassandra-storage';
 import RedisStorage from './redis-storage';
 import StdoutStorage from './stdout-storage';
 
+const isTruncateStorage = storage =>
+    [
+        STORAGES.DB2.value,
+        STORAGES.POSTGRE.value,
+        STORAGES.ORACLE.value,
+        STORAGES.MYSQL.value,
+        STORAGES.MSSQL.value,
+        STORAGES.REDSHIFTJDBC.value
+    ].includes(storage);
+
+const truncateModeDefaultValues = {
+    field: 'truncateMode',
+    value: 'None'
+};
+
 const ReadWriteConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
     const { t } = useTranslation();
+
+    const { truncateMode, writeMode, storage } = state;
+
+    useEffect(() => {
+        if (
+            truncateMode === undefined &&
+            writeMode === 'Overwrite' &&
+            isTruncateStorage(storage)
+        ) {
+            onChange(
+                truncateModeDefaultValues.field,
+                truncateModeDefaultValues.value
+            );
+        }
+    }, [writeMode, storage, truncateMode]);
 
     // eslint-disable-next-line complexity
     const getStorageComponent = name => {
@@ -85,7 +115,7 @@ const ReadWriteConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
                 disabled={!ableToEdit}
                 name="storage"
                 options={Object.values(STORAGES).filter(
-                    storage => !get(storage, 'hide', []).includes(state.operation)
+                    st => !get(st, 'hide', []).includes(state.operation)
                 )}
                 getOptionLabel={option => option.label || option}
                 value={
@@ -102,6 +132,7 @@ const ReadWriteConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
                         margin="normal"
                         placeholder={t('jobDesigner:readConfiguration.Storage')}
                         label={t('jobDesigner:readConfiguration.Storage')}
+                        required
                     />
                 )}
             />

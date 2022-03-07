@@ -41,6 +41,7 @@ const FilterConfiguration = ({ state, ableToEdit, onChange }) => {
                     onChange={event =>
                         onChange(event.target.name, event.target.value)
                     }
+                    required
                 />
             )}
         </>

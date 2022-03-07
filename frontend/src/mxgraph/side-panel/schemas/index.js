@@ -32,6 +32,7 @@ import job from './job.json';
 import container from './container.json';
 import readWriteCommon from './read-write-common.json';
 import cache from './cache.json';
+import notification from './notification.json';
 
 const schemas = {
     ...commonSchema,
@@ -46,6 +47,7 @@ const schemas = {
     ...job,
     ...container,
     ...cache,
+    ...notification,
     READ: [...get(readWriteCommon, 'READ_WRITE'), ...get(read, 'READ')],
     WRITE: [...get(readWriteCommon, 'READ_WRITE'), ...get(write, 'WRITE')]
 };

@@ -62,6 +62,7 @@ const NotificationConfiguration = ({ state, ableToEdit, onChange, openModal }) =
                                 </IconButton>
                             )
                         }}
+                        required
                     />
                     <ClearButton
                         name="addressees"
@@ -87,6 +88,7 @@ const NotificationConfiguration = ({ state, ableToEdit, onChange, openModal }) =
                     onChange={event =>
                         onChange(event.target.name, event.target.value)
                     }
+                    required
                 />
             )}
         </>

@@ -23,6 +23,7 @@ import { Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './CacheStage.Styles';
+import makeTooltip from '../helpers/makeTooltip';
 
 const CacheStage = ({ stage }) => {
     const { t } = useTranslation();
@@ -32,7 +33,7 @@ const CacheStage = ({ stage }) => {
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.name}>
                 {stageIcon(stage.operation)}
-                {stage.name}
+                {makeTooltip(stage.name, stage.name)}
             </Typography>
             <Typography
                 variant="caption"

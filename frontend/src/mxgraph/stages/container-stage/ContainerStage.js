@@ -25,6 +25,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './ContainerStage.Styles';
 import { DRAFT, PENDING, SKIPPED } from '../../constants';
+import StageWarning from '../../../components/stage-warning';
 
 const ContainerStage = ({ stage }) => {
     const classes = useStyles();
@@ -43,6 +44,7 @@ const ContainerStage = ({ stage }) => {
             <Typography variant="caption" component="div" className={classes.image}>
                 {stage.image || ''}
             </Typography>
+            <StageWarning stage={stage} visibleLogsIcon={visibleLogsIcon} />
         </div>
     );
 };

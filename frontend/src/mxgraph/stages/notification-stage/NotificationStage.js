@@ -23,6 +23,7 @@ import { Typography } from '@material-ui/core';
 
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './NotificationStage.Styles';
+import StageWarning from '../../../components/stage-warning';
 
 const NotificationStage = ({ stage }) => {
     const classes = useStyles();
@@ -40,6 +41,7 @@ const NotificationStage = ({ stage }) => {
             >
                 {stage.addressees}
             </Typography>
+            <StageWarning stage={stage} />
         </div>
     );
 };

@@ -43,7 +43,8 @@ describe('ImportExport action', () => {
     let dispatch;
 
     describe('checkAccessToImport', () => {
-        let data, projectId;
+        let data;
+        let projectId;
         beforeEach(() => {
             data = {};
             projectId = 'vf-test';
@@ -77,7 +78,8 @@ describe('ImportExport action', () => {
     });
 
     describe('importResources', () => {
-        let data, projectId;
+        let data;
+        let projectId;
         beforeEach(() => {
             data = {};
             projectId = 'vf-test';
@@ -117,7 +119,8 @@ describe('ImportExport action', () => {
     });
 
     describe('exportResources', () => {
-        let data, projectId;
+        let data;
+        let projectId;
         beforeEach(() => {
             data = {};
             projectId = 'vf-test';

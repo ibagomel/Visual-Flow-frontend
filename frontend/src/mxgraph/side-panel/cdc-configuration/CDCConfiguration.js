@@ -32,7 +32,7 @@ import {
 import { SwapVert } from '@material-ui/icons';
 import { Autocomplete } from '@material-ui/lab';
 import useStyles from './CDCConfiguration.Styles';
-import SelectField from '../select-field';
+import SelectField from '../../../components/select-field';
 import { OTHER } from '../../constants';
 
 const modes = [
@@ -122,6 +122,7 @@ const CDCConfiguration = ({
                                 fullWidth
                                 variant="outlined"
                                 label={t('jobDesigner:CDCConfiguration.Key')}
+                                required
                             />
                         )}
                     />

@@ -32,7 +32,7 @@ import { SwapVert } from '@material-ui/icons';
 
 import { Autocomplete } from '@material-ui/lab';
 import useStyles from './JoinConfiguration.Styles';
-import SelectField from '../select-field';
+import SelectField from '../../../components/select-field';
 import { OTHER } from '../../constants';
 
 const joinTypes = [
@@ -86,6 +86,7 @@ const JoinConfiguration = ({
                 handleInputChange={onChange}
                 menuItems={joinTypes}
                 type={OTHER}
+                required
             />
             <Divider className={classes.divider} />
             {state.joinType && (
@@ -151,6 +152,7 @@ const JoinConfiguration = ({
                                 fullWidth
                                 variant="outlined"
                                 label={t('jobDesigner:joinConfiguration.Key')}
+                                required
                             />
                         )}
                     />

@@ -25,8 +25,9 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './JobStage.Styles';
 import { DRAFT, PENDING, SKIPPED } from '../../constants';
+import StageWarning from '../../../components/stage-warning';
 
-const JobStage = ({ stage }) => {
+const JobStage = ({ stage, jobs }) => {
     const classes = useStyles();
     const visibleLogsIcon =
         stage.status && ![DRAFT, PENDING, SKIPPED].includes(stage.status);
@@ -47,12 +48,18 @@ const JobStage = ({ stage }) => {
             >
                 {stage.jobName || ''}
             </Typography>
+            <StageWarning
+                stage={stage}
+                jobs={jobs}
+                visibleLogsIcon={visibleLogsIcon}
+            />
         </div>
     );
 };
 
 JobStage.propTypes = {
-    stage: PropTypes.object
+    stage: PropTypes.object,
+    jobs: PropTypes.array
 };
 
 export default JobStage;

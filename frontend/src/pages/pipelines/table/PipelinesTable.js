@@ -52,6 +52,11 @@ import DropdownFilter from '../../../components/table/dropdown-filter';
 import history from '../../../utils/history';
 import ExportModalWindow from '../../../components/export-modal-window';
 import { PENDING, PIPELINE_STATUSES, RUNNING } from '../../../mxgraph/constants';
+import {
+    runWithValidation,
+    removeHandler,
+    joinDataNames
+} from '../../../components/helpers/JobsPipelinesTable';
 
 const utilizationField = (t, lastRun, onChange, classname) => (
     <Grid item className={classname}>
@@ -82,14 +87,13 @@ const PipelinesTable = ({
     setStatus,
     setCurrentPage,
     currentPage,
-    rowsPerPage
+    rowsPerPage,
+    jobs
 }) => {
     const { t } = useTranslation();
     const classes = withStyles();
     const [showModal, setShowModal] = React.useState(false);
     const [selectedPipelines, setSelectedPipelines] = React.useState([]);
-
-    const byId = id => data?.find(item => item.id === id);
 
     const getActions = item => [
         ![RUNNING, PENDING].includes(item.status)
@@ -98,7 +102,13 @@ const PipelinesTable = ({
                   Icon: PlayArrowOutlinedIcon,
                   disable: !item.runnable,
                   onClick: () => {
-                      run(projectId, item.id);
+                      runWithValidation(
+                          projectId,
+                          item.id,
+                          { data: jobs, findProp: 'id' },
+                          run,
+                          t('main:validation.pipelineWithoutJob')
+                      );
                   }
               }
             : {
@@ -126,12 +136,14 @@ const PipelinesTable = ({
                 confirmationWindow({
                     body: t('pipelines:confirm.delete', { name: item.name }),
                     callback: () => {
-                        remove(projectId, [item.id]);
-                        const pipelinesLastPageAfterRemove =
-                            Math.ceil((data.length - 1) / rowsPerPage) - 1;
-                        if (currentPage > pipelinesLastPageAfterRemove) {
-                            setCurrentPage(pipelinesLastPageAfterRemove);
-                        }
+                        removeHandler(
+                            projectId,
+                            [item.id],
+                            data.length,
+                            { rowsPerPage, currentPage },
+                            remove,
+                            setCurrentPage
+                        );
                     }
                 })
         }
@@ -144,17 +156,17 @@ const PipelinesTable = ({
             onClick: selected =>
                 confirmationWindow({
                     body: t('pipelines:confirm.delete', {
-                        name: selected?.map(id => byId(id)?.name).join(', ')
+                        name: joinDataNames(selected, data)
                     }),
                     callback: () => {
-                        remove(projectId, selected);
-                        const pipelinesLastPageAfterRemove =
-                            Math.ceil(
-                                (data.length - selected.length) / rowsPerPage
-                            ) - 1;
-                        if (currentPage > pipelinesLastPageAfterRemove) {
-                            setCurrentPage(pipelinesLastPageAfterRemove);
-                        }
+                        removeHandler(
+                            projectId,
+                            selected,
+                            data.length,
+                            { rowsPerPage, currentPage },
+                            remove,
+                            setCurrentPage
+                        );
                     }
                 })
         },
@@ -190,6 +202,8 @@ const PipelinesTable = ({
             filter={
                 <>
                     <ExportModalWindow
+                        showModal={showModal}
+                        tableData={data}
                         isPipelineModal
                         display={showModal}
                         projectId={projectId}
@@ -276,7 +290,8 @@ PipelinesTable.propTypes = {
     confirmationWindow: PropTypes.func,
     setCurrentPage: PropTypes.func,
     currentPage: PropTypes.number,
-    rowsPerPage: PropTypes.number
+    rowsPerPage: PropTypes.number,
+    jobs: PropTypes.array
 };
 
 const mapStateToProps = state => ({

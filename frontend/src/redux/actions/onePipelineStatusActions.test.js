@@ -29,7 +29,9 @@ describe('OnePipelineStatus action', () => {
     let dispatch;
 
     describe('getPipelineById', () => {
-        let data, projectId, pipelineId;
+        let data;
+        let projectId;
+        let pipelineId;
         beforeEach(() => {
             data = { status: '' };
             projectId = '';

@@ -25,15 +25,18 @@ import { useTranslation } from 'react-i18next';
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './GroupByStage.Styles';
 
+import makeTooltip from '../helpers/makeTooltip';
+
 const GroupByStage = ({ stage }) => {
     const { t } = useTranslation();
     const classes = useStyles();
+    const groupingColumns = stage.groupingColumns?.split(',').map(el => el.trim());
 
     return (
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.name}>
-                <span className={classes.icon}>{stageIcon(stage.operation)}</span>
-                {stage.name}
+                {stageIcon(stage.operation)}
+                {makeTooltip(stage.name, stage.name)}
             </Typography>
             <Typography
                 variant="caption"
@@ -42,8 +45,9 @@ const GroupByStage = ({ stage }) => {
                 color="textSecondary"
             >
                 {t('jobDesigner:groupByConfiguration.GroupBy')}:
-                {stage.groupingColumns.split(',').map(value => (
+                {groupingColumns.slice(0, 5).map(value => (
                     <Typography
+                        title={value}
                         key={value}
                         variant="caption"
                         component="span"
@@ -52,6 +56,10 @@ const GroupByStage = ({ stage }) => {
                         {value}
                     </Typography>
                 ))}
+                <span className={classes.dots}>
+                    {groupingColumns.length > 5 &&
+                        makeTooltip(groupingColumns.join(', '), ' ...')}
+                </span>
             </Typography>
         </div>
     );

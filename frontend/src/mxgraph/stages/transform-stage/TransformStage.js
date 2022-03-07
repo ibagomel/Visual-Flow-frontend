@@ -23,6 +23,7 @@ import { Typography } from '@material-ui/core';
 
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './TransformStage.Styles';
+import makeTooltip from '../helpers/makeTooltip';
 
 const TransformStage = ({ stage }) => {
     const classes = useStyles();
@@ -31,7 +32,7 @@ const TransformStage = ({ stage }) => {
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.name}>
                 {stageIcon(stage.operation)}
-                {stage.name}
+                {makeTooltip(stage.name, stage.name)}
             </Typography>
         </div>
     );

@@ -115,6 +115,7 @@ const RemoveDuplicatesConfiguration = ({ ableToEdit, state, onChange }) => {
                         fullWidth
                         variant="outlined"
                         label={t('jobDesigner:RemoveDuplConfiguration.Key')}
+                        required
                     />
                 )}
             />

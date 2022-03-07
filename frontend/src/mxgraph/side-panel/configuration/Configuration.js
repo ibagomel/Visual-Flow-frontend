@@ -167,6 +167,7 @@ const Configuration = ({
                     onChange={event =>
                         handleChange(event.target.name, event.target.value)
                     }
+                    required
                 />
                 <Component
                     ableToEdit={ableToEdit}

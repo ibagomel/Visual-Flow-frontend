@@ -72,7 +72,19 @@
         "3to40chars": "Wrong symbol or should be 3 to 40 characters long.",
         "moreThen500": "Should be less then 500 characters long.",
         "positive": "Should be positive.",
-        "notBlank": "Should not be blank."
+        "notBlank": "Should not be blank.",
+        "fieldsNotFilled": "Some fields are not filled.",
+        "incorrectJobLength": "Must be no more than 63 characters.",
+        "incorrectPipelineLength": "The name should have a total length between 3 and 40 characters max.",
+        "incorrectCharacters": "Use alphanumeric characters, '-', '.' or '_'. Name must start and end with an alphanumeric.",
+        "projectParameters": {
+            "keyDuplication": "Key duplication",
+            "valueDuplication": "Value duplication",
+            "keyLength": "Length must be in range 1-50",
+            "keySymbols": "Only A-Z, a-z, 0-9, -, _ are allowed",
+            "keyStartEnd": "Must start and end with an alphanumeric character",
+            "valueEmpty": "Can’t be empty"
+        }
     },
     "confirm": {
         "title": "Are you sure?",
@@ -80,7 +92,7 @@
         "Yes": "Yes",
         "No": "No",
         "sure": "Are you sure you want to delete",
-        "unsaved" : "Are you sure? Unsaved changes will be lost"
+        "unsaved": "Are you sure? Unsaved changes will be lost"
     },
     "404": "Sorry, we can’t find the page you are looking for.",
     "unsavedChanges": {
@@ -92,7 +104,7 @@
     },
     "enterJobName": "Please enter name and save params",
     "tooltip": {
-        "MoveDown":"Move down",
+        "MoveDown": "Move down",
         "MoveUp": "Move up",
         "Delete": "Delete",
         "Add": "Add"

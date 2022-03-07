@@ -24,26 +24,33 @@ export default makeStyles(theme => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
         position: 'relative',
         width: CELL_WIDTH,
         height: CELL_HEIGHT,
-        overflow: 'hidden',
         padding: theme.spacing(1)
     },
     name: {
         display: 'flex',
         whiteSpace: 'normal',
-        flexShrink: 0
-    },
-    icon: {
-        marginRight: theme.spacing(0.5)
+        flexShrink: 0,
+        marginBottom: 12,
+        '& span': {
+            overflow: 'hidden',
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap'
+        }
     },
     groupBy: {
-        flexGrow: 1,
         display: 'flex',
-        alignItems: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        overflow: 'hidden',
+        padding: '1px 0',
+        maxHeight: 95
+    },
+    dots: {
+        color: '#000',
+        alignSelf: 'flex-end',
+        'white-space': 'pre'
     },
     key: {
         color: theme.palette.getContrastText(theme.palette.success.dark),
@@ -51,6 +58,9 @@ export default makeStyles(theme => ({
         borderRadius: theme.spacing(0.5),
         padding: theme.spacing(0, 0.5),
         margin: theme.spacing(0.25),
-        minWidth: theme.spacing(3)
+        minWidth: theme.spacing(3),
+        maxWidth: 90,
+        overflow: 'inherit',
+        'text-overflow': 'ellipsis'
     }
 }));

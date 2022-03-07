@@ -44,7 +44,9 @@ const ExportModalWindow = ({
     isFetching,
     exportFileName,
     setExportName,
-    setDefault
+    setDefault,
+    tableData,
+    showModal
 }) => {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -78,6 +80,18 @@ const ExportModalWindow = ({
         };
         exportFromProject(projectId, requestData);
     };
+
+    React.useEffect(() => {
+        const selectedData = isPipelineModal ? selectedPipelines : selectedJobs;
+        const letterPart = tableData?.find(el => {
+            return el.id === selectedData[0];
+        });
+        if (selectedData.length > 1) {
+            setFileName(`${letterPart?.name} (${selectedData.length - 1} more)`);
+        } else {
+            setFileName(letterPart?.name);
+        }
+    }, [showModal]);
 
     return (
         <PopupForm
@@ -158,7 +172,9 @@ ExportModalWindow.propTypes = {
     isFetching: PropTypes.bool,
     exportFileName: PropTypes.string,
     setExportName: PropTypes.func,
-    setDefault: PropTypes.func
+    setDefault: PropTypes.func,
+    tableData: PropTypes.array,
+    showModal: PropTypes.bool
 };
 
 const mapStateToProps = state => ({

@@ -385,7 +385,9 @@ describe('Pipelines action', () => {
     });
 
     describe('runPipelineAndRefreshIt', () => {
-        let data, projectId, pipelineId;
+        let data;
+        let projectId;
+        let pipelineId;
         beforeEach(() => {
             data = { status: '' };
             projectId = '';
@@ -420,7 +422,9 @@ describe('Pipelines action', () => {
     });
 
     describe('stopPipelineAndRefreshIt', () => {
-        let data, projectId, pipelineId;
+        let data;
+        let projectId;
+        let pipelineId;
         beforeEach(() => {
             data = { status: '' };
             projectId = '';
@@ -455,7 +459,9 @@ describe('Pipelines action', () => {
     });
 
     describe('copyPipeline', () => {
-        let data, projectId, pipelineId;
+        let data;
+        let projectId;
+        let pipelineId;
         beforeEach(() => {
             data = { status: '' };
             projectId = 'some_id';

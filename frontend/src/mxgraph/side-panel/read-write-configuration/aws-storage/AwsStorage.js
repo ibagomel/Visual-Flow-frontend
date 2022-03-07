@@ -21,9 +21,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { READWRITE } from '../../../constants';
-import ReadTextFields from '../rw-text-fields';
+import ReadTextFields from '../../../../components/rw-text-fields';
 import CosProperties from '../common/CosProperties';
-import SelectField from '../../select-field';
+import SelectField from '../../../../components/select-field';
 
 const anonymousAccess = [
     {
@@ -35,6 +35,8 @@ const anonymousAccess = [
         label: 'False'
     }
 ];
+
+const ANONYMOUS_ACCESS_DEFAULT_VALUES = 'true';
 
 const endpointField = [{ field: 'Endpoint' }];
 
@@ -59,6 +61,8 @@ const AwsStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) =
             handleInputChange={handleInputChange}
             menuItems={anonymousAccess}
             type={READWRITE}
+            defaultValue={ANONYMOUS_ACCESS_DEFAULT_VALUES}
+            required
         />
         {inputValues.anonymousAccess === 'false' && (
             <ReadTextFields

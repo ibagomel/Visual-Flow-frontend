@@ -32,7 +32,7 @@ import { useTranslation } from 'react-i18next';
 import PendingIcon from '@material-ui/icons/Update';
 import JobsPipelines from '../jobs-pipelines/JobsPipelines';
 
-const PipelinesStats = ({ data, loading }) => {
+const PipelinesStats = ({ data, loading, setStatus, setCurrentPage }) => {
     const { t } = useTranslation();
     const theme = useTheme();
     const items = [
@@ -97,13 +97,17 @@ const PipelinesStats = ({ data, loading }) => {
             items={items}
             loading={loading}
             title={t('main:overview.Pipelines')}
+            setStatus={setStatus}
+            setCurrentPage={setCurrentPage}
         />
     );
 };
 
 PipelinesStats.propTypes = {
     data: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    setStatus: PropTypes.func,
+    setCurrentPage: PropTypes.func
 };
 
 export default PipelinesStats;

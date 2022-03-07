@@ -18,11 +18,11 @@
  */
 
 import React from 'react';
-import Auth from './Auth';
 import { mount, shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import { PageSkeleton } from '../../skeleton';
 import axios from 'axios';
+import { PageSkeleton } from '../../skeleton';
+import Auth from './Auth';
 
 describe('Auth', () => {
     const redirect = 'success';

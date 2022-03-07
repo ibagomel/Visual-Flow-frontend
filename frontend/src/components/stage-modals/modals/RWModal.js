@@ -36,6 +36,20 @@ const getWriteMode = t => ({
     hide: READ
 });
 
+const getTruncateMode = t => ({
+    title: t('ReadWrite:truncateMode.name'),
+    paragraph: t('ReadWrite:truncateMode.value1'),
+    paragraph1: t('ReadWrite:truncateMode.value2'),
+    paragraph2: t('ReadWrite:truncateMode.value3'),
+    paragraph3: t('ReadWrite:truncateMode.value4'),
+    paragraph4: t('ReadWrite:truncateMode.value5'),
+    paragraph5: t('ReadWrite:truncateMode.value6'),
+    paragraph6: t('ReadWrite:truncateMode.value7'),
+    paragraph7: t('ReadWrite:truncateMode.value8'),
+    paragraph8: t('ReadWrite:truncateMode.value9'),
+    hide: READ
+});
+
 const getContent = t => [
     {
         title: t('ReadWrite:note.name'),
@@ -126,6 +140,7 @@ const getDB2 = t => [
         hide: WRITE
     },
     getWriteMode(t),
+    getTruncateMode(t),
     {
         title: t('ReadWrite:DB2.certData.name'),
         paragraph: t('ReadWrite:DB2.certData.value')

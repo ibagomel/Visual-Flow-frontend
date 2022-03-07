@@ -290,7 +290,9 @@ describe('Jobs action', () => {
     });
 
     describe('runJobAndRefreshIt', () => {
-        let data, projectId, jobId;
+        let data;
+        let projectId;
+        let jobId;
         beforeEach(() => {
             data = { status: '' };
             projectId = 'vf-test';
@@ -314,7 +316,9 @@ describe('Jobs action', () => {
     });
 
     describe('stopJob', () => {
-        let data, projectId, jobId;
+        let data;
+        let projectId;
+        let jobId;
         beforeEach(() => {
             data = { status: '' };
             projectId = 'vf-test';
@@ -362,7 +366,9 @@ describe('Jobs action', () => {
     });
 
     describe('copyJob', () => {
-        let data, projectId, jobId;
+        let data;
+        let projectId;
+        let jobId;
         beforeEach(() => {
             data = { status: '' };
             projectId = 'some_id';

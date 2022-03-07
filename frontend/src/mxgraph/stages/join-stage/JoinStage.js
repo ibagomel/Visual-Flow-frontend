@@ -24,16 +24,19 @@ import { Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './JoinStage.Styles';
+import makeTooltip from '../helpers/makeTooltip';
 
 const JoinStage = ({ stage }) => {
     const { t } = useTranslation();
     const classes = useStyles();
+    const columns = stage.columns?.split(',').map(el => el.trim());
     return (
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.name}>
                 {stageIcon(stage.operation)}
-                {stage.name}
+                {makeTooltip(stage.name, stage.name)}
             </Typography>
+
             <Typography
                 variant="caption"
                 component="div"
@@ -41,8 +44,9 @@ const JoinStage = ({ stage }) => {
                 color="textSecondary"
             >
                 {t('jobDesigner:joinConfiguration.Key')}:
-                {stage.columns?.split(',').map(value => (
+                {columns.slice(0, 5).map(value => (
                     <Typography
+                        title={value}
                         key={value}
                         variant="caption"
                         component="span"
@@ -51,7 +55,11 @@ const JoinStage = ({ stage }) => {
                         {value}
                     </Typography>
                 ))}
+                <span className={classes.dots}>
+                    {columns.length > 5 && makeTooltip(columns.join(', '), ' ...')}
+                </span>
             </Typography>
+
             <Typography
                 variant="caption"
                 component="div"

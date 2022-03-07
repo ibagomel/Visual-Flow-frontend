@@ -63,12 +63,14 @@
         "ttl": "TTL",
         "ExtraCopyOptions": "Extra copy options",
         "Query": "Query",
-        "quantity": "Quantity"
+        "quantity": "Quantity",
+        "TruncateMode": "Truncate Mode"
     },
     "writeConfiguration": {
         "Header": "Header",
         "Delimiter": "Delimiter",
-        "PartitionBy": "Partition By"
+        "PartitionBy": "Partition By",
+        "TruncateMode": "Truncate Mode"
     },
     "unionConfiguration": {
         "Name": "Name",

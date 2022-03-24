@@ -13,15 +13,7 @@
     "value6": {
       "title": "For more information about Built-in Functions click here.",
       "link": "https://spark.apache.org/docs/latest/api/sql/index.html"
-    },
-    "value7": "Syntax:",
-    "value8": " <column_name_1> as <alias_1>, function(<column_name_2>) as <alias_2>",
-    "value9": "Examples:",
-    "value10": "1) col1, concat(col1, col2)",
-    "value11": "2) count(*) as count",
-    "value12": "3) a, b, row_number() OVER (PARTITION BY a ORDER BY b)",
-    "value13": "4) col, exists(col, x -> x % 2 == 0)",
-    "value14": "5) col, collect_list(col)"
+    }
   },
   "note": {
     "name": "Note",
@@ -35,5 +27,23 @@
       "title": "For more information of backticks click here.",
       "link": "https://spark.apache.org/docs/latest/sql-ref-identifier.html"
     }
+  },
+  "mode": {
+    "name": "Mode",
+    "value1": "Transformer mode defines the type of the SQL query (Spark SQL dialect) that is accepted and executed.",
+    "value2": "Simple - only allows you to specify the part between SELECT and FROM. You can do things like these:",
+    "value3": "1) col1, concat(col1, col2)",
+    "value4": "2) count(*) as count",
+    "value5": "3) a, b, row_number() OVER (PARTITION BY a ORDER BY b)",
+    "value6": "4) col, exists(col, x -> x % 2 == 0)",
+    "value7": "5) col, collect_list(col)",
+    "value8": "Syntax:",
+    "value9": " <column_name_1> as <alias_1>, function(<column_name_2>) as <alias_2>",
+    "value10": "Full SQL - allows you to write a full-blown Spark SQL query. Though you would have to specify the table's name in the query",
+    "value11": "by manually referencing the value from the \"Table name\" parameter."
+  },
+  "tableName": {
+    "name": "Table name",
+    "value": "The name of the table that you should use within the Spark SQL query. Only applicable for Full SQL transformer mode."
   }
 }

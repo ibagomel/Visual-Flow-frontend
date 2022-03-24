@@ -26,6 +26,8 @@ import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './UnionStage.Styles';
 import makeTooltip from '../helpers/makeTooltip';
 
+import StageTag from '../../../components/stage-tag';
+
 const UnionStage = ({ stage }) => {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -36,9 +38,10 @@ const UnionStage = ({ stage }) => {
                 {stageIcon(stage.operation)}
                 {makeTooltip(stage.name, stage.name)}
             </Typography>
-            <Typography variant="caption" component="div" className={classes.type}>
-                {t(`jobDesigner:unionConfiguration.${stage.type}`)}
-            </Typography>
+            <StageTag
+                className={classes.type}
+                content={t(`jobDesigner:unionConfiguration.${stage.type}`)}
+            />
         </div>
     );
 };

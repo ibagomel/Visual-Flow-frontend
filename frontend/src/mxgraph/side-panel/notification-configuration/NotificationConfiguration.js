@@ -23,12 +23,19 @@ import { useTranslation } from 'react-i18next';
 import { Divider, TextField, IconButton, Box } from '@material-ui/core';
 import { TuneOutlined } from '@material-ui/icons';
 import { OTHER } from '../../constants';
+import { findParamByKey } from '../../../components/helpers/PipelinesValidation';
 
 import useStyles from './NotificationConfiguration.Styles';
 
 import ClearButton from '../helpers/ClearButton';
 
-const NotificationConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
+const NotificationConfiguration = ({
+    state,
+    ableToEdit,
+    onChange,
+    openModal,
+    params
+}) => {
     const { t } = useTranslation();
     const classes = useStyles();
 
@@ -48,7 +55,11 @@ const NotificationConfiguration = ({ state, ableToEdit, onChange, openModal }) =
                         fullWidth
                         multiline
                         name="addressees"
-                        value={state.addressees || ''}
+                        value={
+                            findParamByKey(params, [state.addressees])
+                                ? state.addressees
+                                : ''
+                        }
                         onChange={event =>
                             onChange(event.target.name, event.target.value)
                         }
@@ -99,7 +110,8 @@ NotificationConfiguration.propTypes = {
     state: PropTypes.object,
     ableToEdit: PropTypes.bool,
     onChange: PropTypes.func,
-    openModal: PropTypes.func
+    openModal: PropTypes.func,
+    params: PropTypes.array
 };
 
 export default NotificationConfiguration;

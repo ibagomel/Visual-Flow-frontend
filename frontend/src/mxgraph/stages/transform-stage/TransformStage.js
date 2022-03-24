@@ -20,12 +20,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './TransformStage.Styles';
 import makeTooltip from '../helpers/makeTooltip';
 
+import StageTag from '../../../components/stage-tag';
+
 const TransformStage = ({ stage }) => {
+    const { t } = useTranslation();
     const classes = useStyles();
 
     return (
@@ -34,6 +38,20 @@ const TransformStage = ({ stage }) => {
                 {stageIcon(stage.operation)}
                 {makeTooltip(stage.name, stage.name)}
             </Typography>
+            <>
+                {stage.mode === 'Full_SQL' ? (
+                    <Typography
+                        variant="caption"
+                        component="div"
+                        className={classes.tableName}
+                        color="textSecondary"
+                    >
+                        {t('jobDesigner:transformConfiguration.tableName')}:{' '}
+                        {makeTooltip(stage.tableName, stage.tableName)}
+                    </Typography>
+                ) : null}
+            </>
+            <StageTag className={classes.mode} content={stage.mode} />
         </div>
     );
 };

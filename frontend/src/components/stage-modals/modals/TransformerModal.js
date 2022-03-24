@@ -43,6 +43,24 @@ const TransformerModal = props => {
             paragraph: t('transformer:name.value')
         },
         {
+            title: t('transformer:mode.name'),
+            paragraph1: t('transformer:mode.value1'),
+            paragraph2: t('transformer:mode.value2'),
+            example1: t('transformer:mode.value3'),
+            example2: t('transformer:mode.value4'),
+            example3: t('transformer:mode.value5'),
+            example4: t('transformer:mode.value6'),
+            example5: t('transformer:mode.value7'),
+            paragraph4: t('transformer:mode.value8'),
+            example6: t('transformer:mode.value9'),
+            paragraph5: t('transformer:mode.value10'),
+            paragraph6: t('transformer:mode.value11')
+        },
+        {
+            title: t('transformer:tableName.name'),
+            paragraph1: t('transformer:tableName.value')
+        },
+        {
             title: t('transformer:output.name'),
             paragraph1: t('transformer:output.value1'),
             paragraph2: t('transformer:output.value2'),
@@ -52,15 +70,7 @@ const TransformerModal = props => {
             link2: {
                 title: t('transformer:output.value6.title'),
                 link: t('transformer:output.value6.link')
-            },
-            paragraph6: t('transformer:output.value7'),
-            example1: t('transformer:output.value8'),
-            paragraph7: t('transformer:output.value9'),
-            example2: t('transformer:output.value10'),
-            example3: t('transformer:output.value11'),
-            example4: t('transformer:output.value12'),
-            example5: t('transformer:output.value13'),
-            example6: t('transformer:output.value14')
+            }
         }
     ];
     return <InfoModal content={content} {...props} />;

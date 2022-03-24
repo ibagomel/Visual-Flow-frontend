@@ -25,42 +25,52 @@ import NotificationConfiguration from './notification-configuration';
 import JobConfiguration from './job-configuration';
 import Configuration from './configuration';
 import ContainerConfiguration from './container-configuration';
+import { findByProp } from '../../components/helpers/JobsPipelinesTable';
+import {
+    findParamByKey,
+    validParamsContainer
+} from '../../components/helpers/PipelinesValidation';
 
-const checkContainerFields = ({
-    name,
-    image,
-    imagePullPolicy,
-    requestsCpu,
-    requestsMemory,
-    limitsCpu,
-    limitsMemory,
-    imagePullSecretType,
-    username,
-    password,
-    registry,
-    imagePullSecretName
-}) => {
+const checkContainerFields = (params, inputValues) => {
     const fields = [
-        name,
-        image,
-        imagePullPolicy,
-        requestsCpu,
-        requestsMemory,
-        limitsCpu,
-        limitsMemory,
-        imagePullSecretType
+        inputValues.name,
+        inputValues.image,
+        inputValues.imagePullPolicy,
+        inputValues.requestsCpu,
+        inputValues.requestsMemory,
+        inputValues.limitsCpu,
+        inputValues.limitsMemory,
+        inputValues.imagePullSecretType
     ];
 
     if (fields.includes(undefined)) {
         return true;
     }
-    if (imagePullSecretType === 'NEW' && (!username || !password || !registry)) {
+    if (
+        inputValues.imagePullSecretType === 'NEW' &&
+        (!inputValues.username || !inputValues.password || !inputValues.registry)
+    ) {
         return true;
     }
-    if (imagePullSecretType === 'PROVIDED' && !imagePullSecretName) {
+    if (
+        inputValues.imagePullSecretType === 'PROVIDED' &&
+        !inputValues.imagePullSecretName
+    ) {
         return true;
     }
+    if (inputValues.image || inputValues.imagePullSecretType) {
+        return !validParamsContainer(params, inputValues);
+    }
+
     return false;
+};
+
+const checkNotification = (params, state) => {
+    if (!state.name || !state.message || !state.addressees) {
+        return true;
+    }
+
+    return !findParamByKey(params, [state.addressees]);
 };
 
 const RenderPipelineConfiguration = ({
@@ -69,15 +79,15 @@ const RenderPipelineConfiguration = ({
     ableToEdit,
     saveCell,
     graph,
-    jobs
+    jobs,
+    params
 }) => {
     const pipelinesConfigurationComponents = {
         NOTIFICATION: {
             component: Configuration,
             props: {
                 Component: NotificationConfiguration,
-                isDisabled: state =>
-                    !state.name || !state.message || !state.addressees,
+                isDisabled: state => checkNotification(params, state),
                 ableToEdit,
                 setPanelDirty,
                 configuration,
@@ -91,7 +101,7 @@ const RenderPipelineConfiguration = ({
                 isDisabled: inputValues =>
                     !inputValues.name ||
                     !inputValues.jobId ||
-                    !jobs.find(job => job.id === inputValues.jobId),
+                    !findByProp(jobs, inputValues.jobId, 'id'),
                 ableToEdit,
                 setPanelDirty,
                 configuration,
@@ -103,7 +113,7 @@ const RenderPipelineConfiguration = ({
             component: Configuration,
             props: {
                 Component: ContainerConfiguration,
-                isDisabled: inputValues => checkContainerFields(inputValues),
+                isDisabled: inputValues => checkContainerFields(params, inputValues),
                 ableToEdit,
                 setPanelDirty,
                 configuration,
@@ -132,11 +142,13 @@ RenderPipelineConfiguration.propTypes = {
     ableToEdit: PropTypes.bool,
     saveCell: PropTypes.func,
     graph: PropTypes.object,
-    jobs: PropTypes.array
+    jobs: PropTypes.array,
+    params: PropTypes.array
 };
 
 const mapStateToProps = state => ({
-    jobs: state.pages.jobs.data.jobs
+    jobs: state.pages.jobs.data.jobs,
+    params: state.pages.settingsParameters.data.params
 });
 
 export default connect(mapStateToProps)(RenderPipelineConfiguration);

@@ -27,6 +27,8 @@ import useStyles from './ReadWriteStage.Styles';
 import { STORAGES } from '../../constants';
 import makeTooltip from '../helpers/makeTooltip';
 
+import StageTag from '../../../components/stage-tag';
+
 const ReadWriteStage = ({ stage }) => {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -182,17 +184,14 @@ const ReadWriteStage = ({ stage }) => {
                 {makeTooltip(stage.name, stage.name)}
             </Typography>
             {stage.storage && renderStorageData()}
-            <Typography
-                variant="caption"
-                component="div"
+            <StageTag
                 className={classes.storage}
-            >
-                {
+                content={
                     Object.values(STORAGES).find(
                         ({ value }) => value === stage.storage
                     )?.label
                 }
-            </Typography>
+            />
         </div>
     );
 };

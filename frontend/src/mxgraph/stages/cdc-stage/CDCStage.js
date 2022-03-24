@@ -26,6 +26,8 @@ import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './CDCStage.Styles';
 import makeTooltip from '../helpers/makeTooltip';
 
+import StageTag from '../../../components/stage-tag';
+
 const CDCStage = ({ stage }) => {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -60,9 +62,7 @@ const CDCStage = ({ stage }) => {
                         makeTooltip(keyColumns.join(', '), ' ...')}
                 </span>
             </Typography>
-            <Typography variant="caption" component="div" className={classes.mode}>
-                {stage.mode}
-            </Typography>
+            <StageTag className={classes.mode} content={stage.mode} />
         </div>
     );
 };

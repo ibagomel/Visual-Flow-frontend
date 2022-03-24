@@ -21,34 +21,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 
-import stageIcon from '../../sidebar/stage-icon/stageIcon';
-import useStyles from './NotificationStage.Styles';
-import StageWarning from '../../../components/stage-warning';
+const StageTag = ({ className, content }) => (
+    <Typography variant="caption" component="div" className={className}>
+        {content}
+    </Typography>
+);
 
-const NotificationStage = ({ stage, params }) => {
-    const classes = useStyles();
-
-    return (
-        <div className={classes.root}>
-            <Typography variant="body2" component="div" className={classes.title}>
-                {stageIcon(stage.operation)}
-                <span className={classes.name}>{stage.name}</span>
-            </Typography>
-            <Typography
-                variant="caption"
-                component="div"
-                className={classes.addressees}
-            >
-                {stage.addressees}
-            </Typography>
-            <StageWarning stage={stage} params={params} />
-        </div>
-    );
+StageTag.propTypes = {
+    className: PropTypes.string,
+    content: PropTypes.string
 };
 
-NotificationStage.propTypes = {
-    stage: PropTypes.object,
-    params: PropTypes.array
-};
-
-export default NotificationStage;
+export default StageTag;

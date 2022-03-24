@@ -25,5 +25,12 @@ export default makeStyles(() => ({
         justifyContent: 'space-between',
         flexDirection: 'column',
         height: '90%'
+    },
+    fieldWrapper: {
+        display: 'flex',
+        alignItems: 'center'
+    },
+    button: {
+        padding: 0
     }
 }));

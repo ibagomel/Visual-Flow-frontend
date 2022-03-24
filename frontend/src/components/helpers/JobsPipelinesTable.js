@@ -19,6 +19,7 @@
 
 import pipelinesApi from '../../api/pipelines';
 import showNotification from '../notification/showNotification';
+import { findParamByKey, validParamsContainer } from './PipelinesValidation';
 
 export const removeHandler = (
     projectId,
@@ -37,14 +38,13 @@ export const removeHandler = (
         }
     });
 };
-
 export const findByProp = (objects, value, prop) =>
     objects?.find(obj => obj[prop] === value);
 
 export const runWithValidation = async (
     projectId,
     itemId,
-    { data, findProp },
+    { dataJobs, dataParams },
     run,
     message
 ) => {
@@ -56,7 +56,19 @@ export const runWithValidation = async (
     pipelineData.definition?.graph.forEach(stage => {
         if (
             stage.value.operation === 'JOB' &&
-            !findByProp(data, stage.value.jobId, findProp)
+            !findByProp(dataJobs, stage.value.jobId, 'id')
+        ) {
+            runDisabled = true;
+        }
+        if (
+            stage.value.operation === 'NOTIFICATION' &&
+            !findParamByKey(dataParams, [stage.value.addressees])
+        ) {
+            runDisabled = true;
+        }
+        if (
+            stage.value.operation === 'CONTAINER' &&
+            !validParamsContainer(dataParams, stage.value)
         ) {
             runDisabled = true;
         }

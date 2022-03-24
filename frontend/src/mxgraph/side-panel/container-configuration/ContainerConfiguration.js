@@ -36,10 +36,23 @@ import ImagePullSecretType from './ImagePullSecretType';
 import SelectField from '../../../components/select-field';
 import ClearButton from '../helpers/ClearButton';
 import { OTHER } from '../../constants';
+import { findParamByKey } from '../../../components/helpers/PipelinesValidation';
 
-const ContainerConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
+const ContainerConfiguration = ({
+    state,
+    ableToEdit,
+    onChange,
+    openModal,
+    params
+}) => {
     const { t } = useTranslation();
     const classes = useStyles();
+
+    const paramsByKey = key => {
+        const paramKey = findParamByKey(params, [key]);
+        return paramKey ? key : '';
+    };
+
     return (
         <>
             <Divider />
@@ -56,7 +69,7 @@ const ContainerConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
                             fullWidth
                             multiline
                             name="image"
-                            value={state.image || ''}
+                            value={paramsByKey(state.image)}
                             onChange={event =>
                                 onChange(event.target.name, event.target.value)
                             }
@@ -150,6 +163,7 @@ const ContainerConfiguration = ({ state, ableToEdit, onChange, openModal }) => {
                         ableToEdit={ableToEdit}
                         t={t}
                         required
+                        checkParam={paramsByKey}
                     />
                     <TextField
                         disabled={!ableToEdit}
@@ -178,7 +192,8 @@ ContainerConfiguration.propTypes = {
     state: PropTypes.object,
     ableToEdit: PropTypes.bool,
     onChange: PropTypes.func,
-    openModal: PropTypes.func
+    openModal: PropTypes.func,
+    params: PropTypes.array
 };
 
 export default ContainerConfiguration;

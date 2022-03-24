@@ -41,7 +41,8 @@ const Configuration = ({
     swapEdges,
     graph,
     sidePanelIsOpen,
-    selectedStorage
+    selectedStorage,
+    params
 }) => {
     const { t } = useTranslation();
     const [state, setState] = useState({ ...configuration });
@@ -176,6 +177,7 @@ const Configuration = ({
                     openModal={openModal}
                     edgeLabels={edgeLabels}
                     handleSwap={handleSwap}
+                    params={params}
                 />
             </Box>
             <SaveCancelButtons
@@ -199,11 +201,13 @@ Configuration.propTypes = {
     swapEdges: PropTypes.func,
     graph: PropTypes.object,
     sidePanelIsOpen: PropTypes.bool,
-    selectedStorage: PropTypes.func
+    selectedStorage: PropTypes.func,
+    params: PropTypes.array
 };
 
 const mapStateToProps = state => ({
-    sidePanelIsOpen: state.mxGraph.sidePanelIsOpen
+    sidePanelIsOpen: state.mxGraph.sidePanelIsOpen,
+    params: state.pages.settingsParameters.data.params
 });
 
 export default compose(withStyles(styles), connect(mapStateToProps))(Configuration);

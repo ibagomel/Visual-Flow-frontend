@@ -59,7 +59,7 @@ const CDCConfiguration = ({
     return (
         <>
             <Divider className={classes.divider} />
-            {state.name && (
+            {state.name && state.operation === 'CDC' && (
                 <>
                     <Typography variant="body2" color="textSecondary">
                         {t('jobDesigner:CDCConfiguration.LinkOrdering')}

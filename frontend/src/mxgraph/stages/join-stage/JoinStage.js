@@ -26,6 +26,8 @@ import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './JoinStage.Styles';
 import makeTooltip from '../helpers/makeTooltip';
 
+import StageTag from '../../../components/stage-tag';
+
 const JoinStage = ({ stage }) => {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -60,13 +62,7 @@ const JoinStage = ({ stage }) => {
                 </span>
             </Typography>
 
-            <Typography
-                variant="caption"
-                component="div"
-                className={classes.joinType}
-            >
-                {stage.joinType}
-            </Typography>
+            <StageTag className={classes.joinType} content={stage.joinType} />
         </div>
     );
 };

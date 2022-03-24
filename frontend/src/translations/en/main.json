@@ -77,6 +77,7 @@
         "incorrectJobLength": "Must be no more than 63 characters.",
         "incorrectPipelineLength": "The name should have a total length between 3 and 40 characters max.",
         "incorrectCharacters": "Use alphanumeric characters, '-', '.' or '_'. Name must start and end with an alphanumeric.",
+        "pipelineWithoutJobParams": "Unable to run pipeline, missing job/parameter data.",
         "projectParameters": {
             "keyDuplication": "Key duplication",
             "valueDuplication": "Value duplication",
@@ -125,5 +126,9 @@
     },
     "error": {
         "GUI": "GUI is absent. Possible reason: created via API."
+    },
+    "export": {
+        "note1": "Note: ",
+        "note2": "The file will be exported to the default folder set in your browser."
     }
 }

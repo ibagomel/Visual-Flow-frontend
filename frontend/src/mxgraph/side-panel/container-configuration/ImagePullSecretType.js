@@ -33,17 +33,19 @@ const ImagePullSecretType = ({
     state,
     onChange,
     openModal,
-    required
+    required,
+    checkParam
 }) => {
     const { t } = useTranslation();
     const classes = useStyles();
+
     return (
         <>
             <SelectField
                 ableToEdit={ableToEdit}
                 label="pipelineDesigner:containerConfiguration.ImagePullSecretType"
                 name="imagePullSecretType"
-                value={state.imagePullSecretType}
+                value={state.imagePullSecretType || ''}
                 handleInputChange={onChange}
                 menuItems={Object.values(IMAGE_PULL_SECRET_TYPE)}
                 type={OTHER}
@@ -63,7 +65,7 @@ const ImagePullSecretType = ({
                             fullWidth
                             multiline
                             name="username"
-                            value={state.username || ''}
+                            value={checkParam(state.username)}
                             onChange={event =>
                                 onChange(event.target.name, event.target.value)
                             }
@@ -98,7 +100,7 @@ const ImagePullSecretType = ({
                             fullWidth
                             multiline
                             name="password"
-                            value={state.password || ''}
+                            value={checkParam(state.password)}
                             onChange={event =>
                                 onChange(event.target.name, event.target.value)
                             }
@@ -133,7 +135,7 @@ const ImagePullSecretType = ({
                             fullWidth
                             multiline
                             name="registry"
-                            value={state.registry || ''}
+                            value={checkParam(state.registry)}
                             onChange={event =>
                                 onChange(event.target.name, event.target.value)
                             }
@@ -171,7 +173,7 @@ const ImagePullSecretType = ({
                         fullWidth
                         multiline
                         name="imagePullSecretName"
-                        value={state.imagePullSecretName || ''}
+                        value={checkParam(state.imagePullSecretName)}
                         onChange={event =>
                             onChange(event.target.name, event.target.value)
                         }
@@ -205,7 +207,8 @@ ImagePullSecretType.propTypes = {
     ableToEdit: PropTypes.bool,
     onChange: PropTypes.func,
     openModal: PropTypes.func,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    checkParam: PropTypes.func
 };
 
 export default ImagePullSecretType;

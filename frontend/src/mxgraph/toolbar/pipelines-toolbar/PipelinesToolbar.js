@@ -43,6 +43,10 @@ import { fetchJobs } from '../../../redux/actions/jobsActions';
 import { resetFillColor } from '../../resetFillColor/resetFillColor';
 import { PENDING, RUNNING } from '../../constants';
 import { findByProp } from '../../../components/helpers/JobsPipelinesTable';
+import {
+    findParamByKey,
+    validParamsContainer
+} from '../../../components/helpers/PipelinesValidation';
 
 const PipelinesToolbar = ({
     graph,
@@ -61,7 +65,8 @@ const PipelinesToolbar = ({
     sidePanelIsDirty,
     dirty,
     undoButtonsDisabling,
-    jobs
+    jobs,
+    params
 }) => {
     const { t } = useTranslation();
     const classes = useStyles({ name: 'PipelineUtilizationCell' });
@@ -73,12 +78,24 @@ const PipelinesToolbar = ({
     const statusValue = currentPipeline === id ? status : data.status;
     const progressValue = currentPipeline === id ? progress : data.progress;
 
-    const validJobStages = () => {
+    const validStages = () => {
         let isValid = true;
         data?.definition.graph.forEach(stage => {
             if (
                 stage.value.operation === 'JOB' &&
                 !findByProp(jobs, stage.value.jobId, 'id')
+            ) {
+                isValid = false;
+            }
+            if (
+                stage.value.operation === 'NOTIFICATION' &&
+                !findParamByKey(params, [stage.value.addressees])
+            ) {
+                isValid = false;
+            }
+            if (
+                stage.value.operation === 'CONTAINER' &&
+                !validParamsContainer(params, stage.value)
             ) {
                 isValid = false;
             }
@@ -97,6 +114,13 @@ const PipelinesToolbar = ({
 
     const runAndUpdate = () => {
         return run(currentProject, currentPipeline).then(() => {
+            getActualJobs(currentProject);
+            getActualPipeline(currentProject, currentPipeline);
+        });
+    };
+
+    const stopAndUpdate = () => {
+        return stop(currentProject, currentPipeline).then(() => {
             getActualJobs(currentProject);
             getActualPipeline(currentProject, currentPipeline);
         });
@@ -141,13 +165,13 @@ const PipelinesToolbar = ({
                         isNotRunning={![RUNNING, PENDING].includes(statusValue)}
                         runnable={data.runnable}
                         stopable={![PENDING].includes(statusValue)}
-                        changesNotSaved={
-                            sidePanelIsDirty || dirty || !validJobStages()
-                        }
+                        changesNotSaved={sidePanelIsDirty || dirty || !validStages()}
                         run={() => {
                             runAndUpdate();
                         }}
-                        stop={() => stop(currentProject, currentPipeline)}
+                        stop={() => {
+                            stopAndUpdate();
+                        }}
                     />
                 )}
                 {enableViewMode() && (
@@ -195,14 +219,16 @@ PipelinesToolbar.propTypes = {
     sidePanelIsDirty: PropTypes.bool,
     dirty: PropTypes.bool,
     undoButtonsDisabling: PropTypes.object,
-    jobs: PropTypes.array
+    jobs: PropTypes.array,
+    params: PropTypes.array
 };
 
 const mapStateToProps = state => ({
     pipelineStatus: state.pipelineStatus,
     sidePanelIsDirty: state.mxGraph.sidePanelIsDirty,
     dirty: state.mxGraph.dirty,
-    jobs: state.pages.jobs.data.jobs
+    jobs: state.pages.jobs.data.jobs,
+    params: state.pages.settingsParameters.data.params
 });
 
 const mapDispatchToProps = {

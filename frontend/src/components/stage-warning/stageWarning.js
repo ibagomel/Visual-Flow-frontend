@@ -23,52 +23,32 @@ import ReportOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import schemas from '../../mxgraph/side-panel/schemas';
 import useStyles from './stageWarning.Styles';
-import { IMAGE_PULL_SECRET_TYPE } from '../../mxgraph/side-panel/constants/container';
 import { findByProp } from '../helpers/JobsPipelinesTable';
+import {
+    findParamByKey,
+    validParamsContainer
+} from '../helpers/PipelinesValidation';
 
-const containerValidation = (stage, schemaStageLength) => {
-    let stageLength = schemaStageLength || 0;
-    if (!stage.mountProjectParams) {
-        stageLength -= 1;
-    }
-    if (!stage.command) {
-        stageLength -= 1;
-    }
-    switch (stage.imagePullSecretType) {
-        case IMAGE_PULL_SECRET_TYPE.NEW.value:
-            stageLength -= 1;
-            break;
-        case IMAGE_PULL_SECRET_TYPE.PROVIDED.value:
-            stageLength -= 3;
-            break;
-        default:
-            stageLength -= 4;
-    }
-    return stageLength;
-};
-
-const StageWarning = ({ stage, jobs, visibleLogsIcon }) => {
+const StageWarning = ({ stage, jobs, visibleLogsIcon, params }) => {
     const { t } = useTranslation();
     const classes = useStyles();
     const position = stage.name ? classes.stageWithName : classes.stageWithoutName;
 
     const stageNotFilled = () => {
-        const stageLength = Object.keys(stage).length;
-        let schemaStageLength =
-            Object.keys(schemas[stage.operation]).length +
-            Object.keys(schemas.COMMON_SCHEMA).length;
-
         if (jobs && stage.operation === 'JOB') {
             return !findByProp(jobs, stage.jobId, 'id');
         }
 
-        if (stage.operation === 'CONTAINER') {
-            schemaStageLength = containerValidation(stage, schemaStageLength);
+        if (params && stage.operation === 'NOTIFICATION') {
+            return !findParamByKey(params, [stage.addressees]);
         }
 
-        return schemaStageLength > stageLength;
+        if (params && stage.operation === 'CONTAINER') {
+            return !validParamsContainer(params, stage);
+        }
+
+        return false;
     };
 
     return stageNotFilled() ? (
@@ -86,7 +66,8 @@ const StageWarning = ({ stage, jobs, visibleLogsIcon }) => {
 StageWarning.propTypes = {
     stage: PropTypes.object,
     jobs: PropTypes.array,
-    visibleLogsIcon: PropTypes.bool
+    visibleLogsIcon: PropTypes.bool,
+    params: PropTypes.array
 };
 
 export default StageWarning;

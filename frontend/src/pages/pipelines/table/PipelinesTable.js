@@ -88,7 +88,8 @@ const PipelinesTable = ({
     setCurrentPage,
     currentPage,
     rowsPerPage,
-    jobs
+    jobs,
+    params
 }) => {
     const { t } = useTranslation();
     const classes = withStyles();
@@ -105,9 +106,9 @@ const PipelinesTable = ({
                       runWithValidation(
                           projectId,
                           item.id,
-                          { data: jobs, findProp: 'id' },
+                          { dataJobs: jobs, dataParams: params },
                           run,
-                          t('main:validation.pipelineWithoutJob')
+                          t('main:validation.pipelineWithoutJobParams')
                       );
                   }
               }
@@ -291,7 +292,8 @@ PipelinesTable.propTypes = {
     setCurrentPage: PropTypes.func,
     currentPage: PropTypes.number,
     rowsPerPage: PropTypes.number,
-    jobs: PropTypes.array
+    jobs: PropTypes.array,
+    params: PropTypes.array
 };
 
 const mapStateToProps = state => ({

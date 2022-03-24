@@ -40,7 +40,8 @@ const ReadWriteTextFields = ({
     handleInputChange,
     openModal,
     ableToEdit,
-    nameWIthPoint = false
+    nameWIthPoint = false,
+    required
 }) => {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -88,6 +89,7 @@ const ReadWriteTextFields = ({
                             </IconButton>
                         )
                     }}
+                    required={required}
                 />
                 <ClearButton
                     name={fieldName}
@@ -107,7 +109,8 @@ ReadWriteTextFields.propTypes = {
     handleInputChange: PropTypes.func,
     openModal: PropTypes.func,
     ableToEdit: PropTypes.bool,
-    nameWIthPoint: PropTypes.func
+    nameWIthPoint: PropTypes.func,
+    required: PropTypes.bool
 };
 
 export default ReadWriteTextFields;

@@ -21,29 +21,79 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Divider, TextField } from '@material-ui/core';
+import SelectField from '../../../components/select-field';
+import { OTHER } from '../../constants';
+import ReadTextFields from '../../../components/rw-text-fields';
 
-const TransformConfiguration = ({ state, ableToEdit, onChange }) => {
+const mode = [
+    {
+        value: 'Simple',
+        label: 'Simple'
+    },
+    {
+        value: 'Full_SQL',
+        label: 'Full SQL'
+    }
+];
+
+const TransformConfiguration = ({
+    state,
+    ableToEdit,
+    onChange,
+    openModal,
+    required = true
+}) => {
     const { t } = useTranslation();
+    const fields = [{ field: 'tableName' }];
+    const TRANSFORMER_DEFAULT_VALUE = 'Simple';
+
     return (
         <>
             <Divider />
-            {state.name && (
-                <TextField
-                    disabled={!ableToEdit}
-                    label={t('jobDesigner:transformConfiguration.Output')}
-                    placeholder={t('jobDesigner:transformConfiguration.Placeholder')}
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    multiline
-                    rows={16}
-                    name="statement"
-                    value={state.statement || ''}
-                    onChange={event =>
-                        onChange(event.target.name, event.target.value)
-                    }
-                    required
-                />
+            {state.name && state.operation === 'TRANSFORM' && (
+                <>
+                    <SelectField
+                        ableToEdit={ableToEdit}
+                        label="jobDesigner:transformConfiguration.Mode"
+                        name="mode"
+                        value={state.mode}
+                        menuItems={mode}
+                        handleInputChange={onChange}
+                        type={OTHER}
+                        defaultValue={TRANSFORMER_DEFAULT_VALUE}
+                        required
+                    />
+                    {state.mode === 'Full_SQL' ? (
+                        <ReadTextFields
+                            ableToEdit={ableToEdit}
+                            fields={fields}
+                            inputValues={state}
+                            handleInputChange={event =>
+                                onChange(event.target.name, event.target.value)
+                            }
+                            openModal={openModal}
+                            required={required}
+                        />
+                    ) : null}
+                    <TextField
+                        disabled={!ableToEdit}
+                        label={t('jobDesigner:transformConfiguration.Output')}
+                        placeholder={t(
+                            'jobDesigner:transformConfiguration.Placeholder'
+                        )}
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        multiline
+                        rows={16}
+                        name="statement"
+                        value={state.statement || ''}
+                        onChange={event =>
+                            onChange(event.target.name, event.target.value)
+                        }
+                        required
+                    />
+                </>
             )}
         </>
     );
@@ -52,7 +102,9 @@ const TransformConfiguration = ({ state, ableToEdit, onChange }) => {
 TransformConfiguration.propTypes = {
     state: PropTypes.object,
     ableToEdit: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    openModal: PropTypes.func,
+    required: PropTypes.bool
 };
 
 export default TransformConfiguration;

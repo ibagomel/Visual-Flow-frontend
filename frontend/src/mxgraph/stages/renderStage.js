@@ -58,7 +58,7 @@ const root = {
 };
 
 // eslint-disable-next-line complexity
-const renderStage = (stage, t, type, jobs) => {
+const renderStage = (stage, t, type, jobs, params) => {
     // if have only stage.type (on first drag-and-drop)
     if (Object.keys(stage).length === 1) {
         return (
@@ -68,7 +68,9 @@ const renderStage = (stage, t, type, jobs) => {
                     &nbsp;
                     {t(`jobDesigner:palette.${stage.operation}`)}
                 </div>
-                {type === PIPELINE && <StageWarning stage={stage} />}
+                {type === PIPELINE && (
+                    <StageWarning stage={stage} jobs={jobs} params={params} />
+                )}
             </div>
         );
     }
@@ -96,9 +98,9 @@ const renderStage = (stage, t, type, jobs) => {
         case JOB:
             return <JobStage stage={stage} jobs={jobs} />;
         case NOTIFICATION:
-            return <NotificationStage stage={stage} />;
+            return <NotificationStage stage={stage} params={params} />;
         case CONTAINER:
-            return <ContainerStage stage={stage} />;
+            return <ContainerStage stage={stage} params={params} />;
         case CACHE:
             return <CacheStage stage={stage} />;
         default:

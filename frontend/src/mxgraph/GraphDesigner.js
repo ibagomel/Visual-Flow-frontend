@@ -97,7 +97,9 @@ import {
     SUCCEEDED,
     FAILED,
     CONTAINER,
-    SKIPPED
+    SKIPPED,
+    ERROR,
+    TERMINATED
 } from './constants';
 import LogsModal from '../pages/logs-modal';
 import { jobStagesByType } from './jobStages';
@@ -209,7 +211,7 @@ class GraphDesigner extends Component {
 
     // main setting
     setGraphSetting = () => {
-        const { data, jobs, type, t, setPanel } = this.props;
+        const { data, jobs, type, t, setPanel, params } = this.props;
         const { graph } = this.state;
         const that = this;
         graph.gridSize = 10;
@@ -291,7 +293,7 @@ class GraphDesigner extends Component {
                 }
                 // Returns a DOM for the label
                 return ReactDOMServer.renderToString(
-                    renderStage(results, t, type, jobs)
+                    renderStage(results, t, type, jobs, params)
                 );
             }
 
@@ -649,14 +651,18 @@ class GraphDesigner extends Component {
             color = '#E57373';
         } else if (val === RUNNING || val === PENDING) {
             color = '#64b5f6';
+        } else if (val === TERMINATED) {
+            color = '#E57373';
         } else if (val === SKIPPED) {
             color = '#bdbdbd';
+        } else if (val === ERROR) {
+            color = '#E57373';
         }
         return color;
     };
 
     changeBorder = () => {
-        const { data, type } = this.props;
+        const { data, type, pipelineStatus } = this.props;
         let newStyle;
         if (type === PIPELINE) {
             if (data?.definition?.graph) {
@@ -672,13 +678,13 @@ class GraphDesigner extends Component {
                 });
                 if (data?.jobsStatuses) {
                     // eslint-disable-next-line no-restricted-syntax
-                    for (const [key, val] of Object.entries(data?.jobsStatuses)) {
+                    for (const key of Object.keys(data?.jobsStatuses)) {
                         const currentStage = data?.definition.graph.find(
                             item => item.id === key
                         );
                         newStyle = currentStage.style.replace(
-                            '#bdbdbd',
-                            this.changeColor(val)
+                            /strokeColor=#[0-9a-fA-F]{6};/,
+                            `strokeColor=${this.changeColor(pipelineStatus)};`
                         );
                         currentStage.style = newStyle;
                     }
@@ -813,7 +819,8 @@ GraphDesigner.propTypes = {
     zoomVal: PropTypes.number,
     panning: PropTypes.bool,
     showLogsModal: PropTypes.bool,
-    jobs: PropTypes.array
+    jobs: PropTypes.array,
+    params: PropTypes.array
 };
 
 const mapStateToProps = state => ({
@@ -825,7 +832,8 @@ const mapStateToProps = state => ({
     zoomVal: state.mxGraph.zoomValue,
     jobs: state.pages.jobs.data.jobs,
     panning: state.mxGraph.panning,
-    showLogsModal: state.mxGraph.showLogsModal
+    showLogsModal: state.mxGraph.showLogsModal,
+    params: state.pages.settingsParameters.data.params
 });
 
 const mapDispatchToProps = {

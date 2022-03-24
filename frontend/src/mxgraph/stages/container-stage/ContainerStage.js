@@ -27,7 +27,7 @@ import useStyles from './ContainerStage.Styles';
 import { DRAFT, PENDING, SKIPPED } from '../../constants';
 import StageWarning from '../../../components/stage-warning';
 
-const ContainerStage = ({ stage }) => {
+const ContainerStage = ({ stage, params }) => {
     const classes = useStyles();
     const visibleLogsIcon =
         stage.status && ![DRAFT, PENDING, SKIPPED].includes(stage.status);
@@ -44,13 +44,18 @@ const ContainerStage = ({ stage }) => {
             <Typography variant="caption" component="div" className={classes.image}>
                 {stage.image || ''}
             </Typography>
-            <StageWarning stage={stage} visibleLogsIcon={visibleLogsIcon} />
+            <StageWarning
+                stage={stage}
+                visibleLogsIcon={visibleLogsIcon}
+                params={params}
+            />
         </div>
     );
 };
 
 ContainerStage.propTypes = {
-    stage: PropTypes.object
+    stage: PropTypes.object,
+    params: PropTypes.array
 };
 
 export default ContainerStage;

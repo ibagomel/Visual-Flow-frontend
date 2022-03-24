@@ -17,36 +17,6 @@
  * limitations under the License.
  */
 
-import { makeStyles } from '@material-ui/core/styles';
+import StageTag from './StageTag';
 
-export default makeStyles(theme => ({
-    wrapper: {
-        maxHeight: 200,
-        overflow: 'hidden'
-    },
-    buttonsGroup: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    paddedTopOne: {
-        paddingTop: theme.spacing(1)
-    },
-    paddedTopSix: {
-        paddingTop: theme.spacing(6)
-    },
-    button: {
-        width: 100,
-        margin: theme.spacing(0, 2, 7, 2),
-        color: theme.palette.primary.contrastText
-    },
-    cancelBtn: {
-        background: theme.palette.grey[600]
-    },
-    note: {
-        fontWeight: 800
-    },
-    txtNote: {
-        fontWeight: 400
-    }
-}));
+export default StageTag;

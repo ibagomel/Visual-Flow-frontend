@@ -64,6 +64,7 @@
         "ExtraCopyOptions": "Extra copy options",
         "Query": "Query",
         "quantity": "Quantity",
+        "tableName": "Table name",
         "TruncateMode": "Truncate Mode"
     },
     "writeConfiguration": {
@@ -110,7 +111,11 @@
     "transformConfiguration": {
         "Name": "Name",
         "Output": "Output",
-        "Placeholder": "column_name AS alias_name"
+        "Placeholder": "column_name AS alias_name",
+        "Mode": "Mode",
+        "simple": "Simple",
+        "fullSql": "Full SQL",
+        "tableName": "Table name"
     },
     "filterConfiguration": {
         "Name": "Name",

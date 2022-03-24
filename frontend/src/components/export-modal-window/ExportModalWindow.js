@@ -129,6 +129,14 @@ const ExportModalWindow = ({
                         </Typography>
                     )}
                 </Box>
+                <Typography
+                    display="block"
+                    variant="subtitle2"
+                    color="textSecondary"
+                >
+                    <span className={classes.note}>{t('main:export.note1')}</span>
+                    <span className={classes.txtNote}>{t('main:export.note2')}</span>
+                </Typography>
                 <Box
                     className={classNames(
                         classes.buttonsGroup,

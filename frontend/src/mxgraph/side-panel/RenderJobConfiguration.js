@@ -74,6 +74,16 @@ const checkReadWriteFields = ({
     );
 };
 
+const checkTransformerFields = ({ name, mode, tableName, statement }) => {
+    if (!name || !statement || !mode) {
+        return true;
+    }
+    if (mode === 'Full_SQL' && !tableName) {
+        return true;
+    }
+    return false;
+};
+
 const RenderJobConfiguration = ({
     configuration,
     setPanelDirty,
@@ -187,7 +197,7 @@ const RenderJobConfiguration = ({
             component: Configuration,
             props: {
                 Component: TransformConfiguration,
-                isDisabled: state => !state.name || !state.statement,
+                isDisabled: state => checkTransformerFields(state),
                 ableToEdit,
                 setPanelDirty,
                 configuration,

@@ -33,6 +33,7 @@ import container from './container.json';
 import readWriteCommon from './read-write-common.json';
 import cache from './cache.json';
 import notification from './notification.json';
+import sort from './sort.json';
 
 const schemas = {
     ...commonSchema,
@@ -48,6 +49,7 @@ const schemas = {
     ...container,
     ...cache,
     ...notification,
+    ...sort,
     READ: [...get(readWriteCommon, 'READ_WRITE'), ...get(read, 'READ')],
     WRITE: [...get(readWriteCommon, 'READ_WRITE'), ...get(write, 'WRITE')]
 };

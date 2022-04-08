@@ -17,32 +17,33 @@
  * limitations under the License.
  */
 
-export default theme => ({
-    title: {
+import { makeStyles } from '@material-ui/core/styles';
+
+export default makeStyles(theme => ({
+    root: {
+        position: 'relative'
+    },
+    name: {
+        position: 'absolute',
+        left: -100,
+        top: -64,
         display: 'flex',
-        alignItems: 'center',
-        marginTop: theme.spacing(0.5)
+        'white-space': 'normal',
+        width: 215,
+        'text-align': 'left',
+        '& span': {
+            overflow: 'hidden',
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap'
+        }
     },
-
-    text: {
-        flexGrow: 1
-    },
-
-    row: {
-        display: 'flex',
-        alignItems: 'center'
-    },
-
-    icon: {
-        marginTop: theme.spacing(2)
-    },
-
-    formControl: {
-        margin: theme.spacing(2, 1, 0, 0),
-        minWidth: theme.spacing(9)
-    },
-
-    orderColumn: {
-        width: '75px'
+    sortType: {
+        position: 'absolute',
+        left: -27,
+        top: 44,
+        backgroundColor: theme.palette.warning.light,
+        color: 'white',
+        'border-radius': 4,
+        width: 130
     }
-});
+}));

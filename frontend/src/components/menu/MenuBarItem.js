@@ -17,27 +17,18 @@
  * limitations under the License.
  */
 
-import {
-    Collapse,
-    Divider,
-    List,
-    ListItemIcon,
-    ListItemText,
-    useTheme
-} from '@material-ui/core';
+import { Collapse, Divider, List, ListItemText } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import React from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useTranslation } from 'react-i18next';
+import ItemIcon from './ItemIcon';
 
 const isSelected = (item, path) => item.link === path;
-const isIconSelected = (item, path) =>
-    isSelected(item, path) || item.items?.find(v => v.link === path && !v.icon);
 
 const MenuBarItem = ({ item, menuOpen, onClick, location }) => {
-    const theme = useTheme();
     const { t } = useTranslation();
 
     const { name, Icon, items = [] } = item;
@@ -58,15 +49,11 @@ const MenuBarItem = ({ item, menuOpen, onClick, location }) => {
                 onClick={handleClick}
             >
                 {Icon && (
-                    <ListItemIcon>
-                        <Icon
-                            htmlColor={
-                                isIconSelected(item, location?.pathname)
-                                    ? theme.palette.text.primary
-                                    : null
-                            }
-                        />
-                    </ListItemIcon>
+                    <ItemIcon
+                        item={item}
+                        menuOpen={menuOpen}
+                        isSelected={isSelected(item, location?.pathname)}
+                    />
                 )}
                 <ListItemText
                     primaryTypographyProps={{

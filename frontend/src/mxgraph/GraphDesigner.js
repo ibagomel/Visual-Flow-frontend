@@ -99,7 +99,8 @@ import {
     CONTAINER,
     SKIPPED,
     ERROR,
-    TERMINATED
+    TERMINATED,
+    DRAFT
 } from './constants';
 import LogsModal from '../pages/logs-modal';
 import { jobStagesByType } from './jobStages';
@@ -283,7 +284,9 @@ class GraphDesigner extends Component {
                         item => item.pipelineId === data.id
                     );
                     if (jobInstance) {
-                        results.status = jobInstance.status;
+                        data.status === DRAFT
+                            ? delete results.status
+                            : (results.status = jobInstance.status);
                     }
                 }
                 if (operation === CONTAINER) {

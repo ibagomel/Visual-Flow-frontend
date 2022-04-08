@@ -17,7 +17,16 @@
  * limitations under the License.
  */
 
-import { IconButton, Tooltip, Typography, withStyles } from '@material-ui/core';
+import {
+    IconButton,
+    Tooltip,
+    Typography,
+    FormControl,
+    Select,
+    TextField,
+    Input,
+    withStyles
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -26,15 +35,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import styles from './PropertyList.Styles';
+import getMenuItems from '../helpers/getMenuItems';
 
 const PropertyList = ({
     ableToEdit,
     items,
+    defaultValue = '',
     onChange,
     onAddItem,
-    renderItem,
     classes,
-    label
+    label,
+    handleItemChange,
+    options
 }) => {
     const { t } = useTranslation();
     const handleRemove = index => () =>
@@ -46,12 +58,58 @@ const PropertyList = ({
         onChange(result);
     };
 
+    const splitItem = item => item?.split(':');
+
+    React.useEffect(() => {
+        items.forEach((item, index) => {
+            const [column, aggregate] = splitItem(item);
+            if (!aggregate && defaultValue) {
+                handleItemChange(index, `${column}:${defaultValue}`);
+            }
+        });
+    }, [items]);
+
+    const renderItem = (item, index) => {
+        const [column, aggregate] = splitItem(item);
+        return (
+            <>
+                <FormControl className={classes.formControl}>
+                    <Select
+                        disabled={!ableToEdit}
+                        value={aggregate}
+                        className={classes.orderColumn}
+                        onChange={event =>
+                            handleItemChange(
+                                index,
+                                `${column}:${event.target.value}`
+                            )
+                        }
+                        required
+                        input={<Input />}
+                    >
+                        {getMenuItems(options)}
+                    </Select>
+                </FormControl>
+                <TextField
+                    disabled={!ableToEdit}
+                    value={column}
+                    onChange={event =>
+                        handleItemChange(index, `${event.target.value}:${aggregate}`)
+                    }
+                    label={t('jobDesigner:Column')}
+                    placeholder={t('jobDesigner:Column')}
+                />
+            </>
+        );
+    };
+
     const renderRow = (item, index) => (
         <div key={index} className={classes.row}>
             {renderItem(item, index)}
             {index < items.length - 1 && (
                 <Tooltip title={t('main:tooltip.MoveDown')} arrow>
                     <IconButton
+                        disabled={!ableToEdit}
                         onClick={handleMove(index)}
                         aria-label={t('main:tooltip.MoveDown')}
                         className={classes.icon}
@@ -64,6 +122,7 @@ const PropertyList = ({
             {index > 0 && (
                 <Tooltip title={t('main:tooltip.MoveUp')} arrow>
                     <IconButton
+                        disabled={!ableToEdit}
                         onClick={handleMove(index - 1)}
                         aria-label={t('main:tooltip.MoveUp')}
                         className={classes.icon}
@@ -75,6 +134,7 @@ const PropertyList = ({
             )}
             <Tooltip title={t('main:tooltip.Delete')} arrow>
                 <IconButton
+                    disabled={!ableToEdit}
                     onClick={handleRemove(index)}
                     aria-label={t('main:tooltip.Delete')}
                     className={classes.icon}
@@ -110,11 +170,13 @@ const PropertyList = ({
 PropertyList.propTypes = {
     ableToEdit: PropTypes.bool,
     classes: PropTypes.object,
+    defaultValue: PropTypes.string,
     onChange: PropTypes.func,
     onAddItem: PropTypes.func,
-    renderItem: PropTypes.func,
     label: PropTypes.string,
-    items: PropTypes.array
+    items: PropTypes.array,
+    handleItemChange: PropTypes.func,
+    options: PropTypes.array
 };
 
 export default withStyles(styles)(PropertyList);

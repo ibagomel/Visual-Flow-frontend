@@ -31,6 +31,7 @@ import Configuration from './configuration';
 import TransformConfiguration from './transform-configuration';
 import FilterConfiguration from './filter-configuration';
 import CacheConfiguration from './cache-configuration';
+import SortConfiguration from './sort-configuration';
 import { STORAGES } from '../constants';
 
 const MIN_QUANTITY = 1;
@@ -83,6 +84,18 @@ const checkTransformerFields = ({ name, mode, tableName, statement }) => {
     }
     return false;
 };
+
+const checkSortFields = state =>
+    !state.name ||
+    !state.sortType ||
+    !/^[^,]+?:/.test(state.orderColumns) ||
+    /,:/.test(state.orderColumns);
+
+const checkRemoveDuplicateFields = state =>
+    !state.name ||
+    !state.keyColumns ||
+    !state.orderColumns ||
+    !!state.orderColumns?.split(',').find(column => !/.+?:.+?/.test(column.trim()));
 
 const RenderJobConfiguration = ({
     configuration,
@@ -146,7 +159,7 @@ const RenderJobConfiguration = ({
             component: Configuration,
             props: {
                 Component: RemoveDuplicatesConfiguration,
-                isDisabled: state => !state.name || !state.keyColumns,
+                isDisabled: state => checkRemoveDuplicateFields(state),
                 ableToEdit,
                 setPanelDirty,
                 configuration,
@@ -222,6 +235,18 @@ const RenderJobConfiguration = ({
             props: {
                 Component: CacheConfiguration,
                 isDisabled: state => !state.name,
+                ableToEdit,
+                setPanelDirty,
+                configuration,
+                saveCell,
+                graph
+            }
+        },
+        SORT: {
+            component: Configuration,
+            props: {
+                Component: SortConfiguration,
+                isDisabled: state => checkSortFields(state),
                 ableToEdit,
                 setPanelDirty,
                 configuration,

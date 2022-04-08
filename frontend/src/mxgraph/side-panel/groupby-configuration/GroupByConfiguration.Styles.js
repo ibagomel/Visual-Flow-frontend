@@ -22,12 +22,5 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles(theme => ({
     divider: {
         marginTop: theme.spacing(2)
-    },
-    aggregate: {
-        display: 'inline-block'
-    },
-    formControl: {
-        margin: theme.spacing(2, 1, 0, 0),
-        minWidth: theme.spacing(9)
     }
 }));

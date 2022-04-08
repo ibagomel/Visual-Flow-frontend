@@ -32,6 +32,7 @@ import cdc16 from '../../../assets/cdc16.svg';
 import removeDuplicates16 from '../../../assets/removeDuplicates16.svg';
 import filter16 from '../../../assets/filter16.svg';
 import transform16 from '../../../assets/transform16.svg';
+import sort16 from '../../../assets/sort16.svg';
 import {
     READ,
     WRITE,
@@ -46,7 +47,8 @@ import {
     NOTIFICATION,
     PIPELINE,
     CONTAINER,
-    CACHE
+    CACHE,
+    SORT
 } from '../../constants';
 
 const style = {
@@ -84,6 +86,8 @@ const stageIcon = stageName => {
             return <DeveloperModeOutlinedIcon style={style} />;
         case CACHE:
             return <StorageOutlinedIcon style={style} />;
+        case SORT:
+            return <img src={sort16} alt="sort" />;
         default:
             return <></>;
     }

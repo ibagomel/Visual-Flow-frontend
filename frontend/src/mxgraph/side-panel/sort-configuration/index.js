@@ -17,32 +17,6 @@
  * limitations under the License.
  */
 
-export default theme => ({
-    title: {
-        display: 'flex',
-        alignItems: 'center',
-        marginTop: theme.spacing(0.5)
-    },
+import SortConfiguration from './SortConfiguration';
 
-    text: {
-        flexGrow: 1
-    },
-
-    row: {
-        display: 'flex',
-        alignItems: 'center'
-    },
-
-    icon: {
-        marginTop: theme.spacing(2)
-    },
-
-    formControl: {
-        margin: theme.spacing(2, 1, 0, 0),
-        minWidth: theme.spacing(9)
-    },
-
-    orderColumn: {
-        width: '75px'
-    }
-});
+export default SortConfiguration;

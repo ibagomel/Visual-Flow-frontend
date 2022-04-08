@@ -21,11 +21,7 @@ import {
     Checkbox,
     Chip,
     Divider,
-    FormControl,
     FormControlLabel,
-    Input,
-    MenuItem,
-    Select,
     TextField
 } from '@material-ui/core';
 import React from 'react';
@@ -35,7 +31,32 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import useStyles from './GroupByConfiguration.Styles';
 import PropertyList from '../property-list';
 
-const aggregateFunctions = ['Count', 'Avg', 'Max', 'Min', 'Sum', 'Mean'];
+const aggregateFunctions = [
+    {
+        value: 'Count',
+        label: 'Count'
+    },
+    {
+        value: 'Avg',
+        label: 'Avg'
+    },
+    {
+        value: 'Max',
+        label: 'Max'
+    },
+    {
+        value: 'Min',
+        label: 'Min'
+    },
+    {
+        value: 'Sum',
+        label: 'Sum'
+    },
+    {
+        value: 'Mean',
+        label: 'Mean'
+    }
+];
 
 const GroupByConfiguration = ({ ableToEdit, state, onChange }) => {
     const { t } = useTranslation();
@@ -52,41 +73,6 @@ const GroupByConfiguration = ({ ableToEdit, state, onChange }) => {
                 ...groupingCriteria.slice(index + 1)
             ].join(',')
         );
-
-    const renderItem = (item, index) => {
-        const [column, aggregate] = item?.split(':');
-        return (
-            <>
-                <FormControl className={classes.formControl}>
-                    <Select
-                        value={aggregate}
-                        onChange={event =>
-                            handleItemChange(
-                                index,
-                                `${column}:${event.target.value}`
-                            )
-                        }
-                        required
-                        input={<Input />}
-                    >
-                        {aggregateFunctions.map(value => (
-                            <MenuItem value={value} key={value}>
-                                {value}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <TextField
-                    value={column}
-                    onChange={event =>
-                        handleItemChange(index, `${event.target.value}:${aggregate}`)
-                    }
-                    label={t('jobDesigner:groupByConfiguration.Column')}
-                    placeholder={t('jobDesigner:groupByConfiguration.Column')}
-                />
-            </>
-        );
-    };
 
     return (
         <>
@@ -154,8 +140,9 @@ const GroupByConfiguration = ({ ableToEdit, state, onChange }) => {
                     )
                 }
                 onChange={value => onChange('groupingCriteria', value.join(','))}
-                renderItem={renderItem}
                 label={t('jobDesigner:groupByConfiguration.AggregateFunctions')}
+                handleItemChange={handleItemChange}
+                options={aggregateFunctions}
             />
         </>
     );

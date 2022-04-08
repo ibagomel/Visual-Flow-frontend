@@ -28,7 +28,8 @@ import {
     CDC,
     TRANSFORM,
     FILTER,
-    CACHE
+    CACHE,
+    SORT
 } from './constants';
 
 const jobStages = [
@@ -91,6 +92,17 @@ const jobStages = [
     {
         operation: TRANSFORM,
         name: palette.TRANSFORM,
+        color: '#EDF7ED',
+        validation: {
+            minIncomingConnections: 1,
+            maxIncomingConnections: 1,
+            minOutgoingConnections: 1,
+            maxOutgoingConnections: 1
+        }
+    },
+    {
+        operation: SORT,
+        name: palette.SORT,
         color: '#EDF7ED',
         validation: {
             minIncomingConnections: 1,

@@ -33,7 +33,7 @@ const getWriteMode = t => ({
     paragraph3: t('ReadWrite:writeMode.value3'),
     paragraph4: t('ReadWrite:writeMode.value4'),
     paragraph5: t('ReadWrite:writeMode.value5'),
-    hide: READ
+    hide: [READ]
 });
 
 const getTruncateMode = t => ({
@@ -44,22 +44,33 @@ const getTruncateMode = t => ({
     paragraph3: t('ReadWrite:truncateMode.value4'),
     paragraph4: t('ReadWrite:truncateMode.value5'),
     paragraph5: t('ReadWrite:truncateMode.value6'),
-    paragraph6: t('ReadWrite:truncateMode.value7'),
-    paragraph7: t('ReadWrite:truncateMode.value8'),
-    paragraph8: t('ReadWrite:truncateMode.value9'),
-    hide: READ
+    hide: [READ]
+});
+
+const getTruncateModeCascade = t => ({
+    title: '',
+    paragraph: t('ReadWrite:truncateModeCascade.value1'),
+    paragraph1: t('ReadWrite:truncateModeCascade.value2'),
+    paragraph2: t('ReadWrite:truncateModeCascade.value3'),
+    hide: [
+        READ,
+        STORAGES.DB2.label,
+        STORAGES.MYSQL.label,
+        STORAGES.MSSQL.label,
+        STORAGES.REDSHIFTJDBC.label
+    ]
 });
 
 const getContent = t => [
     {
         title: t('ReadWrite:note.name'),
         paragraph: t('ReadWrite:note.value'),
-        hide: WRITE
+        hide: [WRITE]
     },
     {
         title: t('ReadWrite:STDOUT.description.name'),
         paragraph: t('ReadWrite:STDOUT.description.value'),
-        hide: SHOW_DESCRIPTION
+        hide: [SHOW_DESCRIPTION]
     },
     {
         title: t('ReadWrite:name.name'),
@@ -99,7 +110,7 @@ const getCosInfo = (label, t) => [
         paragraph: t(`ReadWrite:${label}.partitionBy.value`),
         paragraph1: t(`ReadWrite:${label}.partitionBy.value1`),
         paragraph2: t(`ReadWrite:${label}.partitionBy.value2`),
-        hide: READ
+        hide: [READ]
     }
 ];
 
@@ -121,7 +132,7 @@ const getDB2 = t => [
     {
         title: t('ReadWrite:DB2.customSql.name'),
         paragraph: t('ReadWrite:DB2.customSql.value'),
-        hide: WRITE
+        hide: [WRITE]
     },
     {
         title: t('ReadWrite:DB2.schema.name'),
@@ -137,10 +148,11 @@ const getDB2 = t => [
         paragraph1: t('ReadWrite:DB2.optionDbtable.value1'),
         paragraph2: t('ReadWrite:DB2.optionDbtable.value2'),
         paragraph3: t('ReadWrite:DB2.optionDbtable.value3'),
-        hide: WRITE
+        hide: [WRITE]
     },
     getWriteMode(t),
     getTruncateMode(t),
+    getTruncateModeCascade(t),
     {
         title: t('ReadWrite:DB2.certData.name'),
         paragraph: t('ReadWrite:DB2.certData.value')
@@ -319,7 +331,7 @@ const getRedis = t => [
     {
         title: t('ReadWrite:REDIS.readMode.name'),
         paragraph: t('ReadWrite:REDIS.readMode.value'),
-        hide: WRITE
+        hide: [WRITE]
     },
     {
         title: t('ReadWrite:REDIS.table.name'),
@@ -332,7 +344,7 @@ const getRedis = t => [
     {
         title: t('ReadWrite:REDIS.ttl.name'),
         paragraph: t('ReadWrite:REDIS.ttl.value'),
-        hide: READ
+        hide: [READ]
     },
     getWriteMode(t)
 ];

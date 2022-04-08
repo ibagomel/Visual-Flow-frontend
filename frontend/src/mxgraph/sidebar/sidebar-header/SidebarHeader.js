@@ -37,7 +37,6 @@ import {
 import useStyles from './SidebarHeader.Styles';
 import toggleConfirmationWindow from '../../../redux/actions/modalsActions';
 import history from '../../../utils/history';
-import { resetFillColor } from '../../resetFillColor/resetFillColor';
 
 const SidebarHeader = ({
     name,
@@ -74,19 +73,14 @@ const SidebarHeader = ({
                 createNewJob(graph, currentProject, data);
             }
         } else {
-            if (data.definition.graph) {
-                resetFillColor(graph, data);
-            }
-            if (currentJobOrPipeline) {
-                updateCurrentPipeline(
-                    graph,
-                    currentProject,
-                    currentJobOrPipeline,
-                    data
-                );
-            } else {
-                createNewPipeline(graph, currentProject, data);
-            }
+            currentJobOrPipeline
+                ? updateCurrentPipeline(
+                      graph,
+                      currentProject,
+                      currentJobOrPipeline,
+                      data
+                  )
+                : createNewPipeline(graph, currentProject, data);
         }
     };
 

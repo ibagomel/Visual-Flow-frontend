@@ -40,8 +40,7 @@ import stageLabels from '../stageLabels';
 import styles from './SidePanel.Styles';
 import StageModal from '../../components/stage-modals/stage';
 import addPropsToChildren from '../../utils/addPropsToChildren';
-import { EDGE, PIPELINE } from '../constants';
-import { selectFillColor } from '../resetFillColor/selectFillColor';
+import { EDGE } from '../constants';
 import schemas from './schemas';
 
 const { mxRectangle, mxConstants } = mxgraph();
@@ -66,13 +65,7 @@ class SidePanel extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        const {
-            graph,
-            currentCell,
-            type,
-            configChanged,
-            setConfigChanged
-        } = this.props;
+        const { graph, currentCell, configChanged, setConfigChanged } = this.props;
         if (
             prevProps.currentCell !== currentCell ||
             (configChanged && currentCell && graph.getSelectionCell())
@@ -87,9 +80,6 @@ class SidePanel extends React.Component {
                 configuration: { ...results }
             });
             configChanged && setConfigChanged(false);
-        }
-        if (graph.getSelectionCell() && type === PIPELINE) {
-            this.changeFillColor(graph.getSelectionCell());
         }
     }
 
@@ -208,39 +198,6 @@ class SidePanel extends React.Component {
             .split('=')
             .pop();
 
-    changeFillColor = cell => {
-        const { graph, data } = this.props;
-        const cellStyle = graph.getModel().getStyle(cell);
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [key, val] of Object.entries(graph.model.cells)) {
-            if (val.vertex && data.definition.graph) {
-                const currentStage = data?.definition.graph.find(
-                    item => item.id === key
-                );
-                if (currentStage && currentStage.edge !== true) {
-                    graph.setCellStyles(
-                        'fillColor',
-                        selectFillColor(currentStage.style),
-                        [val]
-                    );
-                    this.props.sidePanelIsOpen &&
-                    data?.definition.graph.find(item => item.id === cell.id) !==
-                        undefined
-                        ? graph.setCellStyles(
-                              'fillColor',
-                              this.selectStrokeColor(cellStyle),
-                              [cell]
-                          )
-                        : graph.setCellStyles(
-                              'fillColor',
-                              selectFillColor(currentStage.style),
-                              [val]
-                          );
-                }
-            }
-        }
-    };
-
     storageValueHandler = currentState => {
         if (this.state.storageValue !== currentState) {
             this.setState({
@@ -353,7 +310,6 @@ SidePanel.propTypes = {
     setDirty: PropTypes.func,
     setPanelDirty: PropTypes.func,
     children: PropTypes.array,
-    type: PropTypes.string,
     sidePanelIsDirty: PropTypes.bool,
     confirmationWindow: PropTypes.func.isRequired,
     configChanged: PropTypes.bool,

@@ -21,6 +21,13 @@
         "value4": "3. Error if table exists. This mode means that when saving a DataFrame to a data source, if data",
         "value5": "already exists, an exception is expected to be thrown."
     },
+    "truncateModeCascade": {
+        "name": "Truncate mode",
+        "value1": "3. Cascade. The cascade truncation use to overcome fail, if the target table has a primary key", 
+        "value2" : "which is referenced as a foreign key in other tables. The cascade truncation that would not only",
+        "value3" : "delete the data from target table, but also from other tables that use target table's primary key as a foreign key constraint."
+
+    },
     "truncateMode": {
         "name": "Truncate mode",
         "value1": "1. None. No truncation would occur, but the target table will be deleted and recreated. Note that all ",
@@ -28,12 +35,8 @@
         "value3": "2. Simple. The standard truncation that would delete the data from the target table in the efficient",
         "value4": "way, but would leave table's indexes, constraints and other modifiers intact.",
         "value5": "However note that if the target table has a primary key which is referenced as a foreign key in other tables, ",
-        "value6": "the truncation will fail. To overcome this either(only applies to Oracle and Postgre) use Cascade mode ",
-        "value7": "instead or drop constraints manually(outside of VF) prior to accessing the table with VF.",
-        "value8": "3. Cascade. The cascade truncation that would not only delete the data from target table, but also",
-        "value9": "from other tables that use target table's primary key as a foreign key constraint."
+        "value6": "the truncation will fail. To overcome this either drop constraints manually(outside of VF) prior to accessing the table with VF."
     },
-
     "DB2": {
         "JDBCURL": {
             "name": "JDBC URL",

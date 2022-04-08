@@ -90,11 +90,13 @@ const InfoModal = ({
         data
             ?.filter(key => {
                 if (storage === STORAGES.STDOUT.label) {
-                    return !key.hide || key.hide !== title;
+                    return !key.hide || !key.hide.includes(title);
                 }
                 return (
                     !key.hide ||
-                    (key.hide !== title && key.hide !== SHOW_DESCRIPTION)
+                    (!key.hide.includes(title) &&
+                        !key.hide.includes(SHOW_DESCRIPTION) &&
+                        !key.hide.includes(storage))
                 );
             })
             .map(({ hide, ...cleanValue }) => cleanValue);

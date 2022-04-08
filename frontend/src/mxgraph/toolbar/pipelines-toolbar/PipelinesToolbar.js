@@ -40,7 +40,6 @@ import EditDesignerButtons from '../edit-designer-buttons';
 import LinearProgressChart from '../../../components/chart/linear';
 import { fetchPipelineById } from '../../../redux/actions/mxGraphActions';
 import { fetchJobs } from '../../../redux/actions/jobsActions';
-import { resetFillColor } from '../../resetFillColor/resetFillColor';
 import { PENDING, RUNNING } from '../../constants';
 import { findByProp } from '../../../components/helpers/JobsPipelinesTable';
 import {
@@ -104,7 +103,6 @@ const PipelinesToolbar = ({
     };
 
     const createUpdatePipeline = () => {
-        resetFillColor(graph, data);
         if (currentPipeline) {
             update(graph, currentProject, currentPipeline, data);
         } else {

@@ -32,6 +32,7 @@ export const NOTIFICATION = 'NOTIFICATION';
 export const CONTAINER = 'CONTAINER';
 export const PIPELINE = 'PIPELINE';
 export const CACHE = 'CACHE';
+export const SORT = 'SORT';
 
 export const PENDING = 'Pending';
 export const RUNNING = 'Running';
@@ -119,3 +120,14 @@ export const STORAGES = {
 };
 
 export const SHOW_DESCRIPTION = 'notSTDOUT';
+
+export const SORT_TYPES = [
+    {
+        value: 'fullSort',
+        label: 'Full sort'
+    },
+    {
+        value: 'sortWithinPartitions',
+        label: 'Sort within partitions'
+    }
+];

@@ -17,15 +17,7 @@
  * limitations under the License.
  */
 
-import {
-    Chip,
-    Divider,
-    FormControl,
-    Input,
-    MenuItem,
-    Select,
-    TextField
-} from '@material-ui/core';
+import { Chip, Divider, TextField } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +25,16 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import useStyles from '../groupby-configuration/GroupByConfiguration.Styles';
 import PropertyList from '../property-list';
 
-const orderBy = ['asc', 'desc'];
+const orderBy = [
+    {
+        value: 'asc',
+        label: 'asc'
+    },
+    {
+        value: 'desc',
+        label: 'desc'
+    }
+];
 
 const RemoveDuplicatesConfiguration = ({ ableToEdit, state, onChange }) => {
     const { t } = useTranslation();
@@ -50,42 +51,6 @@ const RemoveDuplicatesConfiguration = ({ ableToEdit, state, onChange }) => {
                 ...orderColumns.slice(index + 1)
             ].join(',')
         );
-
-    const renderItem = (item, index) => {
-        const [column, sort = ''] = item?.split(':');
-        const transform = (c, s) => `${c}${s ? `:${s}` : ''}`;
-        return (
-            <>
-                <FormControl className={classes.formControl}>
-                    <Select
-                        value={sort}
-                        onChange={event =>
-                            handleItemChange(
-                                index,
-                                transform(column, event.target.value)
-                            )
-                        }
-                        required
-                        input={<Input />}
-                    >
-                        {orderBy.map(value => (
-                            <MenuItem value={value} key={value}>
-                                {value}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <TextField
-                    value={column}
-                    onChange={event =>
-                        handleItemChange(index, transform(event.target.value, sort))
-                    }
-                    label={t('jobDesigner:groupByConfiguration.Column')}
-                    placeholder={t('jobDesigner:groupByConfiguration.Column')}
-                />
-            </>
-        );
-    };
 
     return (
         <>
@@ -123,12 +88,14 @@ const RemoveDuplicatesConfiguration = ({ ableToEdit, state, onChange }) => {
             <PropertyList
                 ableToEdit={ableToEdit}
                 items={orderColumns}
+                defaultValue={orderBy[0].value}
                 onAddItem={() =>
                     onChange('orderColumns', orderColumns.concat(':').join(','))
                 }
                 onChange={value => onChange('orderColumns', value.join(','))}
-                renderItem={renderItem}
                 label={t('jobDesigner:RemoveDuplConfiguration.OrderBy')}
+                handleItemChange={handleItemChange}
+                options={orderBy}
             />
         </>
     );

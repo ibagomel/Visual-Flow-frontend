@@ -17,32 +17,31 @@
  * limitations under the License.
  */
 
-export default theme => ({
-    title: {
-        display: 'flex',
-        alignItems: 'center',
-        marginTop: theme.spacing(0.5)
-    },
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import InfoModal from '../info';
 
-    text: {
-        flexGrow: 1
-    },
+const SortModal = props => {
+    const { t } = useTranslation();
+    const content = [
+        {
+            title: t('sort:name.name'),
+            paragraph: t('sort:name.value')
+        },
+        {
+            title: t('sort:sortType.name'),
+            paragraph: t('sort:sortType.value'),
+            paragraph1: t('sort:sortType.value1'),
+            paragraph2: t('sort:sortType.value2'),
+            paragraph3: t('sort:sortType.value3')
+        },
+        {
+            title: t('sort:orderColumns.name'),
+            paragraph: t('sort:orderColumns.value'),
+            paragraph1: t('sort:orderColumns.value1')
+        }
+    ];
+    return <InfoModal content={content} {...props} />;
+};
 
-    row: {
-        display: 'flex',
-        alignItems: 'center'
-    },
-
-    icon: {
-        marginTop: theme.spacing(2)
-    },
-
-    formControl: {
-        margin: theme.spacing(2, 1, 0, 0),
-        minWidth: theme.spacing(9)
-    },
-
-    orderColumn: {
-        width: '75px'
-    }
-});
+export default SortModal;

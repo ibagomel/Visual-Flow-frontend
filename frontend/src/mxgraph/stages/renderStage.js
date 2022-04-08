@@ -34,6 +34,7 @@ import NotificationStage from './notification-stage';
 import ContainerStage from './container-stage';
 import CacheStage from './cache-stage';
 import StageWarning from '../../components/stage-warning';
+import SortStage from './sort-stage';
 import {
     READ,
     WRITE,
@@ -49,7 +50,8 @@ import {
     NOTIFICATION,
     CONTAINER,
     CACHE,
-    PIPELINE
+    PIPELINE,
+    SORT
 } from '../constants';
 
 const root = {
@@ -103,6 +105,8 @@ const renderStage = (stage, t, type, jobs, params) => {
             return <ContainerStage stage={stage} params={params} />;
         case CACHE:
             return <CacheStage stage={stage} />;
+        case SORT:
+            return <SortStage stage={stage} />;
         default:
             return null;
     }

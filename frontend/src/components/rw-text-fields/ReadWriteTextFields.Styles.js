@@ -25,7 +25,8 @@ export default makeStyles(() => ({
         alignItems: 'center'
     },
     button: {
-        padding: 0
+        padding: 0,
+        marginLeft: 5
     },
     multilineButton: {
         top: 14,

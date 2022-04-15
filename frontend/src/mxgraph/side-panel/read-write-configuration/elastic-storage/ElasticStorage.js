@@ -29,9 +29,10 @@ const fields = [
     { field: 'Nodes' },
     { field: 'Port' },
     { field: 'User' },
-    { field: 'Password' },
     { field: 'Index' }
 ];
+
+const field = [{ field: 'Password' }];
 
 const ElasticStorage = ({
     inputValues,
@@ -46,6 +47,14 @@ const ElasticStorage = ({
             inputValues={inputValues}
             handleInputChange={handleInputChange}
             openModal={openModal}
+        />
+        <ReadTextFields
+            ableToEdit={ableToEdit}
+            fields={field}
+            inputValues={inputValues}
+            handleInputChange={handleInputChange}
+            openModal={openModal}
+            hidden
         />
         {inputValues.operation === WRITE && (
             <WriteMode

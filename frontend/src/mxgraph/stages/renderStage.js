@@ -62,7 +62,10 @@ const root = {
 // eslint-disable-next-line complexity
 const renderStage = (stage, t, type, jobs, params) => {
     // if have only stage.type (on first drag-and-drop)
-    if (Object.keys(stage).length === 1) {
+    if (
+        Object.keys(stage).length === 1 ||
+        (!stage.name && stage.operation !== EDGE)
+    ) {
         return (
             <div style={root}>
                 <div>

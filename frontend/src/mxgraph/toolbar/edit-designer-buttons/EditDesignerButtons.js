@@ -23,6 +23,8 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import { Undo, Redo, Delete, Refresh } from '@material-ui/icons';
 import { has } from 'lodash';
 
+const PIPELINE = 'PIPELINE';
+
 const EditDesignerButtons = ({
     data,
     graph,
@@ -33,7 +35,9 @@ const EditDesignerButtons = ({
     sidePanelIsOpen,
     setDirty,
     t,
-    undoButtonsDisabling
+    undoButtonsDisabling,
+    setCurrentCell,
+    type
 }) => (
     <>
         {editable && (
@@ -67,6 +71,10 @@ const EditDesignerButtons = ({
                             sidePanelIsOpen && setSidePanel(false);
                             const currentNodes = graph.getSelectionCells();
                             graph.removeCells(currentNodes);
+                            graph.popupMenuHandler.hideMenu();
+                            if (type === PIPELINE) {
+                                setCurrentCell('');
+                            }
                             if (currentNodes.length !== 0) {
                                 setDirty(true);
                             }
@@ -99,7 +107,9 @@ EditDesignerButtons.propTypes = {
     refresh: PropTypes.func,
     editable: PropTypes.bool,
     t: PropTypes.func,
-    undoButtonsDisabling: PropTypes.object
+    undoButtonsDisabling: PropTypes.object,
+    setCurrentCell: PropTypes.func,
+    type: PropTypes.string
 };
 
 export default EditDesignerButtons;

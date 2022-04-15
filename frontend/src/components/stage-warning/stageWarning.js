@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 import ReportOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import useStyles from './stageWarning.Styles';
 import { findByProp } from '../helpers/JobsPipelinesTable';
 import {
@@ -30,10 +29,10 @@ import {
     validParamsContainer
 } from '../helpers/PipelinesValidation';
 
-const StageWarning = ({ stage, jobs, visibleLogsIcon, params }) => {
+const StageWarning = ({ stage, jobs, params }) => {
     const { t } = useTranslation();
     const classes = useStyles();
-    const position = stage.name ? classes.stageWithName : classes.stageWithoutName;
+    const position = stage.name ? null : classes.stageWithoutName;
 
     const stageNotFilled = () => {
         if (jobs && stage.operation === 'JOB') {
@@ -52,12 +51,7 @@ const StageWarning = ({ stage, jobs, visibleLogsIcon, params }) => {
     };
 
     return stageNotFilled() ? (
-        <Box
-            title={t('main:validation.fieldsNotFilled')}
-            className={classNames(position, {
-                [classes.stageWithLogs]: stage.name && visibleLogsIcon
-            })}
-        >
+        <Box title={t('main:validation.fieldsNotFilled')} className={position}>
             <ReportOutlinedIcon className={classes.icon} />
         </Box>
     ) : null;
@@ -66,7 +60,6 @@ const StageWarning = ({ stage, jobs, visibleLogsIcon, params }) => {
 StageWarning.propTypes = {
     stage: PropTypes.object,
     jobs: PropTypes.array,
-    visibleLogsIcon: PropTypes.bool,
     params: PropTypes.array
 };
 

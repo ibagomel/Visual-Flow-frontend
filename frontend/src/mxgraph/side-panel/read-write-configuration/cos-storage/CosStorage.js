@@ -19,7 +19,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import ReadTextFields from '../../../../components/rw-text-fields';
 import CosProperties from '../common';
 import SelectField from '../../../../components/select-field';
@@ -40,12 +39,11 @@ const endpointField = [{ field: 'Endpoint' }];
 
 const fields = [{ field: 'Bucket' }, { field: 'Path' }];
 
-const hmacFields = [{ field: 'Access key' }, { field: 'Secret key' }];
+const keyFields = [{ field: 'Access key' }, { field: 'Secret key' }];
 
 const iamFields = [{ field: 'iamApiKey' }, { field: 'iamServiceId' }];
 
 const CosStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => {
-    const { t } = useTranslation();
     return (
         <>
             <ReadTextFields
@@ -67,12 +65,11 @@ const CosStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) =
             {inputValues.authType === 'HMAC' && (
                 <ReadTextFields
                     ableToEdit={ableToEdit}
-                    label={t('jobDesigner:readConfiguration.iamApiKey')}
-                    placeholder={t('jobDesigner:readConfiguration.iamApiKey')}
-                    fields={hmacFields}
+                    fields={keyFields}
                     inputValues={inputValues}
                     handleInputChange={handleInputChange}
                     openModal={openModal}
+                    hidden
                 />
             )}
             {inputValues.authType === 'IAM' && (
@@ -82,6 +79,7 @@ const CosStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) =
                     inputValues={inputValues}
                     handleInputChange={handleInputChange}
                     openModal={openModal}
+                    hidden
                 />
             )}
             <CosProperties

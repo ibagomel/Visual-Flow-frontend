@@ -72,13 +72,16 @@ class SidePanel extends React.Component {
         ) {
             const selectedCell = graph.getSelectionCell();
             const results = {};
-            Object.keys(selectedCell.value.attributes).forEach(attrKey => {
-                const attribute = selectedCell.value.attributes[attrKey];
-                results[attribute.nodeName] = attribute.nodeValue;
-            });
-            this.setState({
-                configuration: { ...results }
-            });
+            if (selectedCell) {
+                Object.keys(selectedCell.value.attributes).forEach(attrKey => {
+                    const attribute = selectedCell.value.attributes[attrKey];
+                    results[attribute.nodeName] = attribute.nodeValue;
+                });
+                this.setState({
+                    configuration: { ...results }
+                });
+            }
+
             configChanged && setConfigChanged(false);
         }
     }

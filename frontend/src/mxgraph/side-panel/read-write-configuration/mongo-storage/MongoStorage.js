@@ -29,9 +29,10 @@ const fields = [
     { field: 'Collection' },
     { field: 'Host' },
     { field: 'Port' },
-    { field: 'User' },
-    { field: 'Password' }
+    { field: 'User' }
 ];
+
+const field = [{ field: 'Password' }];
 
 const MongoStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => (
     <>
@@ -41,6 +42,14 @@ const MongoStorage = ({ inputValues, handleInputChange, openModal, ableToEdit })
             inputValues={inputValues}
             handleInputChange={handleInputChange}
             openModal={openModal}
+        />
+        <ReadTextFields
+            ableToEdit={ableToEdit}
+            fields={field}
+            inputValues={inputValues}
+            handleInputChange={handleInputChange}
+            openModal={openModal}
+            hidden
         />
         <Ssl
             ableToEdit={ableToEdit}

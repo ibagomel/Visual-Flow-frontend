@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { TextField, MenuItem } from '@material-ui/core';
@@ -54,7 +54,7 @@ const CustomTextField = ({
 
     const parsedValue = parseFunction(value) || [];
     const textValue = parsedValue[1] || '';
-    const selectValue = parsedValue[2] || defaultValue;
+    const [selectValue, setCurrenValue] = useState(defaultValue);
 
     const handleOnChange = event => {
         if (event.target.name === NAMES.TEXT) {
@@ -83,6 +83,7 @@ const CustomTextField = ({
             };
             handleOnChange(event);
         }
+        setCurrenValue(parsedValue[2]);
     });
 
     return (

@@ -42,7 +42,7 @@ const endpointField = [{ field: 'Endpoint' }];
 
 const fields = [{ field: 'Bucket' }, { field: 'Path' }];
 
-const keyField = [{ field: 'Access key' }, { field: 'Secret key' }];
+const keyFields = [{ field: 'Access key' }, { field: 'Secret key' }];
 
 const AwsStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) => (
     <>
@@ -67,10 +67,11 @@ const AwsStorage = ({ inputValues, handleInputChange, openModal, ableToEdit }) =
         {inputValues.anonymousAccess === 'false' && (
             <ReadTextFields
                 ableToEdit={ableToEdit}
-                fields={keyField}
+                fields={keyFields}
                 inputValues={inputValues}
                 handleInputChange={handleInputChange}
                 openModal={openModal}
+                hidden
             />
         )}
         <CosProperties

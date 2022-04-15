@@ -91,6 +91,14 @@ const checkSortFields = state =>
     !/^[^,]+?:/.test(state.orderColumns) ||
     /,:/.test(state.orderColumns);
 
+const checkGroupByFields = state =>
+    !state.name ||
+    !state.groupingColumns ||
+    !state.groupingCriteria ||
+    !!state.groupingCriteria
+        ?.split(',')
+        .find(column => !/.+?:.+?/.test(column.trim()));
+
 const checkRemoveDuplicateFields = state =>
     !state.name ||
     !state.keyColumns ||
@@ -147,7 +155,7 @@ const RenderJobConfiguration = ({
             component: Configuration,
             props: {
                 Component: GroupByConfiguration,
-                isDisabled: state => !state.name || !state.groupingColumns,
+                isDisabled: state => checkGroupByFields(state),
                 ableToEdit,
                 setPanelDirty,
                 configuration,

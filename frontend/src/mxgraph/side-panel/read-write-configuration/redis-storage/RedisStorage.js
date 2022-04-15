@@ -29,12 +29,9 @@ import Ssl from '../helpers/Ssl';
 
 const DEFAULT_TTL = 0;
 
-const fields = [
-    { field: 'Host' },
-    { field: 'Port' },
-    { field: 'Password' },
-    { field: 'KeyColumn' }
-];
+const fields = [{ field: 'Host' }, { field: 'Port' }, { field: 'KeyColumn' }];
+
+const field = [{ field: 'Password' }];
 
 const model = [
     {
@@ -66,6 +63,14 @@ const RedisStorage = ({ inputValues, handleInputChange, openModal, ableToEdit })
                 inputValues={inputValues}
                 ableToEdit={ableToEdit}
                 handleInputChange={handleInputChange}
+            />
+            <ReadTextFields
+                ableToEdit={ableToEdit}
+                fields={field}
+                inputValues={inputValues}
+                handleInputChange={handleInputChange}
+                openModal={openModal}
+                hidden
             />
             <Ssl
                 ableToEdit={ableToEdit}

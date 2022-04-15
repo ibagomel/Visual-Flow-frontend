@@ -26,29 +26,27 @@ import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './ContainerStage.Styles';
 import { DRAFT, PENDING, SKIPPED } from '../../constants';
 import StageWarning from '../../../components/stage-warning';
+import makeTooltip from '../helpers/makeTooltip';
 
 const ContainerStage = ({ stage, params }) => {
     const classes = useStyles();
     const visibleLogsIcon =
         stage.status && ![DRAFT, PENDING, SKIPPED].includes(stage.status);
-
     return (
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.title}>
                 {stageIcon(stage.operation)}
-                <span className={classes.name}>{stage.name}</span>
+                <span className={classes.name}>
+                    {makeTooltip(stage.name, stage.name)}
+                </span>
                 {visibleLogsIcon && (
                     <DescriptionIcon id={stage.name} className={classes.logIcon} />
                 )}
+                <StageWarning stage={stage} params={params} />
             </Typography>
             <Typography variant="caption" component="div" className={classes.image}>
-                {stage.image || ''}
+                {makeTooltip(stage.image, stage.image) || ''}
             </Typography>
-            <StageWarning
-                stage={stage}
-                visibleLogsIcon={visibleLogsIcon}
-                params={params}
-            />
         </div>
     );
 };

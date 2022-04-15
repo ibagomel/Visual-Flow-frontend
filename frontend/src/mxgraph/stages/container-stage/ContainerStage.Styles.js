@@ -31,7 +31,11 @@ export default makeStyles(theme => ({
         'white-space': 'normal',
         width: 204,
         'text-align': 'left',
-        'align-items': 'center'
+        '& span': {
+            overflow: 'hidden',
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap'
+        }
     },
     name: {
         paddingLeft: theme.spacing(1),
@@ -45,6 +49,7 @@ export default makeStyles(theme => ({
         color: 'white',
         'border-radius': 4,
         maxWidth: 190,
+        'text-overflow': 'ellipsis',
         overflow: 'hidden',
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),

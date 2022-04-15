@@ -37,7 +37,9 @@ const customSql = [
 
 const customFields = [{ field: 'Schema' }, { field: 'Table' }];
 
-const fields = [{ field: 'JDBC URL' }, { field: 'User' }, { field: 'Password' }];
+const fields = [{ field: 'JDBC URL' }, { field: 'User' }];
+
+const field = [{ field: 'Password' }];
 
 const truncateMode = [
     {
@@ -83,6 +85,14 @@ const Db2Storage = ({ inputValues, handleInputChange, openModal, ableToEdit }) =
                 inputValues={inputValues}
                 handleInputChange={handleInputChange}
                 openModal={openModal}
+            />
+            <ReadTextFields
+                ableToEdit={ableToEdit}
+                fields={field}
+                inputValues={inputValues}
+                handleInputChange={handleInputChange}
+                openModal={openModal}
+                hidden
             />
             {inputValues.operation === READ && (
                 <SelectField

@@ -21,8 +21,8 @@ import React from 'react';
 import { camelCase } from 'lodash';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { TextField, IconButton, Box } from '@material-ui/core';
-import { TuneOutlined } from '@material-ui/icons';
+import { TextField, InputAdornment, IconButton, Box } from '@material-ui/core';
+import { Visibility, VisibilityOff, TuneOutlined } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import useStyles from './ReadWriteTextFields.Styles';
 import ClearButton from '../../mxgraph/side-panel/helpers/ClearButton';
@@ -41,13 +41,17 @@ const ReadWriteTextFields = ({
     openModal,
     ableToEdit,
     nameWIthPoint = false,
-    required
+    required,
+    hidden,
+    disabled
 }) => {
     const { t } = useTranslation();
     const classes = useStyles();
 
     return fields.map(({ field, rows = 1 }) => {
         const fieldName = nameWIthPoint ? field : camelCase(field);
+        const [visible, setVisibility] = React.useState(false);
+        const hiddenField = visible ? <Visibility /> : <VisibilityOff />;
         return (
             <Box
                 key={field}
@@ -73,20 +77,32 @@ const ReadWriteTextFields = ({
                     fullWidth
                     multiline={rows > 1}
                     rows={rows}
+                    type={!visible && hidden ? 'password' : 'text'}
                     disabled={!ableToEdit || valueIsLink(inputValues[fieldName])}
                     name={fieldName}
                     value={inputValues[fieldName] || ''}
                     onChange={handleInputChange}
                     InputProps={{
-                        endAdornment: (
-                            <IconButton
-                                className={classNames(classes.button, {
-                                    [classes.multilineButton]: rows > 1
-                                })}
-                                onClick={() => openModal(fieldName)}
-                            >
-                                <TuneOutlined />
-                            </IconButton>
+                        endAdornment: !disabled && (
+                            <InputAdornment position="end">
+                                {hidden ? (
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={() => setVisibility(!visible)}
+                                        className={classes.button}
+                                    >
+                                        {hiddenField}
+                                    </IconButton>
+                                ) : null}
+                                <IconButton
+                                    className={classNames(classes.button, {
+                                        [classes.multilineButton]: rows > 1
+                                    })}
+                                    onClick={() => openModal(fieldName)}
+                                >
+                                    <TuneOutlined />
+                                </IconButton>
+                            </InputAdornment>
                         )
                     }}
                     required={required}
@@ -109,8 +125,10 @@ ReadWriteTextFields.propTypes = {
     handleInputChange: PropTypes.func,
     openModal: PropTypes.func,
     ableToEdit: PropTypes.bool,
-    nameWIthPoint: PropTypes.func,
-    required: PropTypes.bool
+    nameWIthPoint: PropTypes.bool,
+    required: PropTypes.bool,
+    hidden: PropTypes.bool,
+    disabled: PropTypes.bool
 };
 
 export default ReadWriteTextFields;

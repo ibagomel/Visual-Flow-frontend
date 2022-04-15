@@ -24,6 +24,7 @@ import { Typography } from '@material-ui/core';
 import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './NotificationStage.Styles';
 import StageWarning from '../../../components/stage-warning';
+import makeTooltip from '../helpers/makeTooltip';
 
 const NotificationStage = ({ stage, params }) => {
     const classes = useStyles();
@@ -32,16 +33,18 @@ const NotificationStage = ({ stage, params }) => {
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.title}>
                 {stageIcon(stage.operation)}
-                <span className={classes.name}>{stage.name}</span>
+                <span className={classes.name}>
+                    {makeTooltip(stage.name, stage.name)}
+                </span>
+                <StageWarning stage={stage} params={params} />
             </Typography>
             <Typography
                 variant="caption"
                 component="div"
                 className={classes.addressees}
             >
-                {stage.addressees}
+                {makeTooltip(stage.addressees, stage.addressees)}
             </Typography>
-            <StageWarning stage={stage} params={params} />
         </div>
     );
 };

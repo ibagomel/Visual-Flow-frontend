@@ -176,11 +176,12 @@ class GraphDesigner extends Component {
                 });
             } else {
                 menu.addItem('Edit child node', null, () => {
-                    this.props.setCurrentCell(cell.id);
+                    this.props.setCell(cell.id);
                     setPanel(true);
                 });
                 menu.addItem('Delete child node', null, () => {
                     sidePanelIsOpen && setPanel(false);
+                    this.props.setCell('');
                     graph.removeCells([cell]);
                     mxEvent.consume(event);
                     setDirtyGraph(true);
@@ -194,9 +195,11 @@ class GraphDesigner extends Component {
         const { graph } = this.state;
         if (event.keyCode === 46 && !sidePanelIsOpen && graph.getSelectionCell()) {
             if (!has(data, 'editable') || this.graphIsDisabled(data.editable)) {
-                setDirtyGraph(true);
                 const currentNodes = graph.getSelectionCells();
+                this.props.setCell('');
+                graph.popupMenuHandler.hideMenu();
                 graph.removeCells(currentNodes);
+                setDirtyGraph(true);
             }
         }
     };
@@ -306,7 +309,7 @@ class GraphDesigner extends Component {
         graph.addListener(mxEvent.EDITING_STARTED, (sender, event) => {
             const cell = event.getProperty('cell');
             if (cell?.vertex) {
-                this.props.setCurrentCell(graph.getSelectionCell().id);
+                this.props.setCell(graph.getSelectionCell().id);
                 setPanel(true);
             }
             graph.cellEditor.stopEditing(true);
@@ -419,6 +422,14 @@ class GraphDesigner extends Component {
                         )
                     })
                 );
+
+                this.setDatasetOnConnection(
+                    graph,
+                    targetNode,
+                    targetNodeType,
+                    inputEdges[firstEdge],
+                    inputEdges[secondEdge]
+                );
             } else {
                 graph.model.setValue(
                     inputEdges[0],
@@ -429,6 +440,34 @@ class GraphDesigner extends Component {
                     })
                 );
             }
+        }
+    };
+
+    setDatasetOnConnection = (graph, target, type, firstEdge, secondEdge) => {
+        if (type === JOIN) {
+            graph.model.setValue(
+                target,
+                stageLabels({
+                    operation: JOIN,
+                    joinType: get(target, 'value.attributes.joinType.value', ''),
+                    columns: get(target, 'value.attributes.columns.value', ''),
+                    name: get(target, 'value.attributes.name.value', ''),
+                    leftDataset: firstEdge?.source?.id,
+                    rightDataset: secondEdge?.source?.id
+                })
+            );
+        } else if (type === CDC) {
+            graph.model.setValue(
+                target,
+                stageLabels({
+                    operation: CDC,
+                    mode: get(target, 'value.attributes.mode.value', ''),
+                    keyColumns: get(target, 'value.attributes.keyColumns.value', ''),
+                    name: get(target, 'value.attributes.name.value', ''),
+                    newDataset: firstEdge?.source?.id,
+                    oldDataset: secondEdge?.source?.id
+                })
+            );
         }
     };
 
@@ -717,7 +756,8 @@ class GraphDesigner extends Component {
             sidePanelIsOpen,
             setPanel,
             setDirtyGraph,
-            setLogs
+            setLogs,
+            setCell
         } = this.props;
         const { graph, jobId, nodeId, configChanged } = this.state;
         const currentPath = history.location.pathname.split('/');
@@ -757,6 +797,7 @@ class GraphDesigner extends Component {
                             <PipelinesToolbar
                                 setSidePanel={setPanel}
                                 sidePanelIsOpen={sidePanelIsOpen}
+                                setCurrentCell={setCell}
                             />
                         )}
                     </DesignerToolbar>
@@ -809,7 +850,7 @@ GraphDesigner.propTypes = {
     setLogs: PropTypes.func,
     setDirtyGraph: PropTypes.func,
     setPanel: PropTypes.func,
-    setCurrentCell: PropTypes.func,
+    setCell: PropTypes.func,
     setZoomValue: PropTypes.func,
     classes: PropTypes.object,
     data: PropTypes.object,
@@ -843,7 +884,7 @@ const mapDispatchToProps = {
     setLogs: setLogsModal,
     setDirtyGraph: setGraphDirty,
     setPanel: setSidePanel,
-    setCurrentCell,
+    setCell: setCurrentCell,
     setZoomValue
 };
 

@@ -27,6 +27,7 @@ import { IMAGE_PULL_SECRET_TYPE } from '../constants/container';
 import SelectField from '../../../components/select-field';
 import { OTHER } from '../../constants';
 import ClearButton from '../helpers/ClearButton';
+import ReadTextFields from '../../../components/rw-text-fields';
 
 const ImagePullSecretType = ({
     ableToEdit,
@@ -38,6 +39,8 @@ const ImagePullSecretType = ({
 }) => {
     const { t } = useTranslation();
     const classes = useStyles();
+
+    const field = [{ field: 'Password' }];
 
     return (
         <>
@@ -89,41 +92,17 @@ const ImagePullSecretType = ({
                             type={OTHER}
                         />
                     </Box>
-                    <Box className={classes.wrapper}>
-                        <TextField
-                            disabled={!ableToEdit}
-                            label={t(
-                                'pipelineDesigner:containerConfiguration.Password'
-                            )}
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                            multiline
-                            name="password"
-                            value={checkParam(state.password)}
-                            onChange={event =>
-                                onChange(event.target.name, event.target.value)
-                            }
-                            InputProps={{
-                                endAdornment: (
-                                    <IconButton
-                                        className={classes.button}
-                                        onClick={() => openModal('password')}
-                                    >
-                                        <TuneOutlined />
-                                    </IconButton>
-                                )
-                            }}
-                            required={required}
-                        />
-                        <ClearButton
-                            name="password"
-                            value={state.password}
-                            ableToEdit={ableToEdit}
-                            handleInputChange={onChange}
-                            type={OTHER}
-                        />
-                    </Box>
+                    <ReadTextFields
+                        ableToEdit={ableToEdit}
+                        fields={field}
+                        inputValues={state}
+                        handleInputChange={event =>
+                            onChange(event.target.name, event.target.value)
+                        }
+                        openModal={openModal}
+                        hidden
+                        required
+                    />
                     <Box className={classes.wrapper}>
                         <TextField
                             disabled={!ableToEdit}

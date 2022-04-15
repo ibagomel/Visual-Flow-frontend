@@ -65,7 +65,8 @@ const PipelinesToolbar = ({
     dirty,
     undoButtonsDisabling,
     jobs,
-    params
+    params,
+    setCurrentCell
 }) => {
     const { t } = useTranslation();
     const classes = useStyles({ name: 'PipelineUtilizationCell' });
@@ -195,6 +196,8 @@ const PipelinesToolbar = ({
                     getActualPipeline(currentProject, currentPipeline);
                 }}
                 undoButtonsDisabling={undoButtonsDisabling}
+                setCurrentCell={setCurrentCell}
+                type="PIPELINE"
             />
         </>
     );
@@ -218,7 +221,8 @@ PipelinesToolbar.propTypes = {
     dirty: PropTypes.bool,
     undoButtonsDisabling: PropTypes.object,
     jobs: PropTypes.array,
-    params: PropTypes.array
+    params: PropTypes.array,
+    setCurrentCell: PropTypes.func
 };
 
 const mapStateToProps = state => ({

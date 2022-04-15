@@ -26,6 +26,7 @@ import stageIcon from '../../sidebar/stage-icon/stageIcon';
 import useStyles from './JobStage.Styles';
 import { DRAFT, PENDING, SKIPPED } from '../../constants';
 import StageWarning from '../../../components/stage-warning';
+import makeTooltip from '../helpers/makeTooltip';
 
 const JobStage = ({ stage, jobs }) => {
     const classes = useStyles();
@@ -36,23 +37,21 @@ const JobStage = ({ stage, jobs }) => {
         <div className={classes.root}>
             <Typography variant="body2" component="div" className={classes.title}>
                 {stageIcon(stage.operation)}
-                <span className={classes.name}>{stage.name}</span>
+                <span className={classes.name}>
+                    {makeTooltip(stage.name, stage.name)}
+                </span>
                 {visibleLogsIcon && (
                     <DescriptionIcon id={stage.jobId} className={classes.logIcon} />
                 )}
+                <StageWarning stage={stage} jobs={jobs} />
             </Typography>
             <Typography
                 variant="caption"
                 component="div"
                 className={classes.jobName}
             >
-                {stage.jobName || ''}
+                {makeTooltip(stage.jobName, stage.jobName) || ''}
             </Typography>
-            <StageWarning
-                stage={stage}
-                jobs={jobs}
-                visibleLogsIcon={visibleLogsIcon}
-            />
         </div>
     );
 };

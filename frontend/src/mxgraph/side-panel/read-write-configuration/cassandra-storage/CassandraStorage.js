@@ -44,7 +44,9 @@ const fields = [
     { field: 'Host' },
     { field: 'Port' }
 ];
-const userFields = [{ field: 'Username' }, { field: 'Password' }];
+const userFields = [{ field: 'Username' }];
+
+const field = [{ field: 'Password' }];
 
 const CassandraStorage = ({
     inputValues,
@@ -71,6 +73,14 @@ const CassandraStorage = ({
             inputValues={inputValues}
             handleInputChange={handleInputChange}
             openModal={openModal}
+        />
+        <ReadTextFields
+            ableToEdit={ableToEdit}
+            fields={field}
+            inputValues={inputValues}
+            handleInputChange={handleInputChange}
+            openModal={openModal}
+            hidden
         />
         <SelectField
             ableToEdit={ableToEdit}

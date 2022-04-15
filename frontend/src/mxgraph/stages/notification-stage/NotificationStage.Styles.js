@@ -29,8 +29,13 @@ export default makeStyles(theme => ({
         top: -64,
         display: 'flex',
         'white-space': 'normal',
-        width: 215,
-        'text-align': 'left'
+        width: 204,
+        'text-align': 'left',
+        '& span': {
+            overflow: 'hidden',
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap'
+        }
     },
     name: {
         paddingLeft: theme.spacing(1),
@@ -39,11 +44,11 @@ export default makeStyles(theme => ({
     addressees: {
         backgroundColor: '#81c784',
         position: 'absolute',
-        left: -90,
-        top: -30,
+        left: -97,
+        top: -22,
         color: 'white',
         'border-radius': 4,
-        maxWidth: 180,
+        maxWidth: 190,
         'text-overflow': 'ellipsis',
         overflow: 'hidden',
         paddingLeft: theme.spacing(1),

@@ -25,17 +25,8 @@ export default makeStyles(() => ({
         top: -21,
         right: 7
     },
-    stageWithName: {
-        position: 'absolute',
-        top: -63,
-        right: -100
-    },
     icon: {
         textSize: '16px',
         color: 'darkred'
-    },
-    stageWithLogs: {
-        top: -40,
-        right: -104
     }
 }));
